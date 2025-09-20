@@ -1,0 +1,128 @@
+import React from "react";
+import { useAllSpa } from "../../api/api";
+import IsLoading from "../../components/IsLoading";
+import IsError from "../../components/IsError";
+import { Button, Table, Tag } from "antd";
+import { Link } from "react-router-dom";
+
+function SpaPackages() {
+  const filter = {
+    page: 1,
+    limit: 10,
+  };
+
+  const { allSpa, pagination, isLoading, isError, error, refetch } = useAllSpa(filter);
+
+  if (isLoading) return <IsLoading />;
+
+  if (isError) return <IsError error={error} refetch={refetch} />;
+
+  const columns = [
+    {
+      title: "Service Name",
+      dataIndex: "service_name",
+      key: "service_name",
+    },
+    {
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
+      render: (text) => <p className="truncate">{text}</p>,
+    },
+    {
+      title: "Time",
+      dataIndex: "time",
+      key: "time",
+    },
+    {
+      title: "Price",
+      dataIndex: "price",
+      key: "price",
+      render: (text) => `$${text.toFixed(2)}`,
+    },
+    {
+      title: "Room",
+      dataIndex: "room",
+      key: "room",
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (status) => {
+        let color;
+        switch (status) {
+          case "Available":
+            color = "green";
+            break;
+          case "Not Available":
+            color = "red";
+            break;
+          case "Declined":
+            color = "orange";
+            break;
+          default:
+            color = "blue";
+        }
+        return <Tag color={color}>{status}</Tag>;
+      },
+    },
+    {
+      title: "Images",
+      dataIndex: "images",
+      key: "images",
+      render: (images) => (
+        <div className="spa-images">
+          {images.slice(0, 2).map((img, index) => (
+            <img key={index} src={img} alt="spa" className="spa-image" />
+          ))}
+        </div>
+      ),
+    },
+    {
+      title: "Actions",
+      key: "actions",
+      render: (_, record) => (
+        <Link to={`/spa/${record.id}`}>
+          <Button type="primary">View Details</Button>
+        </Link>
+      ),
+    },
+  ];
+
+  const handleTableChange = (pagination) => {
+    // Here, you can handle page change or sorting if needed
+  };
+
+  const paginationConfig = {
+    current: pagination.page,
+    pageSize: pagination.limit,
+    total: pagination.totalPayments,
+    onChange: (page) => {
+      // Update the page value and refetch data based on new page
+      filter.page = page;
+      refetch();
+    },
+  };
+
+  return (
+    <div>
+      <div className="flex justify-between mb-4">
+        <h1 className="text-2xl font-bold">Spa Packages</h1>
+        <Button className="my-main-button" type="primary">
+          + Add Spa Package
+        </Button>
+      </div>
+
+      <Table
+        columns={columns}
+        dataSource={allSpa}
+        pagination={paginationConfig}
+        onChange={handleTableChange}
+        rowKey="id"
+      />
+    </div>
+  );
+}
+
+export default SpaPackages;

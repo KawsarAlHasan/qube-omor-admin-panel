@@ -1,0 +1,39 @@
+{
+  "user_id": 100,
+  "user_name": "Shahrukh Khan",
+  "profile": "https://in.bmscdn.com/iedb/artist/images/website/poster/large/shah-rukh-khan-2092-12-09-2017-02-10-43.jpg",
+  "is_active": true,
+  "last_time_active": "2025-07-21T08:45:00Z",
+  "message": [
+    {
+      "sender_id": 1,
+      "receiver_id": 100,
+      "message": "Hi, are you free tomorrow?",
+      "created_at": "2025-07-20T14:25:00Z"
+    },
+    {
+      "sender_id": 100,
+      "receiver_id": 1,
+      "message": "Yes, what time works?",
+      "created_at": "2025-07-20T14:28:00Z"
+    },
+    {
+      "sender_id": 1,
+      "receiver_id": 100,
+      "message": "Around 3 PM?",
+      "created_at": "2025-07-20T14:30:00Z"
+    },
+    {
+      "sender_id": 100,
+      "receiver_id": 1,
+      "message": "Perfect! See you then.",
+      "created_at": "2025-07-20T14:32:00Z"
+    },
+    {
+      "sender_id": 1,
+      "receiver_id": 100,
+      "message": "Are we meeting at the cafe?",
+      "created_at": "2025-07-21T08:30:00Z"
+    }
+  ]
+}
