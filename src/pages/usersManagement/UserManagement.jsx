@@ -17,15 +17,12 @@ function UserManagement() {
 
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
 
- 
-    // Status change modal states
+  // Status change modal states
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [newStatus, setNewStatus] = useState("");
 
   const [isStatusChangeLoading, setIsStatusChangeLoading] = useState(false);
-
-
 
   const { allUsers, pagination, isLoading, isError, error, refetch } =
     useAllUsers(filter);
@@ -35,15 +32,13 @@ function UserManagement() {
     setIsViewModalOpen(true);
   };
 
-
-   const openStatusModal = (record) => {
+  const openStatusModal = (record) => {
     setSelectedCategory(record);
     setNewStatus(record.status); // default current status
     setIsStatusModalOpen(true);
   };
 
-
-    const handleStatusChange = async () => {
+  const handleStatusChange = async () => {
     if (!selectedCategory) return;
 
     setIsStatusChangeLoading(true);
@@ -65,8 +60,6 @@ function UserManagement() {
       setIsStatusChangeLoading(false);
     }
   };
-
-
 
   const handleModalClose = () => {
     setUserDetailsData(null);
@@ -93,10 +86,16 @@ function UserManagement() {
       title: <span>User</span>,
       dataIndex: "full_name",
       key: "full_name",
-      render: (_, record) => <div className="flex flex-items-center gap-2">
-        <img className="w-[40px] h-[40px] rounded-full" src={record.profile} alt={record.full_name} />
-        <h1 className="mt-2">{record.full_name}</h1>
-      </div>,
+      render: (_, record) => (
+        <div className="flex flex-items-center gap-2">
+          <img
+            className="w-[40px] h-[40px] rounded-full"
+            src={record.profile}
+            alt={record.full_name}
+          />
+          <h1 className="mt-2">{record.full_name}</h1>
+        </div>
+      ),
     },
     {
       title: <span>Email</span>,
@@ -117,8 +116,7 @@ function UserManagement() {
       render: (total_scan) => <span>{total_scan}</span>,
     },
 
-  
-      {
+    {
       title: <span>Status</span>,
       dataIndex: "status",
       key: "status",
@@ -186,7 +184,6 @@ function UserManagement() {
         refetch={refetch}
       />
 
-
       {/* Status Change Modal */}
       <Modal
         title="Change User Status"
@@ -207,7 +204,6 @@ function UserManagement() {
           <Select.Option value="Deactive">Deactive</Select.Option>
         </Select>
       </Modal>
-    
     </div>
   );
 }

@@ -14,6 +14,7 @@ import PrivateRoute from "./PrivateRoute";
 import RestaurantOrder from "../pages/restaurantOrder/RestaurantOrder";
 import FoodDetails from "../pages/foodDetails/FoodDetails";
 import SpaPackages from "../pages/spaPackages/SpaPackages";
+import FoodOrders from "../pages/food-orders/FoodOrders";
 
 export const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ export const router = createBrowserRouter([
       {
         path: "/food-details",
         element: <FoodDetails />,
+      },
+      {
+        path: "/food-orders",
+        element: <FoodOrders />,
       },
       {
         path: "/administrators",

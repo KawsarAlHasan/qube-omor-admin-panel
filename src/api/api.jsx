@@ -139,6 +139,28 @@ export const getMockAdministrators = async () => {
   return response.data;
 };
 
+// administrators
+export const getMockDriverList = async () => {
+  const response = await axios.get("/driverList.json");
+
+  return response.data;
+};
+
+export const useAllMockDriverList = () => {
+  const {
+    data: allMockDriverList = [],
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["allMockDriverList"],
+    queryFn: getMockDriverList,
+  });
+
+  return { allMockDriverList, isLoading, isError, error, refetch };
+};
+
 // payments
 export const getMockPayments = async ({ page = 1, limit = 10 }) => {
   const res = await axios.get("/payments.json");
@@ -183,7 +205,7 @@ export const useAllSpa = ({ page = 1, limit = 10, search, status }) => {
   };
 
   const {
-   data: response = {},
+    data: response = {},
     isLoading,
     isError,
     error,
@@ -196,6 +218,43 @@ export const useAllSpa = ({ page = 1, limit = 10, search, status }) => {
   const { data: allSpa = [], pagination = {} } = response;
 
   return { allSpa, pagination, isLoading, isError, error, refetch };
+};
+// get all food-orders
+export const useAllMockFoodOrders = ({ page = 1, limit = 10 }) => {
+  const getData = async ({ page = 1, limit = 10 }) => {
+    const res = await axios.get("/foodOrder.json");
+    const allData = res.data || [];
+
+    // Fake pagination
+    const totalPayments = allData.length;
+    const totalPages = Math.ceil(totalPayments / limit);
+    const paginatedPayments = allData.slice((page - 1) * limit, page * limit);
+
+    return {
+      data: paginatedPayments,
+      pagination: {
+        totalPayments,
+        page,
+        limit,
+        totalPages,
+      },
+    };
+  };
+
+  const {
+    data: response = {},
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["allMockFoodOrders", page, limit],
+    queryFn: getData,
+  });
+
+  const { data: allMockFoodOrders = [], pagination = {} } = response;
+
+  return { allMockFoodOrders, pagination, isLoading, isError, error, refetch };
 };
 
 export const useAllUsers = (params) => {
