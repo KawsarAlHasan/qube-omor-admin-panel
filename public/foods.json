@@ -1,12 +1,14 @@
 [
   {
     "id": 1,
-    "name": "Burger",
+    "food_name": "Burger",
     "description": "Burger with cheese",
     "quantity": 10,
     "price": 100,
     "cost_on_me": 50,
     "calories": "100 calories",
+    "status": "Active",
+    "cookign_time": "10 minutes",
     "ingredients": [
       {
         "id": 1,
@@ -22,6 +24,35 @@
         "id": 3,
         "name": "Beef",
         "price": 30
+      }
+    ],
+    "extra_ingredients": [
+      {
+        "_id": 1,
+        "ingredient_name": "Chicken Breast",
+        "ingredient_image": "https://assets-jpcust.jwpsrv.com/thumbnails/4Bjx60lU-1280.jpg",
+        "quentity": 19,
+        "price": 10,
+        "cost_on_me": 6,
+        "status": "Active"
+      },
+      {
+        "_id": 2,
+        "ingredient_name": "Lettuce",
+        "ingredient_image": "https://cdn.britannica.com/77/170677-050-F7333D51/lettuce.jpg",
+        "quentity": 1,
+        "price": 3,
+        "cost_on_me": 1,
+        "status": "Active"
+      },
+      {
+        "_id": 3,
+        "ingredient_name": "Tomato",
+        "ingredient_image": "https://foodcare.in/cdn/shop/files/tomatoes-canva.webp?v=1725364526",
+        "quentity": 19,
+        "price": 4,
+        "cost_on_me": 2,
+        "status": "Deactive"
       }
     ],
     "items": [
@@ -49,12 +80,14 @@
   },
   {
     "id": 2,
-    "name": "Pizza",
+    "food_name": "Pizza",
     "description": "Pizza with cheese",
     "quantity": 15,
     "price": 200,
     "cost_on_me": 120,
     "calories": "250 calories",
+    "status": "Active",
+    "cookign_time": "10 minutes",
     "ingredients": [
       {
         "id": 1,
@@ -70,6 +103,35 @@
         "id": 3,
         "name": "Tomato Sauce",
         "price": 30
+      }
+    ],
+    "extra_ingredients": [
+      {
+        "_id": 1,
+        "ingredient_name": "Chicken Breast",
+        "ingredient_image": "https://assets-jpcust.jwpsrv.com/thumbnails/4Bjx60lU-1280.jpg",
+        "quentity": 19,
+        "price": 10,
+        "cost_on_me": 6,
+        "status": "Active"
+      },
+      {
+        "_id": 2,
+        "ingredient_name": "Lettuce",
+        "ingredient_image": "https://cdn.britannica.com/77/170677-050-F7333D51/lettuce.jpg",
+        "quentity": 1,
+        "price": 3,
+        "cost_on_me": 1,
+        "status": "Active"
+      },
+      {
+        "_id": 3,
+        "ingredient_name": "Tomato",
+        "ingredient_image": "https://foodcare.in/cdn/shop/files/tomatoes-canva.webp?v=1725364526",
+        "quentity": 19,
+        "price": 4,
+        "cost_on_me": 2,
+        "status": "Deactive"
       }
     ],
     "items": [
@@ -97,12 +159,14 @@
   },
   {
     "id": 3,
-    "name": "Food Item 3",
+    "food_name": "Food Item 3",
     "description": "Delicious food item number 3",
     "quantity": 13,
     "price": 65,
     "cost_on_me": 31,
     "calories": "130 calories",
+    "status": "Active",
+    "cookign_time": "10 minutes",
     "ingredients": [
       {
         "id": 1,
@@ -118,6 +182,35 @@
         "id": 3,
         "name": "Ingredient C",
         "price": 23
+      }
+    ],
+    "extra_ingredients": [
+      {
+        "_id": 1,
+        "ingredient_name": "Chicken Breast",
+        "ingredient_image": "https://assets-jpcust.jwpsrv.com/thumbnails/4Bjx60lU-1280.jpg",
+        "quentity": 19,
+        "price": 10,
+        "cost_on_me": 6,
+        "status": "Active"
+      },
+      {
+        "_id": 2,
+        "ingredient_name": "Lettuce",
+        "ingredient_image": "https://cdn.britannica.com/77/170677-050-F7333D51/lettuce.jpg",
+        "quentity": 1,
+        "price": 3,
+        "cost_on_me": 1,
+        "status": "Active"
+      },
+      {
+        "_id": 3,
+        "ingredient_name": "Tomato",
+        "ingredient_image": "https://foodcare.in/cdn/shop/files/tomatoes-canva.webp?v=1725364526",
+        "quentity": 19,
+        "price": 4,
+        "cost_on_me": 2,
+        "status": "Deactive"
       }
     ],
     "items": [
@@ -145,12 +238,14 @@
   },
   {
     "id": 4,
-    "name": "Food Item 4",
+    "food_name": "Food Item 4",
     "description": "Delicious food item number 4",
     "quantity": 14,
     "price": 70,
     "cost_on_me": 33,
     "calories": "140 calories",
+    "status": "Deactive",
+    "cookign_time": "10 minutes",
     "ingredients": [
       {
         "id": 1,
@@ -193,12 +288,14 @@
   },
   {
     "id": 5,
-    "name": "Food Item 5",
+    "food_name": "Food Item 5",
     "description": "Delicious food item number 5",
     "quantity": 15,
     "price": 75,
     "cost_on_me": 35,
     "calories": "150 calories",
+    "status": "Deactive",
+    "cookign_time": "10 minutes",
     "ingredients": [
       {
         "id": 1,
@@ -214,6 +311,36 @@
         "id": 3,
         "name": "Ingredient C",
         "price": 25
+      }
+    ],
+
+    "extra_ingredients": [
+      {
+        "_id": 1,
+        "ingredient_name": "Chicken Breast",
+        "ingredient_image": "https://assets-jpcust.jwpsrv.com/thumbnails/4Bjx60lU-1280.jpg",
+        "quentity": 19,
+        "price": 10,
+        "cost_on_me": 6,
+        "status": "Active"
+      },
+      {
+        "_id": 2,
+        "ingredient_name": "Lettuce",
+        "ingredient_image": "https://cdn.britannica.com/77/170677-050-F7333D51/lettuce.jpg",
+        "quentity": 1,
+        "price": 3,
+        "cost_on_me": 1,
+        "status": "Active"
+      },
+      {
+        "_id": 3,
+        "ingredient_name": "Tomato",
+        "ingredient_image": "https://foodcare.in/cdn/shop/files/tomatoes-canva.webp?v=1725364526",
+        "quentity": 19,
+        "price": 4,
+        "cost_on_me": 2,
+        "status": "Deactive"
       }
     ],
     "items": [
@@ -241,12 +368,14 @@
   },
   {
     "id": 6,
-    "name": "Food Item 6",
+    "food_name": "Food Item 6",
     "description": "Delicious food item number 6",
     "quantity": 16,
     "price": 80,
     "cost_on_me": 37,
     "calories": "160 calories",
+    "status": "Active",
+    "cookign_time": "10 minutes",
     "ingredients": [
       {
         "id": 1,
@@ -262,6 +391,36 @@
         "id": 3,
         "name": "Ingredient C",
         "price": 26
+      }
+    ],
+
+    "extra_ingredients": [
+      {
+        "_id": 1,
+        "ingredient_name": "Chicken Breast",
+        "ingredient_image": "https://assets-jpcust.jwpsrv.com/thumbnails/4Bjx60lU-1280.jpg",
+        "quentity": 19,
+        "price": 10,
+        "cost_on_me": 6,
+        "status": "Active"
+      },
+      {
+        "_id": 2,
+        "ingredient_name": "Lettuce",
+        "ingredient_image": "https://cdn.britannica.com/77/170677-050-F7333D51/lettuce.jpg",
+        "quentity": 1,
+        "price": 3,
+        "cost_on_me": 1,
+        "status": "Active"
+      },
+      {
+        "_id": 3,
+        "ingredient_name": "Tomato",
+        "ingredient_image": "https://foodcare.in/cdn/shop/files/tomatoes-canva.webp?v=1725364526",
+        "quentity": 19,
+        "price": 4,
+        "cost_on_me": 2,
+        "status": "Deactive"
       }
     ],
     "items": [
@@ -289,12 +448,14 @@
   },
   {
     "id": 7,
-    "name": "Food Item 7",
+    "food_name": "Food Item 7",
     "description": "Delicious food item number 7",
     "quantity": 17,
     "price": 85,
     "cost_on_me": 39,
     "calories": "170 calories",
+    "status": "Active",
+    "cookign_time": "10 minutes",
     "ingredients": [
       {
         "id": 1,
@@ -310,6 +471,36 @@
         "id": 3,
         "name": "Ingredient C",
         "price": 27
+      }
+    ],
+
+    "extra_ingredients": [
+      {
+        "_id": 1,
+        "ingredient_name": "Chicken Breast",
+        "ingredient_image": "https://assets-jpcust.jwpsrv.com/thumbnails/4Bjx60lU-1280.jpg",
+        "quentity": 19,
+        "price": 10,
+        "cost_on_me": 6,
+        "status": "Active"
+      },
+      {
+        "_id": 2,
+        "ingredient_name": "Lettuce",
+        "ingredient_image": "https://cdn.britannica.com/77/170677-050-F7333D51/lettuce.jpg",
+        "quentity": 1,
+        "price": 3,
+        "cost_on_me": 1,
+        "status": "Active"
+      },
+      {
+        "_id": 3,
+        "ingredient_name": "Tomato",
+        "ingredient_image": "https://foodcare.in/cdn/shop/files/tomatoes-canva.webp?v=1725364526",
+        "quentity": 19,
+        "price": 4,
+        "cost_on_me": 2,
+        "status": "Deactive"
       }
     ],
     "items": [
@@ -337,12 +528,14 @@
   },
   {
     "id": 8,
-    "name": "Food Item 8",
+    "food_name": "Food Item 8",
     "description": "Delicious food item number 8",
     "quantity": 18,
     "price": 90,
     "cost_on_me": 41,
     "calories": "180 calories",
+    "status": "Active",
+    "cookign_time": "10 minutes",
     "ingredients": [
       {
         "id": 1,
@@ -358,6 +551,36 @@
         "id": 3,
         "name": "Ingredient C",
         "price": 28
+      }
+    ],
+
+    "extra_ingredients": [
+      {
+        "_id": 1,
+        "ingredient_name": "Chicken Breast",
+        "ingredient_image": "https://assets-jpcust.jwpsrv.com/thumbnails/4Bjx60lU-1280.jpg",
+        "quentity": 19,
+        "price": 10,
+        "cost_on_me": 6,
+        "status": "Active"
+      },
+      {
+        "_id": 2,
+        "ingredient_name": "Lettuce",
+        "ingredient_image": "https://cdn.britannica.com/77/170677-050-F7333D51/lettuce.jpg",
+        "quentity": 1,
+        "price": 3,
+        "cost_on_me": 1,
+        "status": "Active"
+      },
+      {
+        "_id": 3,
+        "ingredient_name": "Tomato",
+        "ingredient_image": "https://foodcare.in/cdn/shop/files/tomatoes-canva.webp?v=1725364526",
+        "quentity": 19,
+        "price": 4,
+        "cost_on_me": 2,
+        "status": "Deactive"
       }
     ],
     "items": [
@@ -385,12 +608,14 @@
   },
   {
     "id": 9,
-    "name": "Food Item 9",
+    "food_name": "Food Item 9",
     "description": "Delicious food item number 9",
     "quantity": 19,
     "price": 95,
     "cost_on_me": 43,
     "calories": "190 calories",
+    "status": "Active",
+    "cookign_time": "10 minutes",
     "ingredients": [
       {
         "id": 1,
@@ -406,6 +631,36 @@
         "id": 3,
         "name": "Ingredient C",
         "price": 29
+      }
+    ],
+
+    "extra_ingredients": [
+      {
+        "_id": 1,
+        "ingredient_name": "Chicken Breast",
+        "ingredient_image": "https://assets-jpcust.jwpsrv.com/thumbnails/4Bjx60lU-1280.jpg",
+        "quentity": 19,
+        "price": 10,
+        "cost_on_me": 6,
+        "status": "Active"
+      },
+      {
+        "_id": 2,
+        "ingredient_name": "Lettuce",
+        "ingredient_image": "https://cdn.britannica.com/77/170677-050-F7333D51/lettuce.jpg",
+        "quentity": 1,
+        "price": 3,
+        "cost_on_me": 1,
+        "status": "Active"
+      },
+      {
+        "_id": 3,
+        "ingredient_name": "Tomato",
+        "ingredient_image": "https://foodcare.in/cdn/shop/files/tomatoes-canva.webp?v=1725364526",
+        "quentity": 19,
+        "price": 4,
+        "cost_on_me": 2,
+        "status": "Deactive"
       }
     ],
     "items": [
@@ -433,12 +688,14 @@
   },
   {
     "id": 10,
-    "name": "Food Item 10",
+    "food_name": "Food Item 10",
     "description": "Delicious food item number 10",
     "quantity": 20,
     "price": 100,
     "cost_on_me": 45,
     "calories": "200 calories",
+    "status": "Active",
+    "cookign_time": "10 minutes",
     "ingredients": [
       {
         "id": 1,
@@ -454,6 +711,36 @@
         "id": 3,
         "name": "Ingredient C",
         "price": 30
+      }
+    ],
+
+    "extra_ingredients": [
+      {
+        "_id": 1,
+        "ingredient_name": "Chicken Breast",
+        "ingredient_image": "https://assets-jpcust.jwpsrv.com/thumbnails/4Bjx60lU-1280.jpg",
+        "quentity": 19,
+        "price": 10,
+        "cost_on_me": 6,
+        "status": "Active"
+      },
+      {
+        "_id": 2,
+        "ingredient_name": "Lettuce",
+        "ingredient_image": "https://cdn.britannica.com/77/170677-050-F7333D51/lettuce.jpg",
+        "quentity": 1,
+        "price": 3,
+        "cost_on_me": 1,
+        "status": "Active"
+      },
+      {
+        "_id": 3,
+        "ingredient_name": "Tomato",
+        "ingredient_image": "https://foodcare.in/cdn/shop/files/tomatoes-canva.webp?v=1725364526",
+        "quentity": 19,
+        "price": 4,
+        "cost_on_me": 2,
+        "status": "Deactive"
       }
     ],
     "items": [
@@ -481,12 +768,14 @@
   },
   {
     "id": 11,
-    "name": "Food Item 11",
+    "food_name": "Food Item 11",
     "description": "Delicious food item number 11",
     "quantity": 21,
     "price": 105,
     "cost_on_me": 47,
     "calories": "210 calories",
+    "status": "Active",
+    "cookign_time": "10 minutes",
     "ingredients": [
       {
         "id": 1,
@@ -502,6 +791,36 @@
         "id": 3,
         "name": "Ingredient C",
         "price": 31
+      }
+    ],
+
+    "extra_ingredients": [
+      {
+        "_id": 1,
+        "ingredient_name": "Chicken Breast",
+        "ingredient_image": "https://assets-jpcust.jwpsrv.com/thumbnails/4Bjx60lU-1280.jpg",
+        "quentity": 19,
+        "price": 10,
+        "cost_on_me": 6,
+        "status": "Active"
+      },
+      {
+        "_id": 2,
+        "ingredient_name": "Lettuce",
+        "ingredient_image": "https://cdn.britannica.com/77/170677-050-F7333D51/lettuce.jpg",
+        "quentity": 1,
+        "price": 3,
+        "cost_on_me": 1,
+        "status": "Active"
+      },
+      {
+        "_id": 3,
+        "ingredient_name": "Tomato",
+        "ingredient_image": "https://foodcare.in/cdn/shop/files/tomatoes-canva.webp?v=1725364526",
+        "quentity": 19,
+        "price": 4,
+        "cost_on_me": 2,
+        "status": "Deactive"
       }
     ],
     "items": [
@@ -529,12 +848,14 @@
   },
   {
     "id": 12,
-    "name": "Food Item 12",
+    "food_name": "Food Item 12",
     "description": "Delicious food item number 12",
     "quantity": 22,
     "price": 110,
     "cost_on_me": 49,
     "calories": "220 calories",
+    "status": "Active",
+    "cookign_time": "10 minutes",
     "ingredients": [
       {
         "id": 1,
@@ -550,6 +871,36 @@
         "id": 3,
         "name": "Ingredient C",
         "price": 32
+      }
+    ],
+
+    "extra_ingredients": [
+      {
+        "_id": 1,
+        "ingredient_name": "Chicken Breast",
+        "ingredient_image": "https://assets-jpcust.jwpsrv.com/thumbnails/4Bjx60lU-1280.jpg",
+        "quentity": 19,
+        "price": 10,
+        "cost_on_me": 6,
+        "status": "Active"
+      },
+      {
+        "_id": 2,
+        "ingredient_name": "Lettuce",
+        "ingredient_image": "https://cdn.britannica.com/77/170677-050-F7333D51/lettuce.jpg",
+        "quentity": 1,
+        "price": 3,
+        "cost_on_me": 1,
+        "status": "Active"
+      },
+      {
+        "_id": 3,
+        "ingredient_name": "Tomato",
+        "ingredient_image": "https://foodcare.in/cdn/shop/files/tomatoes-canva.webp?v=1725364526",
+        "quentity": 19,
+        "price": 4,
+        "cost_on_me": 2,
+        "status": "Deactive"
       }
     ],
     "items": [
@@ -577,12 +928,14 @@
   },
   {
     "id": 13,
-    "name": "Food Item 13",
+    "food_name": "Food Item 13",
     "description": "Delicious food item number 13",
     "quantity": 23,
     "price": 115,
     "cost_on_me": 51,
     "calories": "230 calories",
+    "status": "Active",
+    "cookign_time": "10 minutes",
     "ingredients": [
       {
         "id": 1,
@@ -598,6 +951,36 @@
         "id": 3,
         "name": "Ingredient C",
         "price": 33
+      }
+    ],
+
+    "extra_ingredients": [
+      {
+        "_id": 1,
+        "ingredient_name": "Chicken Breast",
+        "ingredient_image": "https://assets-jpcust.jwpsrv.com/thumbnails/4Bjx60lU-1280.jpg",
+        "quentity": 19,
+        "price": 10,
+        "cost_on_me": 6,
+        "status": "Active"
+      },
+      {
+        "_id": 2,
+        "ingredient_name": "Lettuce",
+        "ingredient_image": "https://cdn.britannica.com/77/170677-050-F7333D51/lettuce.jpg",
+        "quentity": 1,
+        "price": 3,
+        "cost_on_me": 1,
+        "status": "Active"
+      },
+      {
+        "_id": 3,
+        "ingredient_name": "Tomato",
+        "ingredient_image": "https://foodcare.in/cdn/shop/files/tomatoes-canva.webp?v=1725364526",
+        "quentity": 19,
+        "price": 4,
+        "cost_on_me": 2,
+        "status": "Deactive"
       }
     ],
     "items": [
@@ -625,12 +1008,14 @@
   },
   {
     "id": 14,
-    "name": "Food Item 14",
+    "food_name": "Food Item 14",
     "description": "Delicious food item number 14",
     "quantity": 24,
     "price": 120,
     "cost_on_me": 53,
     "calories": "240 calories",
+    "status": "Active",
+    "cookign_time": "10 minutes",
     "ingredients": [
       {
         "id": 1,
@@ -646,6 +1031,36 @@
         "id": 3,
         "name": "Ingredient C",
         "price": 34
+      }
+    ],
+
+    "extra_ingredients": [
+      {
+        "_id": 1,
+        "ingredient_name": "Chicken Breast",
+        "ingredient_image": "https://assets-jpcust.jwpsrv.com/thumbnails/4Bjx60lU-1280.jpg",
+        "quentity": 19,
+        "price": 10,
+        "cost_on_me": 6,
+        "status": "Active"
+      },
+      {
+        "_id": 2,
+        "ingredient_name": "Lettuce",
+        "ingredient_image": "https://cdn.britannica.com/77/170677-050-F7333D51/lettuce.jpg",
+        "quentity": 1,
+        "price": 3,
+        "cost_on_me": 1,
+        "status": "Active"
+      },
+      {
+        "_id": 3,
+        "ingredient_name": "Tomato",
+        "ingredient_image": "https://foodcare.in/cdn/shop/files/tomatoes-canva.webp?v=1725364526",
+        "quentity": 19,
+        "price": 4,
+        "cost_on_me": 2,
+        "status": "Deactive"
       }
     ],
     "items": [
@@ -673,12 +1088,14 @@
   },
   {
     "id": 15,
-    "name": "Food Item 15",
+    "food_name": "Food Item 15",
     "description": "Delicious food item number 15",
     "quantity": 25,
     "price": 125,
     "cost_on_me": 55,
     "calories": "250 calories",
+    "status": "Active",
+    "cookign_time": "10 minutes",
     "ingredients": [
       {
         "id": 1,
@@ -694,6 +1111,36 @@
         "id": 3,
         "name": "Ingredient C",
         "price": 35
+      }
+    ],
+
+    "extra_ingredients": [
+      {
+        "_id": 1,
+        "ingredient_name": "Chicken Breast",
+        "ingredient_image": "https://assets-jpcust.jwpsrv.com/thumbnails/4Bjx60lU-1280.jpg",
+        "quentity": 19,
+        "price": 10,
+        "cost_on_me": 6,
+        "status": "Active"
+      },
+      {
+        "_id": 2,
+        "ingredient_name": "Lettuce",
+        "ingredient_image": "https://cdn.britannica.com/77/170677-050-F7333D51/lettuce.jpg",
+        "quentity": 1,
+        "price": 3,
+        "cost_on_me": 1,
+        "status": "Active"
+      },
+      {
+        "_id": 3,
+        "ingredient_name": "Tomato",
+        "ingredient_image": "https://foodcare.in/cdn/shop/files/tomatoes-canva.webp?v=1725364526",
+        "quentity": 19,
+        "price": 4,
+        "cost_on_me": 2,
+        "status": "Deactive"
       }
     ],
     "items": [
@@ -721,12 +1168,14 @@
   },
   {
     "id": 16,
-    "name": "Food Item 16",
+    "food_name": "Food Item 16",
     "description": "Delicious food item number 16",
     "quantity": 26,
     "price": 130,
     "cost_on_me": 57,
     "calories": "260 calories",
+    "status": "Active",
+    "cookign_time": "10 minutes",
     "ingredients": [
       {
         "id": 1,
@@ -742,6 +1191,36 @@
         "id": 3,
         "name": "Ingredient C",
         "price": 36
+      }
+    ],
+
+    "extra_ingredients": [
+      {
+        "_id": 1,
+        "ingredient_name": "Chicken Breast",
+        "ingredient_image": "https://assets-jpcust.jwpsrv.com/thumbnails/4Bjx60lU-1280.jpg",
+        "quentity": 19,
+        "price": 10,
+        "cost_on_me": 6,
+        "status": "Active"
+      },
+      {
+        "_id": 2,
+        "ingredient_name": "Lettuce",
+        "ingredient_image": "https://cdn.britannica.com/77/170677-050-F7333D51/lettuce.jpg",
+        "quentity": 1,
+        "price": 3,
+        "cost_on_me": 1,
+        "status": "Active"
+      },
+      {
+        "_id": 3,
+        "ingredient_name": "Tomato",
+        "ingredient_image": "https://foodcare.in/cdn/shop/files/tomatoes-canva.webp?v=1725364526",
+        "quentity": 19,
+        "price": 4,
+        "cost_on_me": 2,
+        "status": "Deactive"
       }
     ],
     "items": [
@@ -769,12 +1248,14 @@
   },
   {
     "id": 17,
-    "name": "Food Item 17",
+    "food_name": "Food Item 17",
     "description": "Delicious food item number 17",
     "quantity": 27,
     "price": 135,
     "cost_on_me": 59,
     "calories": "270 calories",
+    "status": "Active",
+    "cookign_time": "10 minutes",
     "ingredients": [
       {
         "id": 1,
@@ -790,6 +1271,36 @@
         "id": 3,
         "name": "Ingredient C",
         "price": 37
+      }
+    ],
+
+    "extra_ingredients": [
+      {
+        "_id": 1,
+        "ingredient_name": "Chicken Breast",
+        "ingredient_image": "https://assets-jpcust.jwpsrv.com/thumbnails/4Bjx60lU-1280.jpg",
+        "quentity": 19,
+        "price": 10,
+        "cost_on_me": 6,
+        "status": "Active"
+      },
+      {
+        "_id": 2,
+        "ingredient_name": "Lettuce",
+        "ingredient_image": "https://cdn.britannica.com/77/170677-050-F7333D51/lettuce.jpg",
+        "quentity": 1,
+        "price": 3,
+        "cost_on_me": 1,
+        "status": "Active"
+      },
+      {
+        "_id": 3,
+        "ingredient_name": "Tomato",
+        "ingredient_image": "https://foodcare.in/cdn/shop/files/tomatoes-canva.webp?v=1725364526",
+        "quentity": 19,
+        "price": 4,
+        "cost_on_me": 2,
+        "status": "Deactive"
       }
     ],
     "items": [
@@ -817,12 +1328,14 @@
   },
   {
     "id": 18,
-    "name": "Food Item 18",
+    "food_name": "Food Item 18",
     "description": "Delicious food item number 18",
     "quantity": 28,
     "price": 140,
     "cost_on_me": 61,
     "calories": "280 calories",
+    "status": "Active",
+    "cookign_time": "10 minutes",
     "ingredients": [
       {
         "id": 1,
@@ -838,6 +1351,36 @@
         "id": 3,
         "name": "Ingredient C",
         "price": 38
+      }
+    ],
+
+    "extra_ingredients": [
+      {
+        "_id": 1,
+        "ingredient_name": "Chicken Breast",
+        "ingredient_image": "https://assets-jpcust.jwpsrv.com/thumbnails/4Bjx60lU-1280.jpg",
+        "quentity": 19,
+        "price": 10,
+        "cost_on_me": 6,
+        "status": "Active"
+      },
+      {
+        "_id": 2,
+        "ingredient_name": "Lettuce",
+        "ingredient_image": "https://cdn.britannica.com/77/170677-050-F7333D51/lettuce.jpg",
+        "quentity": 1,
+        "price": 3,
+        "cost_on_me": 1,
+        "status": "Active"
+      },
+      {
+        "_id": 3,
+        "ingredient_name": "Tomato",
+        "ingredient_image": "https://foodcare.in/cdn/shop/files/tomatoes-canva.webp?v=1725364526",
+        "quentity": 19,
+        "price": 4,
+        "cost_on_me": 2,
+        "status": "Deactive"
       }
     ],
     "items": [
@@ -865,12 +1408,14 @@
   },
   {
     "id": 19,
-    "name": "Food Item 19",
+    "food_name": "Food Item 19",
     "description": "Delicious food item number 19",
     "quantity": 29,
     "price": 145,
     "cost_on_me": 63,
     "calories": "290 calories",
+    "status": "Active",
+    "cookign_time": "10 minutes",
     "ingredients": [
       {
         "id": 1,
@@ -886,6 +1431,36 @@
         "id": 3,
         "name": "Ingredient C",
         "price": 39
+      }
+    ],
+
+    "extra_ingredients": [
+      {
+        "_id": 1,
+        "ingredient_name": "Chicken Breast",
+        "ingredient_image": "https://assets-jpcust.jwpsrv.com/thumbnails/4Bjx60lU-1280.jpg",
+        "quentity": 19,
+        "price": 10,
+        "cost_on_me": 6,
+        "status": "Active"
+      },
+      {
+        "_id": 2,
+        "ingredient_name": "Lettuce",
+        "ingredient_image": "https://cdn.britannica.com/77/170677-050-F7333D51/lettuce.jpg",
+        "quentity": 1,
+        "price": 3,
+        "cost_on_me": 1,
+        "status": "Active"
+      },
+      {
+        "_id": 3,
+        "ingredient_name": "Tomato",
+        "ingredient_image": "https://foodcare.in/cdn/shop/files/tomatoes-canva.webp?v=1725364526",
+        "quentity": 19,
+        "price": 4,
+        "cost_on_me": 2,
+        "status": "Deactive"
       }
     ],
     "items": [
@@ -913,12 +1488,14 @@
   },
   {
     "id": 20,
-    "name": "Food Item 20",
+    "food_name": "Food Item 20",
     "description": "Delicious food item number 20",
     "quantity": 30,
     "price": 150,
     "cost_on_me": 65,
     "calories": "300 calories",
+    "status": "Active",
+    "cookign_time": "10 minutes",
     "ingredients": [
       {
         "id": 1,
@@ -934,6 +1511,36 @@
         "id": 3,
         "name": "Ingredient C",
         "price": 40
+      }
+    ],
+
+    "extra_ingredients": [
+      {
+        "_id": 1,
+        "ingredient_name": "Chicken Breast",
+        "ingredient_image": "https://assets-jpcust.jwpsrv.com/thumbnails/4Bjx60lU-1280.jpg",
+        "quentity": 19,
+        "price": 10,
+        "cost_on_me": 6,
+        "status": "Active"
+      },
+      {
+        "_id": 2,
+        "ingredient_name": "Lettuce",
+        "ingredient_image": "https://cdn.britannica.com/77/170677-050-F7333D51/lettuce.jpg",
+        "quentity": 1,
+        "price": 3,
+        "cost_on_me": 1,
+        "status": "Active"
+      },
+      {
+        "_id": 3,
+        "ingredient_name": "Tomato",
+        "ingredient_image": "https://foodcare.in/cdn/shop/files/tomatoes-canva.webp?v=1725364526",
+        "quentity": 19,
+        "price": 4,
+        "cost_on_me": 2,
+        "status": "Deactive"
       }
     ],
     "items": [
@@ -961,12 +1568,14 @@
   },
   {
     "id": 21,
-    "name": "Food Item 21",
+    "food_name": "Food Item 21",
     "description": "Delicious food item number 21",
     "quantity": 31,
     "price": 155,
     "cost_on_me": 67,
     "calories": "310 calories",
+    "status": "Active",
+    "cookign_time": "10 minutes",
     "ingredients": [
       {
         "id": 1,
@@ -982,6 +1591,36 @@
         "id": 3,
         "name": "Ingredient C",
         "price": 41
+      }
+    ],
+
+    "extra_ingredients": [
+      {
+        "_id": 1,
+        "ingredient_name": "Chicken Breast",
+        "ingredient_image": "https://assets-jpcust.jwpsrv.com/thumbnails/4Bjx60lU-1280.jpg",
+        "quentity": 19,
+        "price": 10,
+        "cost_on_me": 6,
+        "status": "Active"
+      },
+      {
+        "_id": 2,
+        "ingredient_name": "Lettuce",
+        "ingredient_image": "https://cdn.britannica.com/77/170677-050-F7333D51/lettuce.jpg",
+        "quentity": 1,
+        "price": 3,
+        "cost_on_me": 1,
+        "status": "Active"
+      },
+      {
+        "_id": 3,
+        "ingredient_name": "Tomato",
+        "ingredient_image": "https://foodcare.in/cdn/shop/files/tomatoes-canva.webp?v=1725364526",
+        "quentity": 19,
+        "price": 4,
+        "cost_on_me": 2,
+        "status": "Deactive"
       }
     ],
     "items": [
@@ -1009,12 +1648,14 @@
   },
   {
     "id": 22,
-    "name": "Food Item 22",
+    "food_name": "Food Item 22",
     "description": "Delicious food item number 22",
     "quantity": 32,
     "price": 160,
     "cost_on_me": 69,
     "calories": "320 calories",
+    "status": "Active",
+    "cookign_time": "10 minutes",
     "ingredients": [
       {
         "id": 1,
@@ -1030,6 +1671,36 @@
         "id": 3,
         "name": "Ingredient C",
         "price": 42
+      }
+    ],
+
+    "extra_ingredients": [
+      {
+        "_id": 1,
+        "ingredient_name": "Chicken Breast",
+        "ingredient_image": "https://assets-jpcust.jwpsrv.com/thumbnails/4Bjx60lU-1280.jpg",
+        "quentity": 19,
+        "price": 10,
+        "cost_on_me": 6,
+        "status": "Active"
+      },
+      {
+        "_id": 2,
+        "ingredient_name": "Lettuce",
+        "ingredient_image": "https://cdn.britannica.com/77/170677-050-F7333D51/lettuce.jpg",
+        "quentity": 1,
+        "price": 3,
+        "cost_on_me": 1,
+        "status": "Active"
+      },
+      {
+        "_id": 3,
+        "ingredient_name": "Tomato",
+        "ingredient_image": "https://foodcare.in/cdn/shop/files/tomatoes-canva.webp?v=1725364526",
+        "quentity": 19,
+        "price": 4,
+        "cost_on_me": 2,
+        "status": "Deactive"
       }
     ],
     "items": [
@@ -1057,12 +1728,14 @@
   },
   {
     "id": 23,
-    "name": "Food Item 23",
+    "food_name": "Food Item 23",
     "description": "Delicious food item number 23",
     "quantity": 33,
     "price": 165,
     "cost_on_me": 71,
     "calories": "330 calories",
+    "status": "Active",
+    "cookign_time": "10 minutes",
     "ingredients": [
       {
         "id": 1,
@@ -1078,6 +1751,36 @@
         "id": 3,
         "name": "Ingredient C",
         "price": 43
+      }
+    ],
+
+    "extra_ingredients": [
+      {
+        "_id": 1,
+        "ingredient_name": "Chicken Breast",
+        "ingredient_image": "https://assets-jpcust.jwpsrv.com/thumbnails/4Bjx60lU-1280.jpg",
+        "quentity": 19,
+        "price": 10,
+        "cost_on_me": 6,
+        "status": "Active"
+      },
+      {
+        "_id": 2,
+        "ingredient_name": "Lettuce",
+        "ingredient_image": "https://cdn.britannica.com/77/170677-050-F7333D51/lettuce.jpg",
+        "quentity": 1,
+        "price": 3,
+        "cost_on_me": 1,
+        "status": "Active"
+      },
+      {
+        "_id": 3,
+        "ingredient_name": "Tomato",
+        "ingredient_image": "https://foodcare.in/cdn/shop/files/tomatoes-canva.webp?v=1725364526",
+        "quentity": 19,
+        "price": 4,
+        "cost_on_me": 2,
+        "status": "Deactive"
       }
     ],
     "items": [
@@ -1105,12 +1808,14 @@
   },
   {
     "id": 24,
-    "name": "Food Item 24",
+    "food_name": "Food Item 24",
     "description": "Delicious food item number 24",
     "quantity": 34,
     "price": 170,
     "cost_on_me": 73,
     "calories": "340 calories",
+    "status": "Active",
+    "cookign_time": "10 minutes",
     "ingredients": [
       {
         "id": 1,
@@ -1126,6 +1831,36 @@
         "id": 3,
         "name": "Ingredient C",
         "price": 44
+      }
+    ],
+
+    "extra_ingredients": [
+      {
+        "_id": 1,
+        "ingredient_name": "Chicken Breast",
+        "ingredient_image": "https://assets-jpcust.jwpsrv.com/thumbnails/4Bjx60lU-1280.jpg",
+        "quentity": 19,
+        "price": 10,
+        "cost_on_me": 6,
+        "status": "Active"
+      },
+      {
+        "_id": 2,
+        "ingredient_name": "Lettuce",
+        "ingredient_image": "https://cdn.britannica.com/77/170677-050-F7333D51/lettuce.jpg",
+        "quentity": 1,
+        "price": 3,
+        "cost_on_me": 1,
+        "status": "Active"
+      },
+      {
+        "_id": 3,
+        "ingredient_name": "Tomato",
+        "ingredient_image": "https://foodcare.in/cdn/shop/files/tomatoes-canva.webp?v=1725364526",
+        "quentity": 19,
+        "price": 4,
+        "cost_on_me": 2,
+        "status": "Deactive"
       }
     ],
     "items": [
@@ -1153,12 +1888,14 @@
   },
   {
     "id": 25,
-    "name": "Food Item 25",
+    "food_name": "Food Item 25",
     "description": "Delicious food item number 25",
     "quantity": 35,
     "price": 175,
     "cost_on_me": 75,
     "calories": "350 calories",
+    "status": "Active",
+    "cookign_time": "10 minutes",
     "ingredients": [
       {
         "id": 1,
@@ -1174,6 +1911,36 @@
         "id": 3,
         "name": "Ingredient C",
         "price": 45
+      }
+    ],
+
+    "extra_ingredients": [
+      {
+        "_id": 1,
+        "ingredient_name": "Chicken Breast",
+        "ingredient_image": "https://assets-jpcust.jwpsrv.com/thumbnails/4Bjx60lU-1280.jpg",
+        "quentity": 19,
+        "price": 10,
+        "cost_on_me": 6,
+        "status": "Active"
+      },
+      {
+        "_id": 2,
+        "ingredient_name": "Lettuce",
+        "ingredient_image": "https://cdn.britannica.com/77/170677-050-F7333D51/lettuce.jpg",
+        "quentity": 1,
+        "price": 3,
+        "cost_on_me": 1,
+        "status": "Active"
+      },
+      {
+        "_id": 3,
+        "ingredient_name": "Tomato",
+        "ingredient_image": "https://foodcare.in/cdn/shop/files/tomatoes-canva.webp?v=1725364526",
+        "quentity": 19,
+        "price": 4,
+        "cost_on_me": 2,
+        "status": "Deactive"
       }
     ],
     "items": [

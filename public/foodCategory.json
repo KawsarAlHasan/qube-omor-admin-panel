@@ -1,0 +1,68 @@
+[
+  {
+    "_id": 1,
+    "category_name": "Pizza",
+    "category_image": "https://www.allrecipes.com/thmb/0xH8n2D4cC97t7mcC7eT2SDZ0aE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/6776_Pizza-Dough_ddmfs_2x1_1725-fdaa76496da045b3bdaadcec6d4c5398.jpg",
+    "status": "Active"
+  },
+  {
+    "_id": 2,
+    "category_name": "Burger",
+    "category_image": "https://www.allrecipes.com/thmb/5JVfA7MxfTUPfRerQMdF-nGKsLY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/25473-the-perfect-basic-burger-DDMFS-4x3-56eaba3833fd4a26a82755bcd0be0c54.jpg",
+    "status": "Active"
+  },
+  {
+    "_id": 3,
+    "category_name": "Rice Platter",
+    "category_image": "https://i.ytimg.com/vi/d-X6cl48-uI/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAvF_PggS1ZsZNMZG4Jfmr3x89yrg",
+    "status": "Active"
+  },
+  {
+    "_id": 4,
+    "category_name": "Pasta",
+    "category_image": "https://www.allrecipes.com/thmb/O8g6sZ7S8v4dLJvFv9pdaB6O1pM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/pasta-dishes-easy-recipes-5b74f96346e0fb003739caab.jpg",
+    "status": "Active"
+  },
+  {
+    "_id": 5,
+    "category_name": "Salad",
+    "category_image": "https://www.allrecipes.com/thmb/RFTt3lWrtMlvA4KAEFGJq0gIoz8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/salads-image.jpg",
+    "status": "Deactive"
+  },
+  {
+    "_id": 6,
+    "category_name": "Sushi",
+    "category_image": "https://www.allrecipes.com/thmb/YVqdrjiIcvKdtk3zBr6DNXODwwY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/sushi-easy-sushi-rolls.jpg",
+    "status": "Active"
+  },
+  {
+    "_id": 7,
+    "category_name": "Tacos",
+    "category_image": "https://www.allrecipes.com/thmb/Qob_-gOXo2xjyLf1gHJn-ffkIWw=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/tacos-image.jpg",
+    "status": "Deactive"
+  },
+  {
+    "_id": 8,
+    "category_name": "Sandwiches",
+    "category_image": "https://www.allrecipes.com/thmb/OjVqz3brZfZG3oR76fZYwxdwXw0=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/sandwiches-easy-recipes.jpg",
+    "status": "Active"
+  },
+  {
+    "_id": 9,
+    "category_name": "Smoothies",
+    "category_image": "https://www.allrecipes.com/thmb/SFuTeu4FVQZOrNf5J8g0x9vvqAQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/smoothie-recipes.jpg",
+    "status": "Active"
+  },
+  {
+    "_id": 10,
+    "category_name": "Desserts",
+    "category_image": "https://www.allrecipes.com/thmb/Rf5-OwUq89Gzqxpsle2e8p5jNOs=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/dessert-recipes.jpg",
+    "status": "Active"
+  },
+  {
+    "_id": 11,
+    "category_name": "Drinks",
+    "category_image": "https://www.allrecipes.com/thmb/7FytS32H6MQjLgg4wO7gzOe92gY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/drinks.jpg",
+    "status": "Active"
+  }
+]

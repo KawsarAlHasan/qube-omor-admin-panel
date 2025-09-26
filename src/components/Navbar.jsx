@@ -1,4 +1,4 @@
-import { Avatar, Dropdown, Button, Divider } from "antd";
+import { Avatar, Dropdown, Button, Divider, Tag } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import logoImage from "../assets/logo.png";
 import { MenuOutlined, UserOutlined, LogoutOutlined } from "@ant-design/icons";
@@ -18,7 +18,9 @@ const Navbar = ({ showDrawer }) => {
   };
 
   const adminProfile = {
-    name: "Admin Name",
+    name: "Sha Rukh Khan",
+    profile:
+      "https://sm.mashable.com/t/mashable_me/photo/default/shah-rukh-khan-hurun-india-rich-list_h1bt.1248.jpg",
     role: "Super Admin",
     email: "super@admin.com",
     phone_number: "1234567890",
@@ -28,76 +30,108 @@ const Navbar = ({ showDrawer }) => {
     {
       key: "adminProfile",
       label: (
-        <div className="mb-[-25px] cursor-default">
-          <h1 className="text-[#242424] text-[20px] font-bold">
-            {adminProfile?.name}{" "}
-            <span className="text-[16px] font-normal">
-              ({adminProfile?.role})
-            </span>
-          </h1>
-          <p className="text-[#242424] text-[12px] my-[-10px]">
-            {adminProfile?.email}
-          </p>
-
-          <Divider />
+        <div className="p-2 cursor-default">
+          <div className="flex gap-3 items-start">
+            <Avatar
+              size={50}
+              src={adminProfile?.profile}
+              icon={<UserOutlined />}
+            />
+            <div>
+              <h1 className="text-[#242424] text-[16px] font-bold mb-1">
+                {adminProfile?.name}
+              </h1>
+              <Tag color="blue" className="m-0">
+                {adminProfile?.role}
+              </Tag>
+            </div>
+          </div>
         </div>
       ),
     },
     {
+      type: "divider",
+    },
+    {
       key: "profile",
-      label: <AccountSetting adminProfile={adminProfile}  />,
+      label: <AccountSetting adminProfile={adminProfile} />,
     },
     {
       key: "change-password",
       label: <ChangePassword />,
     },
     {
+      type: "divider",
+    },
+    {
       key: "logout",
       label: (
-        <span
+        <div
           onClick={handleSignOut}
-          className="flex items-center gap-2 px-1 py-2 hover:bg-gray-100"
+          className="flex items-center gap-2 px-3 py-2 hover:bg-gray-100 cursor-pointer"
         >
           <LogoutOutlined /> Logout
-        </span>
+        </div>
       ),
     },
   ];
 
   return (
-    <header className="w-full text-[#FFFFFF] shadow-sm fixed top-0 z-50 py-[8px]">
-      <div className=" mx-2 lg:ml-[30px] lg:mr-24 ">
-        <div className="flex items-center justify-between h-16 ">
+    <header className="w-full bg-white shadow-sm fixed top-0 z-50 py-2 border-b">
+      <div className="mx-4 lg:mx-8">
+        <div className="flex items-center justify-between h-16">
           {/* Left section */}
           <div className="flex items-center">
             <Button
               type="text"
-              className="md:hidden mr-2"
+              className="md:hidden mr-3"
               icon={<MenuOutlined className="text-lg" />}
               onClick={showDrawer}
             />
 
-            <Link
-              to="/"
-              className="text-4xl font-bold text-[#FE7400] whitespace-nowrap"
-            >
-              <img src={logoImage} alt="Logo" className="w-auto h-[60px]" />
+            <Link to="/" className="flex items-center">
+              <img src={logoImage} alt="Logo" className="h-12 w-auto" />
             </Link>
           </div>
 
           {/* Right section */}
-          <div className="flex items-center gap-4 lg:gap-8">
+          <div className="flex items-center gap-4">
             <Dropdown
               menu={{ items: profileMenuItems }}
               trigger={["click"]}
               placement="bottomRight"
-              overlayClassName="w-[300px]"
+              overlayStyle={{ width: "300px" }}
             >
-              <Avatar
-                icon={<UserOutlined className="" />}
-                size="large"
-                className="cursor-pointer border border-white hover:opacity-80 transition-opacity"
-              />
+              <div className="flex items-center gap-3 cursor-pointer p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                <Avatar
+                  size="large"
+                  src={adminProfile?.profile}
+                  icon={<UserOutlined />}
+                  className="border-2 border-gray-200 hover:border-orange-400 transition-colors"
+                />
+                <div className="hidden md:block ">
+                  <div className="text-[#242424] text-[14px] font-semibold leading-tight">
+                    {adminProfile?.name}
+                  </div>
+                  <div className="text-[12px] text-gray-500 leading-tight">
+                    {adminProfile?.role}
+                  </div>
+                </div>
+                <div className="hidden md:block">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    className="w-5 h-5"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </div>
+              </div>
             </Dropdown>
           </div>
         </div>

@@ -28,7 +28,11 @@ const AddAdmin = ({ refetch }) => {
 
   return (
     <>
-      <Button type="primary" className="mb-2 my-main-button" onClick={showModal}>
+      <Button
+        type="primary"
+        className="mb-2 my-main-button"
+        onClick={showModal}
+      >
         <FaPlus />
         New Administrators Profile Create
       </Button>
@@ -73,13 +77,20 @@ const AddAdmin = ({ refetch }) => {
             rules={[{ required: true, message: "Please select role" }]}
           >
             <Select placeholder="Select role">
-              <Option value="admin">Admin</Option>
               <Option value="superadmin">Super Admin</Option>
+              <Option value="admin">Admin</Option>
+              <Option value="driver">Driver</Option>
             </Select>
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" className="my-main-button" htmlType="submit" loading={loading} block>
+            <Button
+              type="primary"
+              className="my-main-button"
+              htmlType="submit"
+              loading={loading}
+              block
+            >
               Create Admin
             </Button>
           </Form.Item>

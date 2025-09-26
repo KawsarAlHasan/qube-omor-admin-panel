@@ -11,10 +11,6 @@ const AdminEdit = ({ adminProfile, refetch }) => {
   const showModal = () => setIsModalOpen(true);
   const handleCancel = () => setIsModalOpen(false);
 
-
-
-
-
   const handleFinish = async (values) => {
     try {
       setLoading(true);
@@ -103,13 +99,20 @@ const AdminEdit = ({ adminProfile, refetch }) => {
 
           <Form.Item label="Role" name="role">
             <Select placeholder="Select role">
-              <Option value="admin">Admin</Option>
               <Option value="superadmin">Super Admin</Option>
+              <Option value="admin">Admin</Option>
+              <Option value="driver">Driver</Option>
             </Select>
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" className="my-main-button" htmlType="submit" loading={loading} block>
+            <Button
+              type="primary"
+              className="my-main-button"
+              htmlType="submit"
+              loading={loading}
+              block
+            >
               Update
             </Button>
           </Form.Item>

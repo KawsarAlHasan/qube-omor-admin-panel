@@ -14,6 +14,7 @@ import {
   FaHourglassHalf, // today_pending_orders
   FaTimesCircle, // today_cancelled_orders
 } from "react-icons/fa";
+import EarningsGrowth from "./EarningsGrowth";
 
 function Dashboard() {
   // const { adminDashboard, isLoading, isError, error, refetch } =
@@ -75,13 +76,12 @@ function Dashboard() {
         </h2>
       </div>
 
-      
       {/* Dashboard Overview */}
-      <div>
+      {/* <div>
         <h1 className="text-[24px] lg:text-[30px] font-semibold mt-4">
           Dashboard Overview
         </h1>
-        <div className="grid grid-cols-2 lg:grid-cols-6">
+        <div className="grid grid-cols-2 lg:grid-cols-6 gap-4">
           <div className="bg-white p-4 w-full">
             <div className="bg-[#e6f0f5] w-full rounded-md p-4 flex flex-col items-center">
               <FaUsers className="bgBlack text-[#FFF] h-[40px] rounded-full w-[40px] p-2" />
@@ -96,36 +96,21 @@ function Dashboard() {
             <div className="bg-[#e6f0f5] w-full rounded-md p-4 flex flex-col items-center">
               <AiOutlineUsergroupAdd className="bgBlack text-[#FFF] h-[40px] rounded-full w-[40px] p-2" />
               <h2 className="text-[24px] font-semibold text-[#242424] mt-2">
-                 {adminDashboard?.todays_new_users || 0}
+                {adminDashboard?.todays_new_users || 0}
               </h2>
               <p className="text-[16px]">Today New Users</p>
             </div>
           </div>
 
-          <div className="bg-white p-4 w-full">
-            <div className="bg-[#e6f0f5] w-full rounded-md p-4 flex flex-col items-center">
-              <FaSackDollar className="bgBlack text-[#FFF] h-[40px] rounded-full w-[40px] p-2" />
-              <h2 className="text-[24px] font-semibold text-[#242424] mt-2">
-                 {adminDashboard?.total_earnings || 0}
-              </h2>
-              <p className="text-[16px]">Total Earnings</p>
-            </div>
+          <div className="md:col-span-3">
+           
           </div>
-
-          <div className="bg-white p-4 w-full">
-            <div className="bg-[#e6f0f5] w-full rounded-md p-4 flex flex-col items-center">
-              <FaCircleDollarToSlot className="bgBlack text-[#FFF] h-[40px] rounded-full w-[40px] p-2" />
-              <h2 className="text-[24px] font-semibold text-[#242424] mt-2">
-                 {adminDashboard?.today_total_earnings || 0}
-              </h2>
-              <p className="text-[16px]">Today Total Earnings</p>
-            </div>
-          </div>
-
-         
         </div>
-      </div>
+      </div> */}
 
+      <div className="mt-4">
+         <EarningsGrowth />
+      </div>
 
       {/* restaurant */}
       <div>

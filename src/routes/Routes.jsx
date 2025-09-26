@@ -15,6 +15,12 @@ import RestaurantOrder from "../pages/restaurantOrder/RestaurantOrder";
 import FoodDetails from "../pages/foodDetails/FoodDetails";
 import SpaPackages from "../pages/spaPackages/SpaPackages";
 import FoodOrders from "../pages/food-orders/FoodOrders";
+import FoodCategory from "../pages/food-category/FoodCategory";
+import UserMassages from "../pages/user-massages/UserMassages";
+import Ingredients from "../pages/ingredients/Ingredients";
+import SpaBooking from "../pages/spa-booking/SpaBooking";
+import PhysioBooking from "../pages/physio-booking/PhysioBooking";
+import PhysioPackages from "../pages/physio-packages/PhysioPackages";
 
 export const router = createBrowserRouter([
   {
@@ -58,12 +64,36 @@ export const router = createBrowserRouter([
         element: <FoodOrders />,
       },
       {
+        path: "/food-category",
+        element: <FoodCategory />,
+      },
+      {
+        path: "/ingredients",
+        element: <Ingredients />,
+      },
+      {
         path: "/administrators",
         element: <Administrators />,
       },
       {
+        path: "/user-massages",
+        element: <UserMassages />,
+      },
+      {
         path: "/spa-packages",
         element: <SpaPackages />,
+      },
+      {
+        path: "/spa-booking",
+        element: <SpaBooking />,
+      },
+      {
+        path: "/physio-packages",
+        element: <PhysioPackages />,
+      },
+      {
+        path: "/physio-booking",
+        element: <SpaBooking />,
       },
       {
         path: "/restaurant-order",

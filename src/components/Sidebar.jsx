@@ -12,7 +12,9 @@ import {
   FaCalendarCheck, // Spa Booking
   FaUserMd, // Physio / Doctor
   FaHeartbeat, // Physio Service
-  FaCalendarAlt, // Physio Booking
+  FaCalendarAlt,
+  FaBoxes,
+  FaCarrot, // Physio Booking
 } from "react-icons/fa";
 import { TbMessageMinus } from "react-icons/tb";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
@@ -44,6 +46,8 @@ const Sidebar = ({ onClick }) => {
     if (path === "/") return ["1"];
     if (path === "/food-details") return ["food-details", "restaurant"];
     if (path === "/food-orders") return ["food-orders", "restaurant"];
+    if (path === "/food-category") return ["food-category", "restaurant"];
+    if (path === "/ingredients") return ["ingredients", "restaurant"];
     if (path === "/spa-packages") return ["spa-packages", "spa"];
     if (path === "/spa-booking") return ["spa-booking", "spa"];
     if (path === "/physio-packages") return ["physio-packages", "physio"];
@@ -77,6 +81,16 @@ const Sidebar = ({ onClick }) => {
           key: "food-orders",
           icon: <FaShoppingCart />,
           label: <Link to="/food-orders">Food Orders</Link>,
+        },
+        {
+          key: "food-category",
+          icon: <FaBoxes />,
+          label: <Link to="/food-category">Food Category</Link>,
+        },
+        {
+          key: "ingredients",
+          icon: <FaCarrot />,
+          label: <Link to="/ingredients">Ingredients</Link>,
         },
       ],
     },
