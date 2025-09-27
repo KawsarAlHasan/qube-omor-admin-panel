@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Modal, Form, Input, Upload, message, InputNumber } from "antd";
+import { Button, Modal, Form, Input, Upload, message, InputNumber, Radio } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { useForm, Controller } from "react-hook-form";
 // import { API } from "../../api/api";
@@ -120,6 +120,22 @@ const AddNewIngredient = ({ refetch }) => {
                 />
               )}
             />
+          </Form.Item>
+
+          {/* Allow purchese when out of stock redio button */}
+          <Form.Item label="Allow purchese when out of stock">
+            <Form.Item>
+              <Controller
+                name="allow_purchese_when_out_of_stock"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <Radio.Group onChange={onChange} defaultValue={true} value={value}>
+                    <Radio value={true}>Yes</Radio>
+                    <Radio value={false}>No</Radio>
+                  </Radio.Group>
+                )}
+              />
+            </Form.Item>
           </Form.Item>
 
           {/* Ingredient Image */}

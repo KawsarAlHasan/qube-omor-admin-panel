@@ -8,6 +8,7 @@ import {
   message,
   Typography,
   InputNumber,
+  Radio,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { useForm, Controller } from "react-hook-form";
@@ -151,7 +152,11 @@ function EditIngredient({ ingredientDetails, isOpen, onClose, refetch }) {
             control={control}
             rules={{ required: "Price is required" }}
             render={({ field }) => (
-              <InputNumber className="w-full" placeholder="Enter Price..." {...field} />
+              <InputNumber
+                className="w-full"
+                placeholder="Enter Price..."
+                {...field}
+              />
             )}
           />
         </Form.Item>
@@ -164,7 +169,11 @@ function EditIngredient({ ingredientDetails, isOpen, onClose, refetch }) {
             control={control}
             rules={{ required: "Cost on Me is required" }}
             render={({ field }) => (
-              <InputNumber className="w-full" placeholder="Enter Cost on Me..." {...field} />
+              <InputNumber
+                className="w-full"
+                placeholder="Enter Cost on Me..."
+                {...field}
+              />
             )}
           />
         </Form.Item>
@@ -177,12 +186,34 @@ function EditIngredient({ ingredientDetails, isOpen, onClose, refetch }) {
             control={control}
             rules={{ required: "Quantity is required" }}
             render={({ field }) => (
-              <InputNumber className="w-full" placeholder="Enter Quantity..." {...field} />
+              <InputNumber
+                className="w-full"
+                placeholder="Enter Quantity..."
+                {...field}
+              />
             )}
           />
         </Form.Item>
 
-
+        {/* Allow purchese when out of stock redio button */}
+        <Form.Item label="Allow purchese when out of stock">
+          <Form.Item>
+            <Controller
+              name="allow_purchese_when_out_of_stock"
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <Radio.Group
+                  onChange={onChange}
+                  defaultValue={true}
+                  value={value}
+                >
+                  <Radio value={true}>Yes</Radio>
+                  <Radio value={false}>No</Radio>
+                </Radio.Group>
+              )}
+            />
+          </Form.Item>
+        </Form.Item>
 
         <Form.Item>
           <Button
