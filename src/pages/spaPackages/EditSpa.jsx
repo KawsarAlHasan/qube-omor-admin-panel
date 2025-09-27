@@ -20,7 +20,7 @@ import React, { useState } from "react";
 const { TextArea } = Input;
 const { Option } = Select;
 
-function EditSpa({ record }) {
+function EditSpa({capitalized, record }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [form] = Form.useForm();
   const [imageList, setImageList] = useState([]);
@@ -40,7 +40,7 @@ function EditSpa({ record }) {
         };
 
         console.log("Form values:", formattedValues);
-        message.success("Spa class added successfully!");
+        message.success(`${capitalized} class updated successfully`);
         form.resetFields();
         setImageList([]);
         setIsModalOpen(false);
@@ -71,7 +71,7 @@ function EditSpa({ record }) {
        <EditOutlined className="text-blue-500 text-xl" onClick={showModal} />
 
       <Modal
-        title="Edit Spa Class"
+        title={`Update ${capitalized} Class`}
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
@@ -130,7 +130,7 @@ function EditSpa({ record }) {
           >
             <TextArea
               rows={4}
-              placeholder="Describe the spa treatment and experience"
+              placeholder={`Describe the ${capitalized} treatment and experience`}
             />
           </Form.Item>
 

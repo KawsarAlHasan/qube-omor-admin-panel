@@ -3,7 +3,7 @@ import { useAllSpa } from "../../api/api";
 import IsLoading from "../../components/IsLoading";
 import IsError from "../../components/IsError";
 import { Button, message, Modal, Space, Table, Tag } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { EditOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import AddSpa from "./AddSpa";
 import EditSpa from "./EditSpa";
@@ -17,6 +17,14 @@ function SpaPackages() {
     page: 1,
     limit: 10,
   };
+
+  const location = useLocation();
+  const pathnames = location.pathname.split("/").filter((x) => x);
+
+  const beforeHyphen = pathnames[0]?.split("-")[0];
+  const capitalized = beforeHyphen
+    ? beforeHyphen.charAt(0).toUpperCase() + beforeHyphen.slice(1)
+    : "";
 
   const { allSpa, pagination, isLoading, isError, error, refetch } =
     useAllSpa(filter);
@@ -128,7 +136,7 @@ function SpaPackages() {
           {/* <ViewFoodDetail record={record} />
 
 */}
-          <EditSpa record={record} />
+          <EditSpa capitalized={capitalized} record={record} />
 
           <DeleteOutlined
             className="text-xl text-red-500 hover:text-red-700 cursor-pointer transition-colors"
@@ -157,7 +165,7 @@ function SpaPackages() {
   return (
     <div>
       <div className="flex justify-between mb-4">
-        <AddSpa refetch={refetch} />
+        <AddSpa capitalized={capitalized} refetch={refetch} />
       </div>
 
       <Table
@@ -185,10 +193,7 @@ function SpaPackages() {
         okType="danger"
         confirmLoading={deleteLoading}
       >
-        <p>
-          Are you sure you want to delete the food item "
-          {selectedFood?.food_name}"? This action cannot be undone.
-        </p>
+        <p>Are you sure you want to delete this {capitalized}?</p>
       </Modal>
     </div>
   );

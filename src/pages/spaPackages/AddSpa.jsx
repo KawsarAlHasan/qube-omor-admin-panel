@@ -15,7 +15,7 @@ import React, { useState } from "react";
 const { TextArea } = Input;
 const { Option } = Select;
 
-function AddSpa() {
+function AddSpa({capitalized}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [form] = Form.useForm();
   const [imageList, setImageList] = useState([]);
@@ -35,7 +35,7 @@ function AddSpa() {
         };
 
         console.log("Form values:", formattedValues);
-        message.success("Spa class added successfully!");
+        message.success(`${capitalized} class added successfully`);
         form.resetFields();
         setImageList([]);
         setIsModalOpen(false);
@@ -61,11 +61,11 @@ function AddSpa() {
   return (
     <div>
       <Button onClick={showModal} className="my-main-button" type="primary">
-        + Add Spa Class
+        + Add {capitalized} Class
       </Button>
 
       <Modal
-        title="Add New Spa Class"
+        title={`Add ${capitalized} Class`}
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
@@ -109,7 +109,7 @@ function AddSpa() {
           >
             <TextArea
             //   rows={4}
-              placeholder="Describe the spa treatment and experience"
+              placeholder={`Describe the ${capitalized} treatment and experience`}
             />
           </Form.Item>
 
