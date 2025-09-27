@@ -1,23 +1,60 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAllSpa } from "../../api/api";
 import IsLoading from "../../components/IsLoading";
 import IsError from "../../components/IsError";
-import { Button, Table, Tag } from "antd";
+import { Button, message, Modal, Space, Table, Tag } from "antd";
 import { Link } from "react-router-dom";
+import { EditOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
+import AddSpa from "./AddSpa";
+import EditSpa from "./EditSpa";
 
 function SpaPackages() {
+  const [selectedFood, setSelectedFood] = useState(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+
   const filter = {
     page: 1,
     limit: 10,
   };
 
-  const { allSpa, pagination, isLoading, isError, error, refetch } = useAllSpa(filter);
+  const { allSpa, pagination, isLoading, isError, error, refetch } =
+    useAllSpa(filter);
+
+  const openDeleteModal = (record) => {
+    setSelectedFood(record);
+    setIsDeleteModalOpen(true);
+  };
 
   if (isLoading) return <IsLoading />;
 
   if (isError) return <IsError error={error} refetch={refetch} />;
 
+  const handleDelete = async () => {
+    if (!selectedFood) return;
+
+    setDeleteLoading(true);
+    try {
+      // Simulate API call
+      // await API.delete(`/foods/${selectedFood.id}`);
+
+      message.success("Food item deleted successfully!");
+      setIsDeleteModalOpen(false);
+      setSelectedFood(null);
+      setDeleteLoading(false);
+      refetch();
+    } catch (err) {
+      message.error(err.response?.data?.error || "Failed to delete food item");
+      setDeleteLoading(false);
+    }
+  };
+
   const columns = [
+    {
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
+    },
     {
       title: "Service Name",
       dataIndex: "service_name",
@@ -27,7 +64,7 @@ function SpaPackages() {
       title: "Description",
       dataIndex: "description",
       key: "description",
-      render: (text) => <p className="truncate">{text}</p>,
+      render: (text) => <p className="truncate">{text?.slice(0, 50)}</p>,
     },
     {
       title: "Time",
@@ -64,7 +101,11 @@ function SpaPackages() {
           default:
             color = "blue";
         }
-        return <Tag color={color}>{status}</Tag>;
+        return (
+          <Tag className="py-0.5 px-2" color={color}>
+            {status}
+          </Tag>
+        );
       },
     },
     {
@@ -83,9 +124,17 @@ function SpaPackages() {
       title: "Actions",
       key: "actions",
       render: (_, record) => (
-        <Link to={`/spa/${record.id}`}>
-          <Button type="primary">View Details</Button>
-        </Link>
+        <Space size="middle">
+          {/* <ViewFoodDetail record={record} />
+
+*/}
+          <EditSpa record={record} />
+
+          <DeleteOutlined
+            className="text-xl text-red-500 hover:text-red-700 cursor-pointer transition-colors"
+            onClick={() => openDeleteModal(record)}
+          />
+        </Space>
       ),
     },
   ];
@@ -108,19 +157,39 @@ function SpaPackages() {
   return (
     <div>
       <div className="flex justify-between mb-4">
-        <h1 className="text-2xl font-bold">Spa Packages</h1>
-        <Button className="my-main-button" type="primary">
-          + Add Spa Package
-        </Button>
+        <AddSpa refetch={refetch} />
       </div>
 
       <Table
         columns={columns}
         dataSource={allSpa}
-        pagination={paginationConfig}
-        onChange={handleTableChange}
         rowKey="id"
+        pagination={{
+          current: filter.page,
+          pageSize: filter.limit,
+          total: pagination.totalUser,
+          showSizeChanger: false,
+          pageSizeOptions: ["10", "20", "50", "100"],
+        }}
+        onChange={handleTableChange}
+        loading={isLoading}
       />
+
+      {/* Delete Confirmation Modal */}
+      <Modal
+        title="Confirm Delete"
+        open={isDeleteModalOpen}
+        onOk={handleDelete}
+        onCancel={() => setIsDeleteModalOpen(false)}
+        okText="Delete"
+        okType="danger"
+        confirmLoading={deleteLoading}
+      >
+        <p>
+          Are you sure you want to delete the food item "
+          {selectedFood?.food_name}"? This action cannot be undone.
+        </p>
+      </Modal>
     </div>
   );
 }

@@ -27,7 +27,7 @@ const AddNewIngredient = ({ refetch }) => {
     formData.append("ingredient_name", data.ingredient_name);
     formData.append("price", data.price);
     formData.append("cost_on_me", data.cost_on_me);
-    formData.append("quentity", data.quentity);
+    formData.append("quantity", data.quantity);
 
     if (data.ingredient_image && data.ingredient_image[0]) {
       formData.append(
@@ -106,16 +106,16 @@ const AddNewIngredient = ({ refetch }) => {
             />
           </Form.Item>
 
-          {/* Quentity */}
-          <Form.Item label="Quentity">
+          {/* Quantity */}
+          <Form.Item label="Quantity">
             <Controller
-              name="quentity"
-              rules={{ required: "Quentity is required" }}
+              name="quantity"
+              rules={{ required: "Quantity is required" }}
               control={control}
               render={({ field }) => (
                 <InputNumber
                   className="w-full"
-                  placeholder="Quentity..."
+                  placeholder="Quantity..."
                   {...field}
                 />
               )}

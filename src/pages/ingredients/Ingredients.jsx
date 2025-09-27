@@ -108,10 +108,10 @@ function Ingredients() {
       render: (name) => <span className="font-medium">{name}</span>,
     },
     {
-      title: "Quentity",
-      dataIndex: "quentity",
-      key: "quentity",
-      render: (quentity) => <span>{quentity}</span>,
+      title: "Quantity",
+      dataIndex: "quantity",
+      key: "quantity",
+      render: (quantity) => <span>{quantity}</span>,
     },
     {
       title: "Price",

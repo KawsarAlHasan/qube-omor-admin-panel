@@ -80,7 +80,7 @@ export const router = createBrowserRouter([
         element: <UserMassages />,
       },
       {
-        path: "/spa-packages",
+        path: "/spa-classes",
         element: <SpaPackages />,
       },
       {
@@ -88,8 +88,8 @@ export const router = createBrowserRouter([
         element: <SpaBooking />,
       },
       {
-        path: "/physio-packages",
-        element: <PhysioPackages />,
+        path: "/physio-classes",
+        element: <SpaPackages />,
       },
       {
         path: "/physio-booking",

@@ -38,7 +38,7 @@ function EditIngredient({ ingredientDetails, isOpen, onClose, refetch }) {
     formData.append("ingredient_name", data.ingredient_name);
     formData.append("price", data.price);
     formData.append("cost_on_me", data.cost_on_me);
-    formData.append("quentity", data.quentity);
+    formData.append("quantity", data.quantity);
 
     if (data.image && data.image[0]) {
       formData.append("ingredient_image", data.image[0].originFileObj);
@@ -169,15 +169,15 @@ function EditIngredient({ ingredientDetails, isOpen, onClose, refetch }) {
           />
         </Form.Item>
 
-        {/* Quentity */}
-        <Form.Item label="Quentity">
+        {/* Quantity */}
+        <Form.Item label="Quantity">
           <Controller
-            name="quentity"
-            defaultValue={ingredientDetails?.quentity}
+            name="quantity"
+            defaultValue={ingredientDetails?.quantity}
             control={control}
-            rules={{ required: "Quentity is required" }}
+            rules={{ required: "Quantity is required" }}
             render={({ field }) => (
-              <InputNumber className="w-full" placeholder="Enter Quentity..." {...field} />
+              <InputNumber className="w-full" placeholder="Enter Quantity..." {...field} />
             )}
           />
         </Form.Item>

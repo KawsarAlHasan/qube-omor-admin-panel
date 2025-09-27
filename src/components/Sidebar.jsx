@@ -48,9 +48,9 @@ const Sidebar = ({ onClick }) => {
     if (path === "/food-orders") return ["food-orders", "restaurant"];
     if (path === "/food-category") return ["food-category", "restaurant"];
     if (path === "/ingredients") return ["ingredients", "restaurant"];
-    if (path === "/spa-packages") return ["spa-packages", "spa"];
+    if (path === "/spa-classes") return ["spa-classes", "spa"];
     if (path === "/spa-booking") return ["spa-booking", "spa"];
-    if (path === "/physio-packages") return ["physio-packages", "physio"];
+    if (path === "/physio-classes") return ["physio-classes", "physio"];
     if (path === "/physio-booking") return ["physio-booking", "physio"];
     if (path === "/user-management") return ["user-management"];
     if (path === "/user-massages") return ["user-massages"];
@@ -100,9 +100,9 @@ const Sidebar = ({ onClick }) => {
       label: "Spa",
       children: [
         {
-          key: "spa-packages",
+          key: "spa-classes",
           icon: <FaHotTub />,
-          label: <Link to="/spa-packages">Spa Packages</Link>,
+          label: <Link to="/spa-classes">Spa Classes</Link>,
         },
         {
           key: "spa-booking",
@@ -117,9 +117,9 @@ const Sidebar = ({ onClick }) => {
       label: "Physio",
       children: [
         {
-          key: "physio-packages",
+          key: "physio-classes",
           icon: <FaHeartbeat />,
-          label: <Link to="/physio-packages">Physio Packages</Link>,
+          label: <Link to="/physio-classes">Physio Classes</Link>,
         },
         {
           key: "physio-booking",

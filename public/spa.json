@@ -6,6 +6,16 @@
     "time": "50 minutes",
     "price": 70.99,
     "room": "Private Room",
+    "date": "3 September 2025",
+    "class_capacity": 18,
+    "waitinglist": 10,
+    "instructor": {
+      "id": 3,
+      "full_name": "Jessica Davis",
+      "email": "jessica.d@example.com",
+      "profile": "https://s1.r29static.com/bin/entry/b72/x,80/1968901/image.jpg",
+      "phone": "+1-555-0103"
+    },
     "status": "Available",
     "images": [
       "https://calista.com.tr/media/532bmoz2/spa-nedir.jpg",
@@ -20,6 +30,16 @@
     "time": "34 minutes",
     "price": 61.0,
     "room": "Private Room",
+    "date": "3 September 2025",
+    "class_capacity": 18,
+    "waitinglist": 10,
+    "instructor": {
+      "id": 3,
+      "full_name": "Jessica Davis",
+      "email": "jessica.d@example.com",
+      "profile": "https://s1.r29static.com/bin/entry/b72/x,80/1968901/image.jpg",
+      "phone": "+1-555-0103"
+    },
     "status": "Not Available",
     "images": [
       "https://example.com/spa2_1.jpg",
@@ -34,6 +54,16 @@
     "time": "36 minutes",
     "price": 66.5,
     "room": "Couple Room",
+    "date": "3 September 2025",
+    "class_capacity": 18,
+    "waitinglist": 10,
+    "instructor": {
+      "id": 3,
+      "full_name": "Jessica Davis",
+      "email": "jessica.d@example.com",
+      "profile": "https://s1.r29static.com/bin/entry/b72/x,80/1968901/image.jpg",
+      "phone": "+1-555-0103"
+    },
     "status": "Declined",
     "images": [
       "https://example.com/spa3_1.jpg",
@@ -48,6 +78,16 @@
     "time": "38 minutes",
     "price": 72.0,
     "room": "Private Room",
+    "date": "3 September 2025",
+    "class_capacity": 18,
+    "waitinglist": 10,
+    "instructor": {
+      "id": 3,
+      "full_name": "Jessica Davis",
+      "email": "jessica.d@example.com",
+      "profile": "https://s1.r29static.com/bin/entry/b72/x,80/1968901/image.jpg",
+      "phone": "+1-555-0103"
+    },
     "status": "Available",
     "images": [
       "https://example.com/spa4_1.jpg",
@@ -62,6 +102,16 @@
     "time": "40 minutes",
     "price": 77.5,
     "room": "Couple Room",
+    "date": "3 September 2025",
+    "class_capacity": 18,
+    "waitinglist": 10,
+    "instructor": {
+      "id": 3,
+      "full_name": "Jessica Davis",
+      "email": "jessica.d@example.com",
+      "profile": "https://s1.r29static.com/bin/entry/b72/x,80/1968901/image.jpg",
+      "phone": "+1-555-0103"
+    },
     "status": "Available",
     "images": [
       "https://example.com/spa5_1.jpg",
@@ -76,6 +126,16 @@
     "time": "42 minutes",
     "price": 83.0,
     "room": "Private Room",
+    "date": "3 September 2025",
+    "class_capacity": 18,
+    "waitinglist": 10,
+    "instructor": {
+      "id": 3,
+      "full_name": "Jessica Davis",
+      "email": "jessica.d@example.com",
+      "profile": "https://s1.r29static.com/bin/entry/b72/x,80/1968901/image.jpg",
+      "phone": "+1-555-0103"
+    },
     "status": "Available",
     "images": [
       "https://example.com/spa6_1.jpg",
@@ -90,6 +150,16 @@
     "time": "44 minutes",
     "price": 88.5,
     "room": "Couple Room",
+    "date": "3 September 2025",
+    "class_capacity": 18,
+    "waitinglist": 10,
+    "instructor": {
+      "id": 3,
+      "full_name": "Jessica Davis",
+      "email": "jessica.d@example.com",
+      "profile": "https://s1.r29static.com/bin/entry/b72/x,80/1968901/image.jpg",
+      "phone": "+1-555-0103"
+    },
     "status": "Available",
     "images": [
       "https://example.com/spa7_1.jpg",
@@ -104,6 +174,16 @@
     "time": "46 minutes",
     "price": 94.0,
     "room": "Private Room",
+    "date": "3 September 2025",
+    "class_capacity": 18,
+    "waitinglist": 10,
+    "instructor": {
+      "id": 3,
+      "full_name": "Jessica Davis",
+      "email": "jessica.d@example.com",
+      "profile": "https://s1.r29static.com/bin/entry/b72/x,80/1968901/image.jpg",
+      "phone": "+1-555-0103"
+    },
     "status": "Available",
     "images": [
       "https://example.com/spa8_1.jpg",
@@ -118,6 +198,16 @@
     "time": "48 minutes",
     "price": 99.5,
     "room": "Couple Room",
+    "date": "3 September 2025",
+    "class_capacity": 18,
+    "waitinglist": 10,
+    "instructor": {
+      "id": 3,
+      "full_name": "Jessica Davis",
+      "email": "jessica.d@example.com",
+      "profile": "https://s1.r29static.com/bin/entry/b72/x,80/1968901/image.jpg",
+      "phone": "+1-555-0103"
+    },
     "status": "Available",
     "images": [
       "https://example.com/spa9_1.jpg",
@@ -132,6 +222,16 @@
     "time": "50 minutes",
     "price": 105.0,
     "room": "Private Room",
+    "date": "3 September 2025",
+    "class_capacity": 18,
+    "waitinglist": 10,
+    "instructor": {
+      "id": 3,
+      "full_name": "Jessica Davis",
+      "email": "jessica.d@example.com",
+      "profile": "https://s1.r29static.com/bin/entry/b72/x,80/1968901/image.jpg",
+      "phone": "+1-555-0103"
+    },
     "status": "Available",
     "images": [
       "https://example.com/spa10_1.jpg",
@@ -146,6 +246,16 @@
     "time": "52 minutes",
     "price": 110.5,
     "room": "Couple Room",
+    "date": "3 September 2025",
+    "class_capacity": 18,
+    "waitinglist": 10,
+    "instructor": {
+      "id": 3,
+      "full_name": "Jessica Davis",
+      "email": "jessica.d@example.com",
+      "profile": "https://s1.r29static.com/bin/entry/b72/x,80/1968901/image.jpg",
+      "phone": "+1-555-0103"
+    },
     "status": "Available",
     "images": [
       "https://example.com/spa11_1.jpg",
@@ -160,6 +270,16 @@
     "time": "54 minutes",
     "price": 116.0,
     "room": "Private Room",
+    "date": "3 September 2025",
+    "class_capacity": 18,
+    "waitinglist": 10,
+    "instructor": {
+      "id": 3,
+      "full_name": "Jessica Davis",
+      "email": "jessica.d@example.com",
+      "profile": "https://s1.r29static.com/bin/entry/b72/x,80/1968901/image.jpg",
+      "phone": "+1-555-0103"
+    },
     "status": "Available",
     "images": [
       "https://example.com/spa12_1.jpg",
@@ -174,6 +294,16 @@
     "time": "56 minutes",
     "price": 121.5,
     "room": "Couple Room",
+    "date": "3 September 2025",
+    "class_capacity": 18,
+    "waitinglist": 10,
+    "instructor": {
+      "id": 3,
+      "full_name": "Jessica Davis",
+      "email": "jessica.d@example.com",
+      "profile": "https://s1.r29static.com/bin/entry/b72/x,80/1968901/image.jpg",
+      "phone": "+1-555-0103"
+    },
     "status": "Available",
     "images": [
       "https://example.com/spa13_1.jpg",
@@ -188,6 +318,16 @@
     "time": "58 minutes",
     "price": 127.0,
     "room": "Private Room",
+    "date": "3 September 2025",
+    "class_capacity": 18,
+    "waitinglist": 10,
+    "instructor": {
+      "id": 3,
+      "full_name": "Jessica Davis",
+      "email": "jessica.d@example.com",
+      "profile": "https://s1.r29static.com/bin/entry/b72/x,80/1968901/image.jpg",
+      "phone": "+1-555-0103"
+    },
     "status": "Available",
     "images": [
       "https://example.com/spa14_1.jpg",
@@ -202,6 +342,16 @@
     "time": "60 minutes",
     "price": 132.5,
     "room": "Couple Room",
+    "date": "3 September 2025",
+    "class_capacity": 18,
+    "waitinglist": 10,
+    "instructor": {
+      "id": 3,
+      "full_name": "Jessica Davis",
+      "email": "jessica.d@example.com",
+      "profile": "https://s1.r29static.com/bin/entry/b72/x,80/1968901/image.jpg",
+      "phone": "+1-555-0103"
+    },
     "status": "Available",
     "images": [
       "https://example.com/spa15_1.jpg",
