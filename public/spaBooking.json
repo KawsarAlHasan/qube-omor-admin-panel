@@ -1,0 +1,434 @@
+[
+  {
+    "id": 1,
+    "spa_name": "Relax & Rejuvenate Spa",
+    "instructor": "Sarah Johnson",
+    "attendees": 8,
+    "schedule": "15 June, 2024, 09:00 AM",
+    "attendees_in_class": [
+      {
+        "id": 1,
+        "full_name": "Emma Watson",
+        "email": "emma.watson@example.com",
+        "profile": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzMOdFAwSn6SI50A9OhSS3dnFI0gP_j6TEzg&s",
+        "phone": "+1-555-0101"
+      },
+      {
+        "id": 2,
+        "full_name": "Michael Brown",
+        "email": "michael.b@example.com",
+        "profile": "https://media.cnn.com/api/v1/images/stellar/prod/michael-brown-by-elcardo-anthony-dsc-7603.JPG?c=16x9&q=h_833,w_1480,c_fill",
+        "phone": "+1-555-0102"
+      }
+    ],
+    "waiting_list": [
+      {
+        "id": 3,
+        "full_name": "Jessica Davis",
+        "email": "jessica.d@example.com",
+        "profile": "https://s1.r29static.com/bin/entry/b72/x,80/1968901/image.jpg",
+        "phone": "+1-555-0103"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "spa_name": "Harmony Wellness Center",
+    "instructor": "David Chen",
+    "attendees": 6,
+    "schedule": "16 June, 2024, 02:00 PM",
+    "attendees_in_class": [
+      {
+        "id": 4,
+        "full_name": "Robert Wilson",
+        "email": "robert.w@example.com",
+        "profile": "https://example.com/profiles/robert.jpg",
+        "phone": "+1-555-0104"
+      },
+      {
+        "id": 5,
+        "full_name": "Lisa Anderson",
+        "email": "lisa.a@example.com",
+        "profile": "https://example.com/profiles/lisa.jpg",
+        "phone": "+1-555-0105"
+      }
+    ],
+    "waiting_list": [
+      {
+        "id": 6,
+        "full_name": "Daniel Martinez",
+        "email": "daniel.m@example.com",
+        "profile": "https://example.com/profiles/daniel.jpg",
+        "phone": "+1-555-0106"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "spa_name": "Tranquil Oasis Spa",
+    "instructor": "Maria Garcia",
+    "attendees": 10,
+    "schedule": "17 June, 2024, 11:00 AM",
+    "attendees_in_class": [
+      {
+        "id": 7,
+        "full_name": "Jennifer Lee",
+        "email": "jennifer.l@example.com",
+        "profile": "https://example.com/profiles/jennifer.jpg",
+        "phone": "+1-555-0107"
+      },
+      {
+        "id": 8,
+        "full_name": "Christopher Taylor",
+        "email": "chris.t@example.com",
+        "profile": "https://example.com/profiles/chris.jpg",
+        "phone": "+1-555-0108"
+      }
+    ],
+    "waiting_list": [
+      {
+        "id": 9,
+        "full_name": "Amanda White",
+        "email": "amanda.w@example.com",
+        "profile": "https://example.com/profiles/amanda.jpg",
+        "phone": "+1-555-0109"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "spa_name": "Serenity Retreat",
+    "instructor": "James Wilson",
+    "attendees": 12,
+    "schedule": "18 June, 2024, 03:30 PM",
+    "attendees_in_class": [
+      {
+        "id": 10,
+        "full_name": "Kevin Harris",
+        "email": "kevin.h@example.com",
+        "profile": "https://example.com/profiles/kevin.jpg",
+        "phone": "+1-555-0110"
+      },
+      {
+        "id": 11,
+        "full_name": "Nicole Clark",
+        "email": "nicole.c@example.com",
+        "profile": "https://example.com/profiles/nicole.jpg",
+        "phone": "+1-555-0111"
+      }
+    ],
+    "waiting_list": [
+      {
+        "id": 12,
+        "full_name": "Brian Scott",
+        "email": "brian.s@example.com",
+        "profile": "https://example.com/profiles/brian.jpg",
+        "phone": "+1-555-0112"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "spa_name": "Blissful Escape Spa",
+    "instructor": "Rachel Adams",
+    "attendees": 7,
+    "schedule": "19 June, 2024, 10:30 AM",
+    "attendees_in_class": [
+      {
+        "id": 13,
+        "full_name": "Michelle Rodriguez",
+        "email": "michelle.r@example.com",
+        "profile": "https://example.com/profiles/michelle.jpg",
+        "phone": "+1-555-0113"
+      },
+      {
+        "id": 14,
+        "full_name": "Steven King",
+        "email": "steven.k@example.com",
+        "profile": "https://example.com/profiles/steven.jpg",
+        "phone": "+1-555-0114"
+      }
+    ],
+    "waiting_list": [
+      {
+        "id": 15,
+        "full_name": "Patricia Lewis",
+        "email": "patricia.l@example.com",
+        "profile": "https://example.com/profiles/patricia.jpg",
+        "phone": "+1-555-0115"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "spa_name": "Zen Garden Spa",
+    "instructor": "Thomas Moore",
+    "attendees": 9,
+    "schedule": "20 June, 2024, 01:00 PM",
+    "attendees_in_class": [
+      {
+        "id": 16,
+        "full_name": "Richard Walker",
+        "email": "richard.w@example.com",
+        "profile": "https://example.com/profiles/richard.jpg",
+        "phone": "+1-555-0116"
+      },
+      {
+        "id": 17,
+        "full_name": "Susan Hall",
+        "email": "susan.h@example.com",
+        "profile": "https://example.com/profiles/susan.jpg",
+        "phone": "+1-555-0117"
+      }
+    ],
+    "waiting_list": [
+      {
+        "id": 18,
+        "full_name": "Jason Allen",
+        "email": "jason.a@example.com",
+        "profile": "https://example.com/profiles/jason.jpg",
+        "phone": "+1-555-0118"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "spa_name": "Purity Wellness Spa",
+    "instructor": "Karen Young",
+    "attendees": 5,
+    "schedule": "21 June, 2024, 04:00 PM",
+    "attendees_in_class": [
+      {
+        "id": 19,
+        "full_name": "Jeffrey Wright",
+        "email": "jeffrey.w@example.com",
+        "profile": "https://example.com/profiles/jeffrey.jpg",
+        "phone": "+1-555-0119"
+      },
+      {
+        "id": 20,
+        "full_name": "Melissa Turner",
+        "email": "melissa.t@example.com",
+        "profile": "https://example.com/profiles/melissa.jpg",
+        "phone": "+1-555-0120"
+      }
+    ],
+    "waiting_list": []
+  },
+  {
+    "id": 8,
+    "spa_name": "Heavenly Touch Spa",
+    "instructor": "Mark Roberts",
+    "attendees": 11,
+    "schedule": "22 June, 2024, 09:30 AM",
+    "attendees_in_class": [
+      {
+        "id": 21,
+        "full_name": "Andrew Parker",
+        "email": "andrew.p@example.com",
+        "profile": "https://example.com/profiles/andrew.jpg",
+        "phone": "+1-555-0121"
+      },
+      {
+        "id": 22,
+        "full_name": "Rebecca Evans",
+        "email": "rebecca.e@example.com",
+        "profile": "https://example.com/profiles/rebecca.jpg",
+        "phone": "+1-555-0122"
+      }
+    ],
+    "waiting_list": [
+      {
+        "id": 23,
+        "full_name": "Timothy Collins",
+        "email": "timothy.c@example.com",
+        "profile": "https://example.com/profiles/timothy.jpg",
+        "phone": "+1-555-0123"
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "spa_name": "Aqua Vitality Spa",
+    "instructor": "Laura Miller",
+    "attendees": 8,
+    "schedule": "23 June, 2024, 02:30 PM",
+    "attendees_in_class": [
+      {
+        "id": 24,
+        "full_name": "Brandon Edwards",
+        "email": "brandon.e@example.com",
+        "profile": "https://example.com/profiles/brandon.jpg",
+        "phone": "+1-555-0124"
+      },
+      {
+        "id": 25,
+        "full_name": "Stephanie Green",
+        "email": "stephanie.g@example.com",
+        "profile": "https://example.com/profiles/stephanie.jpg",
+        "phone": "+1-555-0125"
+      }
+    ],
+    "waiting_list": [
+      {
+        "id": 26,
+        "full_name": "Eric Stewart",
+        "email": "eric.s@example.com",
+        "profile": "https://example.com/profiles/eric.jpg",
+        "phone": "+1-555-0126"
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "spa_name": "Nature's Bliss Spa",
+    "instructor": "Paul Baker",
+    "attendees": 6,
+    "schedule": "24 June, 2024, 11:30 AM",
+    "attendees_in_class": [
+      {
+        "id": 27,
+        "full_name": "Ashley Cooper",
+        "email": "ashley.c@example.com",
+        "profile": "https://example.com/profiles/ashley.jpg",
+        "phone": "+1-555-0127"
+      },
+      {
+        "id": 28,
+        "full_name": "Joshua Rogers",
+        "email": "joshua.r@example.com",
+        "profile": "https://example.com/profiles/joshua.jpg",
+        "phone": "+1-555-0128"
+      }
+    ],
+    "waiting_list": [
+      {
+        "id": 29,
+        "full_name": "Kimberly Reed",
+        "email": "kimberly.r@example.com",
+        "profile": "https://example.com/profiles/kimberly.jpg",
+        "phone": "+1-555-0129"
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "spa_name": "Crystal Clear Spa",
+    "instructor": "Nancy Campbell",
+    "attendees": 10,
+    "schedule": "25 June, 2024, 03:00 PM",
+    "attendees_in_class": [
+      {
+        "id": 30,
+        "full_name": "Justin Cook",
+        "email": "justin.c@example.com",
+        "profile": "https://example.com/profiles/justin.jpg",
+        "phone": "+1-555-0130"
+      },
+      {
+        "id": 31,
+        "full_name": "Angela Morgan",
+        "email": "angela.m@example.com",
+        "profile": "https://example.com/profiles/angela.jpg",
+        "phone": "+1-555-0131"
+      }
+    ],
+    "waiting_list": [
+      {
+        "id": 32,
+        "full_name": "Scott Bell",
+        "email": "scott.b@example.com",
+        "profile": "https://example.com/profiles/scott.jpg",
+        "phone": "+1-555-0132"
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "spa_name": "Golden Hour Spa",
+    "instructor": "George Murphy",
+    "attendees": 7,
+    "schedule": "26 June, 2024, 10:00 AM",
+    "attendees_in_class": [
+      {
+        "id": 33,
+        "full_name": "Christina Bailey",
+        "email": "christina.b@example.com",
+        "profile": "https://example.com/profiles/christina.jpg",
+        "phone": "+1-555-0133"
+      },
+      {
+        "id": 34,
+        "full_name": "Gregory Rivera",
+        "email": "gregory.r@example.com",
+        "profile": "https://example.com/profiles/gregory.jpg",
+        "phone": "+1-555-0134"
+      }
+    ],
+    "waiting_list": [
+      {
+        "id": 35,
+        "full_name": "Rachel Cox",
+        "email": "rachel.c@example.com",
+        "profile": "https://example.com/profiles/rachel.jpg",
+        "phone": "+1-555-0135"
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "spa_name": "Eternal Youth Spa",
+    "instructor": "Helen Ward",
+    "attendees": 9,
+    "schedule": "27 June, 2024, 01:30 PM",
+    "attendees_in_class": [
+      {
+        "id": 36,
+        "full_name": "Patrick Howard",
+        "email": "patrick.h@example.com",
+        "profile": "https://example.com/profiles/patrick.jpg",
+        "phone": "+1-555-0136"
+      },
+      {
+        "id": 37,
+        "full_name": "Megan Torres",
+        "email": "megan.t@example.com",
+        "profile": "https://example.com/profiles/megan.jpg",
+        "phone": "+1-555-0137"
+      }
+    ],
+    "waiting_list": [
+      {
+        "id": 38,
+        "full_name": "Aaron Peterson",
+        "email": "aaron.p@example.com",
+        "profile": "https://example.com/profiles/aaron.jpg",
+        "phone": "+1-555-0138"
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "spa_name": "Ocean Breeze Spa",
+    "instructor": "Donald Foster",
+    "attendees": 5,
+    "schedule": "28 June, 2024, 04:30 PM",
+    "attendees_in_class": [
+      {
+        "id": 39,
+        "full_name": "Amy Gray",
+        "email": "amy.g@example.com",
+        "profile": "https://example.com/profiles/amy.jpg",
+        "phone": "+1-555-0139"
+      },
+      {
+        "id": 40,
+        "full_name": "Kyle Ramirez",
+        "email": "kyle.r@example.com",
+        "profile": "https://example.com/profiles/kyle.jpg",
+        "phone": "+1-555-0140"
+      }
+    ],
+    "waiting_list": []
+  }
+]

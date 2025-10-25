@@ -1,0 +1,362 @@
+[
+  {
+    "id": 1,
+    "service_name": "Relax & Rejuvenate",
+    "description": "Enjoy a full body massage and a soothing spa treatment for a relaxing and rejuvenating experience.",
+    "time": "50 minutes",
+    "price": 70.99,
+    "room": "Private Room",
+    "date": "3 September 2025",
+    "class_capacity": 18,
+    "waitinglist": 10,
+    "instructor": {
+      "id": 3,
+      "full_name": "Jessica Davis",
+      "email": "jessica.d@example.com",
+      "profile": "https://s1.r29static.com/bin/entry/b72/x,80/1968901/image.jpg",
+      "phone": "+1-555-0103"
+    },
+    "status": "Available",
+    "images": [
+      "https://calista.com.tr/media/532bmoz2/spa-nedir.jpg",
+      "https://images.squarespace-cdn.com/content/v1/6447eeb38baf0c31deed937f/f6df5eac-2e70-447f-9608-174cabb1114b/image-asset.png",
+      "https://www.carecredit.com/sites/cc/image/day_spa_treatments.jpg"
+    ]
+  },
+  {
+    "id": 2,
+    "service_name": "Spa Service 2",
+    "description": "Experience luxury and comfort with spa service number 2. Includes massage, aromatherapy, and relaxation treatments.",
+    "time": "34 minutes",
+    "price": 61.0,
+    "room": "Private Room",
+    "date": "3 September 2025",
+    "class_capacity": 18,
+    "waitinglist": 10,
+    "instructor": {
+      "id": 3,
+      "full_name": "Jessica Davis",
+      "email": "jessica.d@example.com",
+      "profile": "https://s1.r29static.com/bin/entry/b72/x,80/1968901/image.jpg",
+      "phone": "+1-555-0103"
+    },
+    "status": "Not Available",
+    "images": [
+      "https://example.com/spa2_1.jpg",
+      "https://example.com/spa2_2.jpg",
+      "https://example.com/spa2_3.jpg"
+    ]
+  },
+  {
+    "id": 3,
+    "service_name": "Spa Service 3",
+    "description": "Experience luxury and comfort with spa service number 3. Includes massage, aromatherapy, and relaxation treatments.",
+    "time": "36 minutes",
+    "price": 66.5,
+    "room": "Couple Room",
+    "date": "3 September 2025",
+    "class_capacity": 18,
+    "waitinglist": 10,
+    "instructor": {
+      "id": 3,
+      "full_name": "Jessica Davis",
+      "email": "jessica.d@example.com",
+      "profile": "https://s1.r29static.com/bin/entry/b72/x,80/1968901/image.jpg",
+      "phone": "+1-555-0103"
+    },
+    "status": "Declined",
+    "images": [
+      "https://example.com/spa3_1.jpg",
+      "https://example.com/spa3_2.jpg",
+      "https://example.com/spa3_3.jpg"
+    ]
+  },
+  {
+    "id": 4,
+    "service_name": "Spa Service 4",
+    "description": "Experience luxury and comfort with spa service number 4. Includes massage, aromatherapy, and relaxation treatments.",
+    "time": "38 minutes",
+    "price": 72.0,
+    "room": "Private Room",
+    "date": "3 September 2025",
+    "class_capacity": 18,
+    "waitinglist": 10,
+    "instructor": {
+      "id": 3,
+      "full_name": "Jessica Davis",
+      "email": "jessica.d@example.com",
+      "profile": "https://s1.r29static.com/bin/entry/b72/x,80/1968901/image.jpg",
+      "phone": "+1-555-0103"
+    },
+    "status": "Available",
+    "images": [
+      "https://example.com/spa4_1.jpg",
+      "https://example.com/spa4_2.jpg",
+      "https://example.com/spa4_3.jpg"
+    ]
+  },
+  {
+    "id": 5,
+    "service_name": "Spa Service 5",
+    "description": "Experience luxury and comfort with spa service number 5. Includes massage, aromatherapy, and relaxation treatments.",
+    "time": "40 minutes",
+    "price": 77.5,
+    "room": "Couple Room",
+    "date": "3 September 2025",
+    "class_capacity": 18,
+    "waitinglist": 10,
+    "instructor": {
+      "id": 3,
+      "full_name": "Jessica Davis",
+      "email": "jessica.d@example.com",
+      "profile": "https://s1.r29static.com/bin/entry/b72/x,80/1968901/image.jpg",
+      "phone": "+1-555-0103"
+    },
+    "status": "Available",
+    "images": [
+      "https://example.com/spa5_1.jpg",
+      "https://example.com/spa5_2.jpg",
+      "https://example.com/spa5_3.jpg"
+    ]
+  },
+  {
+    "id": 6,
+    "service_name": "Spa Service 6",
+    "description": "Experience luxury and comfort with spa service number 6. Includes massage, aromatherapy, and relaxation treatments.",
+    "time": "42 minutes",
+    "price": 83.0,
+    "room": "Private Room",
+    "date": "3 September 2025",
+    "class_capacity": 18,
+    "waitinglist": 10,
+    "instructor": {
+      "id": 3,
+      "full_name": "Jessica Davis",
+      "email": "jessica.d@example.com",
+      "profile": "https://s1.r29static.com/bin/entry/b72/x,80/1968901/image.jpg",
+      "phone": "+1-555-0103"
+    },
+    "status": "Available",
+    "images": [
+      "https://example.com/spa6_1.jpg",
+      "https://example.com/spa6_2.jpg",
+      "https://example.com/spa6_3.jpg"
+    ]
+  },
+  {
+    "id": 7,
+    "service_name": "Spa Service 7",
+    "description": "Experience luxury and comfort with spa service number 7. Includes massage, aromatherapy, and relaxation treatments.",
+    "time": "44 minutes",
+    "price": 88.5,
+    "room": "Couple Room",
+    "date": "3 September 2025",
+    "class_capacity": 18,
+    "waitinglist": 10,
+    "instructor": {
+      "id": 3,
+      "full_name": "Jessica Davis",
+      "email": "jessica.d@example.com",
+      "profile": "https://s1.r29static.com/bin/entry/b72/x,80/1968901/image.jpg",
+      "phone": "+1-555-0103"
+    },
+    "status": "Available",
+    "images": [
+      "https://example.com/spa7_1.jpg",
+      "https://example.com/spa7_2.jpg",
+      "https://example.com/spa7_3.jpg"
+    ]
+  },
+  {
+    "id": 8,
+    "service_name": "Spa Service 8",
+    "description": "Experience luxury and comfort with spa service number 8. Includes massage, aromatherapy, and relaxation treatments.",
+    "time": "46 minutes",
+    "price": 94.0,
+    "room": "Private Room",
+    "date": "3 September 2025",
+    "class_capacity": 18,
+    "waitinglist": 10,
+    "instructor": {
+      "id": 3,
+      "full_name": "Jessica Davis",
+      "email": "jessica.d@example.com",
+      "profile": "https://s1.r29static.com/bin/entry/b72/x,80/1968901/image.jpg",
+      "phone": "+1-555-0103"
+    },
+    "status": "Available",
+    "images": [
+      "https://example.com/spa8_1.jpg",
+      "https://example.com/spa8_2.jpg",
+      "https://example.com/spa8_3.jpg"
+    ]
+  },
+  {
+    "id": 9,
+    "service_name": "Spa Service 9",
+    "description": "Experience luxury and comfort with spa service number 9. Includes massage, aromatherapy, and relaxation treatments.",
+    "time": "48 minutes",
+    "price": 99.5,
+    "room": "Couple Room",
+    "date": "3 September 2025",
+    "class_capacity": 18,
+    "waitinglist": 10,
+    "instructor": {
+      "id": 3,
+      "full_name": "Jessica Davis",
+      "email": "jessica.d@example.com",
+      "profile": "https://s1.r29static.com/bin/entry/b72/x,80/1968901/image.jpg",
+      "phone": "+1-555-0103"
+    },
+    "status": "Available",
+    "images": [
+      "https://example.com/spa9_1.jpg",
+      "https://example.com/spa9_2.jpg",
+      "https://example.com/spa9_3.jpg"
+    ]
+  },
+  {
+    "id": 10,
+    "service_name": "Spa Service 10",
+    "description": "Experience luxury and comfort with spa service number 10. Includes massage, aromatherapy, and relaxation treatments.",
+    "time": "50 minutes",
+    "price": 105.0,
+    "room": "Private Room",
+    "date": "3 September 2025",
+    "class_capacity": 18,
+    "waitinglist": 10,
+    "instructor": {
+      "id": 3,
+      "full_name": "Jessica Davis",
+      "email": "jessica.d@example.com",
+      "profile": "https://s1.r29static.com/bin/entry/b72/x,80/1968901/image.jpg",
+      "phone": "+1-555-0103"
+    },
+    "status": "Available",
+    "images": [
+      "https://example.com/spa10_1.jpg",
+      "https://example.com/spa10_2.jpg",
+      "https://example.com/spa10_3.jpg"
+    ]
+  },
+  {
+    "id": 11,
+    "service_name": "Spa Service 11",
+    "description": "Experience luxury and comfort with spa service number 11. Includes massage, aromatherapy, and relaxation treatments.",
+    "time": "52 minutes",
+    "price": 110.5,
+    "room": "Couple Room",
+    "date": "3 September 2025",
+    "class_capacity": 18,
+    "waitinglist": 10,
+    "instructor": {
+      "id": 3,
+      "full_name": "Jessica Davis",
+      "email": "jessica.d@example.com",
+      "profile": "https://s1.r29static.com/bin/entry/b72/x,80/1968901/image.jpg",
+      "phone": "+1-555-0103"
+    },
+    "status": "Available",
+    "images": [
+      "https://example.com/spa11_1.jpg",
+      "https://example.com/spa11_2.jpg",
+      "https://example.com/spa11_3.jpg"
+    ]
+  },
+  {
+    "id": 12,
+    "service_name": "Spa Service 12",
+    "description": "Experience luxury and comfort with spa service number 12. Includes massage, aromatherapy, and relaxation treatments.",
+    "time": "54 minutes",
+    "price": 116.0,
+    "room": "Private Room",
+    "date": "3 September 2025",
+    "class_capacity": 18,
+    "waitinglist": 10,
+    "instructor": {
+      "id": 3,
+      "full_name": "Jessica Davis",
+      "email": "jessica.d@example.com",
+      "profile": "https://s1.r29static.com/bin/entry/b72/x,80/1968901/image.jpg",
+      "phone": "+1-555-0103"
+    },
+    "status": "Available",
+    "images": [
+      "https://example.com/spa12_1.jpg",
+      "https://example.com/spa12_2.jpg",
+      "https://example.com/spa12_3.jpg"
+    ]
+  },
+  {
+    "id": 13,
+    "service_name": "Spa Service 13",
+    "description": "Experience luxury and comfort with spa service number 13. Includes massage, aromatherapy, and relaxation treatments.",
+    "time": "56 minutes",
+    "price": 121.5,
+    "room": "Couple Room",
+    "date": "3 September 2025",
+    "class_capacity": 18,
+    "waitinglist": 10,
+    "instructor": {
+      "id": 3,
+      "full_name": "Jessica Davis",
+      "email": "jessica.d@example.com",
+      "profile": "https://s1.r29static.com/bin/entry/b72/x,80/1968901/image.jpg",
+      "phone": "+1-555-0103"
+    },
+    "status": "Available",
+    "images": [
+      "https://example.com/spa13_1.jpg",
+      "https://example.com/spa13_2.jpg",
+      "https://example.com/spa13_3.jpg"
+    ]
+  },
+  {
+    "id": 14,
+    "service_name": "Spa Service 14",
+    "description": "Experience luxury and comfort with spa service number 14. Includes massage, aromatherapy, and relaxation treatments.",
+    "time": "58 minutes",
+    "price": 127.0,
+    "room": "Private Room",
+    "date": "3 September 2025",
+    "class_capacity": 18,
+    "waitinglist": 10,
+    "instructor": {
+      "id": 3,
+      "full_name": "Jessica Davis",
+      "email": "jessica.d@example.com",
+      "profile": "https://s1.r29static.com/bin/entry/b72/x,80/1968901/image.jpg",
+      "phone": "+1-555-0103"
+    },
+    "status": "Available",
+    "images": [
+      "https://example.com/spa14_1.jpg",
+      "https://example.com/spa14_2.jpg",
+      "https://example.com/spa14_3.jpg"
+    ]
+  },
+  {
+    "id": 15,
+    "service_name": "Spa Service 15",
+    "description": "Experience luxury and comfort with spa service number 15. Includes massage, aromatherapy, and relaxation treatments.",
+    "time": "60 minutes",
+    "price": 132.5,
+    "room": "Couple Room",
+    "date": "3 September 2025",
+    "class_capacity": 18,
+    "waitinglist": 10,
+    "instructor": {
+      "id": 3,
+      "full_name": "Jessica Davis",
+      "email": "jessica.d@example.com",
+      "profile": "https://s1.r29static.com/bin/entry/b72/x,80/1968901/image.jpg",
+      "phone": "+1-555-0103"
+    },
+    "status": "Available",
+    "images": [
+      "https://example.com/spa15_1.jpg",
+      "https://example.com/spa15_2.jpg",
+      "https://example.com/spa15_3.jpg"
+    ]
+  }
+]

@@ -1,0 +1,1161 @@
+[
+  {
+    "_id": 1,
+    "user": {
+      "_id": 1,
+      "name": "Will Smith",
+      "email": "kM3Qv@example.com",
+      "profile": "https://orthopaedie-hannover.de/wp-content/uploads/2023/02/team-img03.jpg"
+    },
+    "delivery_address": "123 Main St, City, Country",
+    "contact_number": "123-456-7890",
+    "total_quantity": 7,
+    "delivery_fee": 2,
+    "coupon_discount": 3,
+    "sub_total": 12,
+    "total_price": 16.98,
+    "food_cost": 10.98,
+    "driver": null,
+    "paid_status": "Paid",
+    "food": [
+      {
+        "_id": 1,
+        "name": "Rice Platter with Chicken",
+        "image": "https://i.cbc.ca/1.7438794.1737582409!/fileImage/httpImage/image.jpg_gen/derivatives/original_1180/one-pan-spatchcock-chicken-and-rice.jpg",
+        "price": 12.99,
+        "quantity": 2,
+        "description": "A delicious rice platter with chicken and vegetables.",
+        "category": "Rice"
+      },
+      {
+        "_id": 2,
+        "name": "Rice Platter with Vegetables",
+        "image": "https://img.freepik.com/premium-photo/plate-food-with-rice-rice-vegetables_1288657-55200.jpg",
+        "price": 10.99,
+        "quantity": 1,
+        "description": "A healthy rice platter with a selection of vegetables.",
+        "category": "Rice"
+      }
+    ],
+    "status": "Pending",
+    "date": "2023-07-16T12:20:00Z"
+  },
+  {
+    "_id": 233,
+    "user": {
+      "_id": 2,
+      "name": "Eva Mendes",
+      "email": "eva@example.com",
+      "profile": "https://randomuser.me/api/portraits/women/2.jpg"
+    },
+    "delivery_address": "456 Elm St, Downtown, City",
+    "contact_number": "321-654-9870",
+    "total_quantity": 5,
+    "delivery_fee": 2,
+    "coupon_discount": 3,
+    "sub_total": 12,
+    "total_price": 25.5,
+    "food_cost": 25.5,
+    "driver": {
+      "_id": 2,
+      "name": "Mark Green",
+      "email": "mark.green@email.com",
+      "phone": "23456784",
+      "profile": "https://img.freepik.com/free-photo/food-delivery-service_1303-27700.jpg"
+    },
+    "paid_status": "Online Pay",
+    "food": [
+      {
+        "_id": 1,
+        "name": "Margherita Pizza",
+        "image": "https://www.177milkstreet.com/assets/site/Recipes/Margherita-Pizza.jpg",
+        "price": 8.99,
+        "quantity": 1,
+        "description": "Classic pizza with fresh mozzarella and tomatoes.",
+        "category": "Pizza"
+      },
+      {
+        "_id": 2,
+        "name": "Caesar Salad",
+        "image": "https://image.shutterstock.com/image-photo/caesar-salad-on-plate-260nw-1724729048.jpg",
+        "price": 6.5,
+        "quantity": 2,
+        "description": "Crisp lettuce with Caesar dressing, parmesan, and croutons.",
+        "category": "Salad"
+      }
+    ],
+    "status": "Delivered",
+    "date": "2023-09-15T15:10:00Z"
+  },
+  {
+    "_id": 31,
+    "user": {
+      "_id": 3,
+      "name": "Chris Hemsworth",
+      "email": "chris@example.com",
+      "profile": "https://randomuser.me/api/portraits/men/1.jpg"
+    },
+    "delivery_address": "789 Pine Rd, Suburbia, City",
+    "contact_number": "555-123-4567",
+    "total_quantity": 3,
+    "delivery_fee": 2,
+    "coupon_discount": 3,
+    "sub_total": 12,
+    "total_price": 22.97,
+    "food_cost": 22.97,
+    "driver": {
+      "_id": 3,
+      "name": "Sarah Lee",
+      "email": "sarah.lee@email.com",
+      "phone": "23456784",
+      "profile": "https://img.freepik.com/free-photo/food-delivery-woman-delivering-foods_1303-27685.jpg"
+    },
+    "paid_status": "COD",
+    "food": [
+      {
+        "_id": 1,
+        "name": "Cheeseburger",
+        "image": "https://www.example.com/images/cheeseburger.jpg",
+        "price": 9.99,
+        "quantity": 2,
+        "description": "A juicy cheeseburger with fresh lettuce and tomato.",
+        "category": "Burger"
+      },
+      {
+        "_id": 2,
+        "name": "French Fries",
+        "image": "https://www.example.com/images/french-fries.jpg",
+        "price": 3.99,
+        "quantity": 1,
+        "description": "Crispy golden fries, salted to perfection.",
+        "category": "Sides"
+      }
+    ],
+    "status": "On Going",
+    "date": "2023-09-18T09:30:00Z"
+  },
+  {
+    "_id": 41,
+    "user": {
+      "_id": 4,
+      "name": "Scarlett Johansson",
+      "email": "scarlett@example.com",
+      "profile": "https://randomuser.me/api/portraits/women/3.jpg"
+    },
+    "delivery_address": "654 Oak Blvd, Uptown, City",
+    "contact_number": "123-789-4561",
+    "total_quantity": 4,
+    "delivery_fee": 2,
+    "coupon_discount": 3,
+    "sub_total": 12,
+    "total_price": 19.98,
+    "food_cost": 19.98,
+    "driver": {
+      "_id": 4,
+      "name": "James Bond",
+      "email": "james.bond@email.com",
+      "phone": "23456784",
+      "profile": "https://img.freepik.com/free-photo/food-delivery-man-wearing-helmet_1303-27711.jpg"
+    },
+    "paid_status": "Paid",
+    "food": [
+      {
+        "_id": 1,
+        "name": "Spaghetti Bolognese",
+        "image": "https://example.com/spaghetti.jpg",
+        "price": 8.99,
+        "quantity": 2,
+        "description": "Traditional pasta with a rich Bolognese sauce.",
+        "category": "Pasta"
+      },
+      {
+        "_id": 2,
+        "name": "Garlic Bread",
+        "image": "https://example.com/garlic-bread.jpg",
+        "price": 3.99,
+        "quantity": 2,
+        "description": "Crispy bread topped with garlic and butter.",
+        "category": "Sides"
+      }
+    ],
+    "status": "Pending",
+    "date": "2023-09-20T18:00:00Z"
+  },
+  {
+    "_id": 11,
+    "user": {
+      "_id": 1,
+      "name": "Will Smith",
+      "email": "kM3Qv@example.com",
+      "profile": "https://orthopaedie-hannover.de/wp-content/uploads/2023/02/team-img03.jpg"
+    },
+    "delivery_address": "123 Main St, City, Country",
+    "contact_number": "123-456-7890",
+    "total_quantity": 7,
+    "delivery_fee": 2,
+    "coupon_discount": 3,
+    "sub_total": 12,
+    "total_price": 16.98,
+    "food_cost": 10.98,
+    "driver": null,
+    "paid_status": "Paid",
+    "food": [
+      {
+        "_id": 1,
+        "name": "Rice Platter with Chicken",
+        "image": "https://i.cbc.ca/1.7438794.1737582409!/fileImage/httpImage/image.jpg_gen/derivatives/original_1180/one-pan-spatchcock-chicken-and-rice.jpg",
+        "price": 12.99,
+        "quantity": 2,
+        "description": "A delicious rice platter with chicken and vegetables.",
+        "category": "Rice"
+      },
+      {
+        "_id": 2,
+        "name": "Rice Platter with Vegetables",
+        "image": "https://img.freepik.com/premium-photo/plate-food-with-rice-rice-vegetables_1288657-55200.jpg",
+        "price": 10.99,
+        "quantity": 1,
+        "description": "A healthy rice platter with a selection of vegetables.",
+        "category": "Rice"
+      }
+    ],
+    "status": "Pending",
+    "date": "2023-07-16T12:20:00Z"
+  },
+  {
+    "_id": 21,
+    "user": {
+      "_id": 2,
+      "name": "Eva Mendes",
+      "email": "eva@example.com",
+      "profile": "https://randomuser.me/api/portraits/women/2.jpg"
+    },
+    "delivery_address": "456 Elm St, Downtown, City",
+    "contact_number": "321-654-9870",
+    "total_quantity": 5,
+    "delivery_fee": 2,
+    "coupon_discount": 3,
+    "sub_total": 12,
+    "total_price": 25.5,
+    "food_cost": 25.5,
+    "driver": {
+      "_id": 2,
+      "name": "Mark Green",
+      "email": "mark.green@email.com",
+      "phone": "23456784",
+      "profile": "https://img.freepik.com/free-photo/food-delivery-service_1303-27700.jpg"
+    },
+    "paid_status": "Online Pay",
+    "food": [
+      {
+        "_id": 1,
+        "name": "Margherita Pizza",
+        "image": "https://www.177milkstreet.com/assets/site/Recipes/Margherita-Pizza.jpg",
+        "price": 8.99,
+        "quantity": 1,
+        "description": "Classic pizza with fresh mozzarella and tomatoes.",
+        "category": "Pizza"
+      },
+      {
+        "_id": 2,
+        "name": "Caesar Salad",
+        "image": "https://image.shutterstock.com/image-photo/caesar-salad-on-plate-260nw-1724729048.jpg",
+        "price": 6.5,
+        "quantity": 2,
+        "description": "Crisp lettuce with Caesar dressing, parmesan, and croutons.",
+        "category": "Salad"
+      }
+    ],
+    "status": "Delivered",
+    "date": "2023-09-15T15:10:00Z"
+  },
+  {
+    "_id": 32,
+    "user": {
+      "_id": 3,
+      "name": "Chris Hemsworth",
+      "email": "chris@example.com",
+      "profile": "https://randomuser.me/api/portraits/men/1.jpg"
+    },
+    "delivery_address": "789 Pine Rd, Suburbia, City",
+    "contact_number": "555-123-4567",
+    "total_quantity": 3,
+    "delivery_fee": 2,
+    "coupon_discount": 3,
+    "sub_total": 12,
+    "total_price": 22.97,
+    "food_cost": 22.97,
+    "driver": {
+      "_id": 3,
+      "name": "Sarah Lee",
+      "email": "sarah.lee@email.com",
+      "phone": "23456784",
+      "profile": "https://img.freepik.com/free-photo/food-delivery-woman-delivering-foods_1303-27685.jpg"
+    },
+    "paid_status": "COD",
+    "food": [
+      {
+        "_id": 1,
+        "name": "Cheeseburger",
+        "image": "https://www.example.com/images/cheeseburger.jpg",
+        "price": 9.99,
+        "quantity": 2,
+        "description": "A juicy cheeseburger with fresh lettuce and tomato.",
+        "category": "Burger"
+      },
+      {
+        "_id": 2,
+        "name": "French Fries",
+        "image": "https://www.example.com/images/french-fries.jpg",
+        "price": 3.99,
+        "quantity": 1,
+        "description": "Crispy golden fries, salted to perfection.",
+        "category": "Sides"
+      }
+    ],
+    "status": "On Going",
+    "date": "2023-09-18T09:30:00Z"
+  },
+  {
+    "_id": 42,
+    "user": {
+      "_id": 4,
+      "name": "Scarlett Johansson",
+      "email": "scarlett@example.com",
+      "profile": "https://randomuser.me/api/portraits/women/3.jpg"
+    },
+    "delivery_address": "654 Oak Blvd, Uptown, City",
+    "contact_number": "123-789-4561",
+    "total_quantity": 4,
+    "delivery_fee": 2,
+    "coupon_discount": 3,
+    "sub_total": 12,
+    "total_price": 19.98,
+    "food_cost": 19.98,
+    "driver": {
+      "_id": 4,
+      "name": "James Bond",
+      "email": "james.bond@email.com",
+      "phone": "23456784",
+      "profile": "https://img.freepik.com/free-photo/food-delivery-man-wearing-helmet_1303-27711.jpg"
+    },
+    "paid_status": "Paid",
+    "food": [
+      {
+        "_id": 1,
+        "name": "Spaghetti Bolognese",
+        "image": "https://example.com/spaghetti.jpg",
+        "price": 8.99,
+        "quantity": 2,
+        "description": "Traditional pasta with a rich Bolognese sauce.",
+        "category": "Pasta"
+      },
+      {
+        "_id": 2,
+        "name": "Garlic Bread",
+        "image": "https://example.com/garlic-bread.jpg",
+        "price": 3.99,
+        "quantity": 2,
+        "description": "Crispy bread topped with garlic and butter.",
+        "category": "Sides"
+      }
+    ],
+    "status": "Pending",
+    "date": "2023-09-20T18:00:00Z"
+  },
+  {
+    "_id": 5,
+    "user": {
+      "_id": 5,
+      "name": "Ryan Reynolds",
+      "email": "ryan@example.com",
+      "profile": "https://randomuser.me/api/portraits/men/2.jpg"
+    },
+    "delivery_address": "123 Maple Ave, City Park, City",
+    "contact_number": "321-654-3210",
+    "total_quantity": 2,
+    "delivery_fee": 2,
+    "coupon_discount": 3,
+    "sub_total": 12,
+    "total_price": 13.98,
+    "food_cost": 13.98,
+    "driver": {
+      "_id": 5,
+      "name": "Sophia Turner",
+      "email": "sophia.turner@email.com",
+      "phone": "23456784",
+      "profile": "https://img.freepik.com/free-photo/food-delivery-girl-scooter_1303-27723.jpg"
+    },
+    "paid_status": "Online Pay",
+    "food": [
+      {
+        "_id": 1,
+        "name": "Veggie Wrap",
+        "image": "https://example.com/veggie-wrap.jpg",
+        "price": 7.99,
+        "quantity": 1,
+        "description": "Healthy wrap with fresh vegetables and a tangy sauce.",
+        "category": "Wrap"
+      },
+      {
+        "_id": 2,
+        "name": "Fruit Smoothie",
+        "image": "https://example.com/fruit-smoothie.jpg",
+        "price": 5.99,
+        "quantity": 1,
+        "description": "A refreshing fruit smoothie made with seasonal fruits.",
+        "category": "Beverage"
+      }
+    ],
+    "status": "On Going",
+    "date": "2023-09-22T12:40:00Z"
+  },
+  {
+    "_id": 6,
+    "user": {
+      "_id": 6,
+      "name": "Ben Affleck",
+      "email": "ben.affleck@example.com",
+      "profile": "https://randomuser.me/api/portraits/men/3.jpg"
+    },
+    "delivery_address": "987 Birch St, Westend, City",
+    "contact_number": "555-321-9870",
+    "total_quantity": 5,
+    "delivery_fee": 2,
+    "coupon_discount": 3,
+    "sub_total": 12,
+    "total_price": 26.45,
+    "food_cost": 26.45,
+    "driver": {
+      "_id": 6,
+      "name": "Alice Carter",
+      "email": "alice.carter@email.com",
+      "phone": "23456784",
+      "profile": "https://img.freepik.com/free-photo/food-delivery-woman-on-scooter_1303-27656.jpg"
+    },
+    "paid_status": "Paid",
+    "food": [
+      {
+        "_id": 1,
+        "name": "Chicken Caesar Wrap",
+        "image": "https://www.example.com/images/caesar-wrap.jpg",
+        "price": 8.99,
+        "quantity": 2,
+        "description": "Grilled chicken with Caesar dressing wrapped in a tortilla.",
+        "category": "Wrap"
+      },
+      {
+        "_id": 2,
+        "name": "Vegetable Soup",
+        "image": "https://www.example.com/images/vegetable-soup.jpg",
+        "price": 5.99,
+        "quantity": 1,
+        "description": "A warm and hearty vegetable soup with seasonal ingredients.",
+        "category": "Soup"
+      },
+      {
+        "_id": 3,
+        "name": "Garlic Bread",
+        "image": "https://www.example.com/images/garlic-bread.jpg",
+        "price": 3.99,
+        "quantity": 2,
+        "description": "Crispy and buttery garlic bread.",
+        "category": "Sides"
+      }
+    ],
+    "status": "Delivered",
+    "date": "2023-09-25T10:00:00Z"
+  },
+  {
+    "_id": 7,
+    "user": {
+      "_id": 7,
+      "name": "Robert Downey Jr.",
+      "email": "robert@example.com",
+      "profile": "https://randomuser.me/api/portraits/men/4.jpg"
+    },
+    "delivery_address": "321 Maple St, Midtown, City",
+    "contact_number": "555-123-7654",
+    "total_quantity": 4,
+    "delivery_fee": 2,
+    "coupon_discount": 3,
+    "sub_total": 12,
+    "total_price": 18.0,
+    "food_cost": 18.0,
+    "driver": {
+      "_id": 7,
+      "name": "Olivia Clark",
+      "email": "olivia.clark@email.com",
+      "phone": "23456784",
+      "profile": "https://img.freepik.com/free-photo/food-delivery-woman-with-bag_1303-27702.jpg"
+    },
+    "paid_status": "COD",
+    "food": [
+      {
+        "_id": 1,
+        "name": "BBQ Ribs",
+        "image": "https://www.example.com/images/bbq-ribs.jpg",
+        "price": 12.0,
+        "quantity": 2,
+        "description": "Tender BBQ ribs served with coleslaw and fries.",
+        "category": "BBQ"
+      },
+      {
+        "_id": 2,
+        "name": "Coleslaw",
+        "image": "https://www.example.com/images/coleslaw.jpg",
+        "price": 3.0,
+        "quantity": 1,
+        "description": "Crunchy cabbage with a tangy dressing.",
+        "category": "Sides"
+      },
+      {
+        "_id": 3,
+        "name": "Iced Tea",
+        "image": "https://www.example.com/images/iced-tea.jpg",
+        "price": 3.0,
+        "quantity": 1,
+        "description": "Refreshing iced tea with lemon.",
+        "category": "Beverages"
+      }
+    ],
+    "status": "Pending",
+    "date": "2023-09-24T14:20:00Z"
+  },
+  {
+    "_id": 8,
+    "user": {
+      "_id": 8,
+      "name": "Anne Hathaway",
+      "email": "anne@example.com",
+      "profile": "https://randomuser.me/api/portraits/women/4.jpg"
+    },
+    "delivery_address": "555 Pine St, Northside, City",
+    "contact_number": "555-987-6543",
+    "total_quantity": 6,
+    "delivery_fee": 2,
+    "coupon_discount": 3,
+    "sub_total": 12,
+    "total_price": 27.5,
+    "food_cost": 27.5,
+    "driver": {
+      "_id": 8,
+      "name": "Ethan Taylor",
+      "email": "ethan.taylor@email.com",
+      "phone": "23456784",
+      "profile": "https://img.freepik.com/free-photo/food-delivery-man-scooter_1303-27695.jpg"
+    },
+    "paid_status": "Paid",
+    "food": [
+      {
+        "_id": 1,
+        "name": "Lamb Shawarma",
+        "image": "https://www.example.com/images/lamb-shawarma.jpg",
+        "price": 10.0,
+        "quantity": 2,
+        "description": "Tender lamb in a pita with garlic sauce, tomatoes, and cucumbers.",
+        "category": "Middle Eastern"
+      },
+      {
+        "_id": 2,
+        "name": "Falafel",
+        "image": "https://www.example.com/images/falafel.jpg",
+        "price": 5.5,
+        "quantity": 2,
+        "description": "Crispy falafel balls served with tahini sauce.",
+        "category": "Middle Eastern"
+      },
+      {
+        "_id": 3,
+        "name": "Mint Yogurt Drink",
+        "image": "https://www.example.com/images/mint-yogurt.jpg",
+        "price": 3.0,
+        "quantity": 2,
+        "description": "Cool and refreshing mint yogurt drink.",
+        "category": "Beverages"
+      }
+    ],
+    "status": "Delivered",
+    "date": "2023-09-21T17:10:00Z"
+  },
+  {
+    "_id": 9,
+    "user": {
+      "_id": 9,
+      "name": "Emma Stone",
+      "email": "emma.stone@example.com",
+      "profile": "https://randomuser.me/api/portraits/women/5.jpg"
+    },
+    "delivery_address": "234 Oak Rd, Downtown, City",
+    "contact_number": "555-654-3210",
+    "total_quantity": 8,
+    "delivery_fee": 2,
+    "coupon_discount": 3,
+    "sub_total": 12,
+    "total_price": 42.0,
+    "food_cost": 42.0,
+    "driver": {
+      "_id": 9,
+      "name": "Lucas Harris",
+      "email": "lucas.harris@email.com",
+      "phone": "23456784",
+      "profile": "https://img.freepik.com/free-photo/food-delivery-man-biking_1303-27715.jpg"
+    },
+    "paid_status": "COD",
+    "food": [
+      {
+        "_id": 1,
+        "name": "Cheese Platter",
+        "image": "https://www.example.com/images/cheese-platter.jpg",
+        "price": 15.0,
+        "quantity": 1,
+        "description": "Assorted cheeses served with crackers and fruits.",
+        "category": "Appetizers"
+      },
+      {
+        "_id": 2,
+        "name": "Salmon Sushi",
+        "image": "https://www.example.com/images/salmon-sushi.jpg",
+        "price": 12.0,
+        "quantity": 3,
+        "description": "Fresh salmon sushi rolls served with soy sauce.",
+        "category": "Sushi"
+      },
+      {
+        "_id": 3,
+        "name": "Miso Soup",
+        "image": "https://www.example.com/images/miso-soup.jpg",
+        "price": 5.0,
+        "quantity": 2,
+        "description": "Classic Japanese miso soup with tofu and seaweed.",
+        "category": "Soup"
+      },
+      {
+        "_id": 4,
+        "name": "Green Tea",
+        "image": "https://www.example.com/images/green-tea.jpg",
+        "price": 3.0,
+        "quantity": 2,
+        "description": "A cup of hot green tea.",
+        "category": "Beverages"
+      }
+    ],
+    "status": "On Going",
+    "date": "2023-09-23T20:45:00Z"
+  },
+  {
+    "_id": 10,
+    "user": {
+      "_id": 10,
+      "name": "Johnny Depp",
+      "email": "johnny@example.com",
+      "profile": "https://randomuser.me/api/portraits/men/5.jpg"
+    },
+    "delivery_address": "777 Sunset Blvd, West Coast, City",
+    "contact_number": "555-777-8888",
+    "total_quantity": 2,
+    "delivery_fee": 2,
+    "coupon_discount": 3,
+    "sub_total": 12,
+    "total_price": 12.99,
+    "food_cost": 12.99,
+    "driver": {
+      "_id": 10,
+      "name": "Grace Wilson",
+      "email": "grace.wilson@email.com",
+      "phone": "23456784",
+      "profile": "https://img.freepik.com/free-photo/food-delivery-scooter-man_1303-27719.jpg"
+    },
+    "paid_status": "Online Pay",
+    "food": [
+      {
+        "_id": 1,
+        "name": "Vegan Burger",
+        "image": "https://www.example.com/images/vegan-burger.jpg",
+        "price": 6.99,
+        "quantity": 1,
+        "description": "A delicious vegan burger with plant-based patty and avocado.",
+        "category": "Burger"
+      },
+      {
+        "_id": 2,
+        "name": "Sweet Potato Fries",
+        "image": "https://www.example.com/images/sweet-potato-fries.jpg",
+        "price": 5.0,
+        "quantity": 1,
+        "description": "Crispy sweet potato fries with a smoky dipping sauce.",
+        "category": "Sides"
+      }
+    ],
+    "status": "Pending",
+    "date": "2023-09-22T12:10:00Z"
+  },
+  {
+    "_id": 11,
+    "user": {
+      "_id": 11,
+      "name": "Will Smith",
+      "email": "kM3Qv@example.com",
+      "profile": "https://orthopaedie-hannover.de/wp-content/uploads/2023/02/team-img03.jpg"
+    },
+    "delivery_address": "123 Main St, City, Country",
+    "contact_number": "123-456-7890",
+    "total_quantity": 7,
+    "delivery_fee": 2,
+    "coupon_discount": 3,
+    "sub_total": 12,
+    "total_price": 16.98,
+    "food_cost": 16.98,
+    "driver": {
+      "_id": 11,
+      "name": "John Doe",
+      "email": "driver@email.com",
+      "phone": "23456784",
+      "profile": "https://img.freepik.com/free-photo/food-delivery-boy-delivering-food-scooter_1303-27695.jpg"
+    },
+    "paid_status": "Paid",
+    "food": [
+      {
+        "_id": 11,
+        "name": "Rice Platter with Chicken",
+        "image": "https://i.cbc.ca/1.7438794.1737582409!/fileImage/httpImage/image.jpg_gen/derivatives/original_1180/one-pan-spatchcock-chicken-and-rice.jpg",
+        "price": 12.99,
+        "quantity": 2,
+        "description": "A delicious rice platter with chicken and vegetables.",
+        "category": "Rice"
+      },
+      {
+        "_id": 12,
+        "name": "Rice Platter with Vegetables",
+        "image": "https://img.freepik.com/premium-photo/plate-food-with-rice-rice-vegetables_1288657-55200.jpg",
+        "price": 10.99,
+        "quantity": 1,
+        "description": "A healthy rice platter with a selection of vegetables.",
+        "category": "Rice"
+      }
+    ],
+    "status": "Pending",
+    "date": "2023-07-16T12:20:00Z"
+  },
+  {
+    "_id": 12,
+    "user": {
+      "_id": 12,
+      "name": "Eva Mendes",
+      "email": "eva@example.com",
+      "profile": "https://randomuser.me/api/portraits/women/2.jpg"
+    },
+    "delivery_address": "456 Elm St, Downtown, City",
+    "contact_number": "321-654-9870",
+    "total_quantity": 5,
+    "delivery_fee": 2,
+    "coupon_discount": 3,
+    "sub_total": 12,
+    "total_price": 25.5,
+    "food_cost": 25.5,
+    "driver": {
+      "_id": 12,
+      "name": "Mark Green",
+      "email": "mark.green@email.com",
+      "phone": "23456784",
+      "profile": "https://img.freepik.com/free-photo/food-delivery-service_1303-27700.jpg"
+    },
+    "paid_status": "Online Pay",
+    "food": [
+      {
+        "_id": 11,
+        "name": "Margherita Pizza",
+        "image": "https://www.177milkstreet.com/assets/site/Recipes/Margherita-Pizza.jpg",
+        "price": 8.99,
+        "quantity": 1,
+        "description": "Classic pizza with fresh mozzarella and tomatoes.",
+        "category": "Pizza"
+      },
+      {
+        "_id": 12,
+        "name": "Caesar Salad",
+        "image": "https://image.shutterstock.com/image-photo/caesar-salad-on-plate-260nw-1724729048.jpg",
+        "price": 6.5,
+        "quantity": 2,
+        "description": "Crisp lettuce with Caesar dressing, parmesan, and croutons.",
+        "category": "Salad"
+      }
+    ],
+    "status": "Delivered",
+    "date": "2023-09-15T15:10:00Z"
+  },
+  {
+    "_id": 13,
+    "user": {
+      "_id": 13,
+      "name": "Chris Hemsworth",
+      "email": "chris@example.com",
+      "profile": "https://randomuser.me/api/portraits/men/1.jpg"
+    },
+    "delivery_address": "789 Pine Rd, Suburbia, City",
+    "contact_number": "555-123-4567",
+    "total_quantity": 3,
+    "delivery_fee": 2,
+    "coupon_discount": 3,
+    "sub_total": 12,
+    "total_price": 22.97,
+    "food_cost": 22.97,
+    "driver": {
+      "_id": 13,
+      "name": "Sarah Lee",
+      "email": "sarah.lee@email.com",
+      "phone": "23456784",
+      "profile": "https://img.freepik.com/free-photo/food-delivery-woman-delivering-foods_1303-27685.jpg"
+    },
+    "paid_status": "COD",
+    "food": [
+      {
+        "_id": 11,
+        "name": "Cheeseburger",
+        "image": "https://www.example.com/images/cheeseburger.jpg",
+        "price": 9.99,
+        "quantity": 2,
+        "description": "A juicy cheeseburger with fresh lettuce and tomato.",
+        "category": "Burger"
+      },
+      {
+        "_id": 12,
+        "name": "French Fries",
+        "image": "https://www.example.com/images/french-fries.jpg",
+        "price": 3.99,
+        "quantity": 1,
+        "description": "Crispy golden fries, salted to perfection.",
+        "category": "Sides"
+      }
+    ],
+    "status": "On Going",
+    "date": "2023-09-18T09:30:00Z"
+  },
+  {
+    "_id": 14,
+    "user": {
+      "_id": 14,
+      "name": "Scarlett Johansson",
+      "email": "scarlett@example.com",
+      "profile": "https://randomuser.me/api/portraits/women/3.jpg"
+    },
+    "delivery_address": "654 Oak Blvd, Uptown, City",
+    "contact_number": "123-789-4561",
+    "total_quantity": 4,
+    "delivery_fee": 2,
+    "coupon_discount": 3,
+    "sub_total": 12,
+    "total_price": 19.98,
+    "food_cost": 19.98,
+    "driver": {
+      "_id": 14,
+      "name": "James Bond",
+      "email": "james.bond@email.com",
+      "phone": "23456784",
+      "profile": "https://img.freepik.com/free-photo/food-delivery-man-wearing-helmet_1303-27711.jpg"
+    },
+    "paid_status": "Paid",
+    "food": [
+      {
+        "_id": 11,
+        "name": "Spaghetti Bolognese",
+        "image": "https://example.com/spaghetti.jpg",
+        "price": 8.99,
+        "quantity": 2,
+        "description": "Traditional pasta with a rich Bolognese sauce.",
+        "category": "Pasta"
+      },
+      {
+        "_id": 12,
+        "name": "Garlic Bread",
+        "image": "https://example.com/garlic-bread.jpg",
+        "price": 3.99,
+        "quantity": 2,
+        "description": "Crispy bread topped with garlic and butter.",
+        "category": "Sides"
+      }
+    ],
+    "status": "Pending",
+    "date": "2023-09-20T18:00:00Z"
+  },
+  {
+    "_id": 15,
+    "user": {
+      "_id": 15,
+      "name": "Ryan Reynolds",
+      "email": "ryan@example.com",
+      "profile": "https://randomuser.me/api/portraits/men/2.jpg"
+    },
+    "delivery_address": "123 Maple Ave, City Park, City",
+    "contact_number": "321-654-3210",
+    "total_quantity": 2,
+    "delivery_fee": 2,
+    "coupon_discount": 3,
+    "sub_total": 12,
+    "total_price": 13.98,
+    "food_cost": 13.98,
+    "driver": {
+      "_id": 15,
+      "name": "Sophia Turner",
+      "email": "sophia.turner@email.com",
+      "phone": "23456784",
+      "profile": "https://img.freepik.com/free-photo/food-delivery-girl-scooter_1303-27723.jpg"
+    },
+    "paid_status": "Online Pay",
+    "food": [
+      {
+        "_id": 11,
+        "name": "Veggie Wrap",
+        "image": "https://example.com/veggie-wrap.jpg",
+        "price": 7.99,
+        "quantity": 1,
+        "description": "Healthy wrap with fresh vegetables and a tangy sauce.",
+        "category": "Wrap"
+      },
+      {
+        "_id": 12,
+        "name": "Fruit Smoothie",
+        "image": "https://example.com/fruit-smoothie.jpg",
+        "price": 5.99,
+        "quantity": 1,
+        "description": "A refreshing fruit smoothie made with seasonal fruits.",
+        "category": "Beverage"
+      }
+    ],
+    "status": "On Going",
+    "date": "2023-09-22T12:40:00Z"
+  },
+  {
+    "_id": 16,
+    "user": {
+      "_id": 16,
+      "name": "Ben Affleck",
+      "email": "ben.affleck@example.com",
+      "profile": "https://randomuser.me/api/portraits/men/3.jpg"
+    },
+    "delivery_address": "987 Birch St, Westend, City",
+    "contact_number": "555-321-9870",
+    "total_quantity": 5,
+    "delivery_fee": 2,
+    "coupon_discount": 3,
+    "sub_total": 12,
+    "total_price": 26.45,
+    "food_cost": 26.45,
+    "driver": {
+      "_id": 16,
+      "name": "Alice Carter",
+      "email": "alice.carter@email.com",
+      "phone": "23456784",
+      "profile": "https://img.freepik.com/free-photo/food-delivery-woman-on-scooter_1303-27656.jpg"
+    },
+    "paid_status": "Paid",
+    "food": [
+      {
+        "_id": 11,
+        "name": "Chicken Caesar Wrap",
+        "image": "https://www.example.com/images/caesar-wrap.jpg",
+        "price": 8.99,
+        "quantity": 2,
+        "description": "Grilled chicken with Caesar dressing wrapped in a tortilla.",
+        "category": "Wrap"
+      },
+      {
+        "_id": 12,
+        "name": "Vegetable Soup",
+        "image": "https://www.example.com/images/vegetable-soup.jpg",
+        "price": 5.99,
+        "quantity": 1,
+        "description": "A warm and hearty vegetable soup with seasonal ingredients.",
+        "category": "Soup"
+      },
+      {
+        "_id": 13,
+        "name": "Garlic Bread",
+        "image": "https://www.example.com/images/garlic-bread.jpg",
+        "price": 3.99,
+        "quantity": 2,
+        "description": "Crispy and buttery garlic bread.",
+        "category": "Sides"
+      }
+    ],
+    "status": "Delivered",
+    "date": "2023-09-25T10:00:00Z"
+  },
+  {
+    "_id": 17,
+    "user": {
+      "_id": 17,
+      "name": "Robert Downey Jr.",
+      "email": "robert@example.com",
+      "profile": "https://randomuser.me/api/portraits/men/4.jpg"
+    },
+    "delivery_address": "321 Maple St, Midtown, City",
+    "contact_number": "555-123-7654",
+    "total_quantity": 4,
+    "delivery_fee": 2,
+    "coupon_discount": 3,
+    "sub_total": 12,
+    "total_price": 18.0,
+    "food_cost": 18.0,
+    "driver": {
+      "_id": 17,
+      "name": "Olivia Clark",
+      "email": "olivia.clark@email.com",
+      "phone": "23456784",
+      "profile": "https://img.freepik.com/free-photo/food-delivery-woman-with-bag_1303-27702.jpg"
+    },
+    "paid_status": "COD",
+    "food": [
+      {
+        "_id": 11,
+        "name": "BBQ Ribs",
+        "image": "https://www.example.com/images/bbq-ribs.jpg",
+        "price": 12.0,
+        "quantity": 2,
+        "description": "Tender BBQ ribs served with coleslaw and fries.",
+        "category": "BBQ"
+      },
+      {
+        "_id": 12,
+        "name": "Coleslaw",
+        "image": "https://www.example.com/images/coleslaw.jpg",
+        "price": 3.0,
+        "quantity": 1,
+        "description": "Crunchy cabbage with a tangy dressing.",
+        "category": "Sides"
+      },
+      {
+        "_id": 13,
+        "name": "Iced Tea",
+        "image": "https://www.example.com/images/iced-tea.jpg",
+        "price": 3.0,
+        "quantity": 1,
+        "description": "Refreshing iced tea with lemon.",
+        "category": "Beverages"
+      }
+    ],
+    "status": "Pending",
+    "date": "2023-09-24T14:20:00Z"
+  },
+  {
+    "_id": 18,
+    "user": {
+      "_id": 18,
+      "name": "Anne Hathaway",
+      "email": "anne@example.com",
+      "profile": "https://randomuser.me/api/portraits/women/4.jpg"
+    },
+    "delivery_address": "555 Pine St, Northside, City",
+    "contact_number": "555-987-6543",
+    "total_quantity": 6,
+    "delivery_fee": 2,
+    "coupon_discount": 3,
+    "sub_total": 12,
+    "total_price": 27.5,
+    "food_cost": 27.5,
+    "driver": {
+      "_id": 18,
+      "name": "Ethan Taylor",
+      "email": "ethan.taylor@email.com",
+      "phone": "23456784",
+      "profile": "https://img.freepik.com/free-photo/food-delivery-man-scooter_1303-27695.jpg"
+    },
+    "paid_status": "Paid",
+    "food": [
+      {
+        "_id": 11,
+        "name": "Lamb Shawarma",
+        "image": "https://www.example.com/images/lamb-shawarma.jpg",
+        "price": 10.0,
+        "quantity": 2,
+        "description": "Tender lamb in a pita with garlic sauce, tomatoes, and cucumbers.",
+        "category": "Middle Eastern"
+      },
+      {
+        "_id": 12,
+        "name": "Falafel",
+        "image": "https://www.example.com/images/falafel.jpg",
+        "price": 5.5,
+        "quantity": 2,
+        "description": "Crispy falafel balls served with tahini sauce.",
+        "category": "Middle Eastern"
+      },
+      {
+        "_id": 13,
+        "name": "Mint Yogurt Drink",
+        "image": "https://www.example.com/images/mint-yogurt.jpg",
+        "price": 3.0,
+        "quantity": 2,
+        "description": "Cool and refreshing mint yogurt drink.",
+        "category": "Beverages"
+      }
+    ],
+    "status": "Delivered",
+    "date": "2023-09-21T17:10:00Z"
+  },
+  {
+    "_id": 19,
+    "user": {
+      "_id": 19,
+      "name": "Emma Stone",
+      "email": "emma.stone@example.com",
+      "profile": "https://randomuser.me/api/portraits/women/5.jpg"
+    },
+    "delivery_address": "234 Oak Rd, Downtown, City",
+    "contact_number": "555-654-3210",
+    "total_quantity": 8,
+    "delivery_fee": 2,
+    "coupon_discount": 3,
+    "sub_total": 12,
+    "total_price": 42.0,
+    "food_cost": 42.0,
+    "driver": {
+      "_id": 19,
+      "name": "Lucas Harris",
+      "email": "lucas.harris@email.com",
+      "phone": "23456784",
+      "profile": "https://img.freepik.com/free-photo/food-delivery-man-biking_1303-27715.jpg"
+    },
+    "paid_status": "COD",
+    "food": [
+      {
+        "_id": 11,
+        "name": "Cheese Platter",
+        "image": "https://www.example.com/images/cheese-platter.jpg",
+        "price": 15.0,
+        "quantity": 1,
+        "description": "Assorted cheeses served with crackers and fruits.",
+        "category": "Appetizers"
+      },
+      {
+        "_id": 12,
+        "name": "Salmon Sushi",
+        "image": "https://www.example.com/images/salmon-sushi.jpg",
+        "price": 12.0,
+        "quantity": 3,
+        "description": "Fresh salmon sushi rolls served with soy sauce.",
+        "category": "Sushi"
+      },
+      {
+        "_id": 13,
+        "name": "Miso Soup",
+        "image": "https://www.example.com/images/miso-soup.jpg",
+        "price": 5.0,
+        "quantity": 2,
+        "description": "Classic Japanese miso soup with tofu and seaweed.",
+        "category": "Soup"
+      },
+      {
+        "_id": 14,
+        "name": "Green Tea",
+        "image": "https://www.example.com/images/green-tea.jpg",
+        "price": 3.0,
+        "quantity": 2,
+        "description": "A cup of hot green tea.",
+        "category": "Beverages"
+      }
+    ],
+    "status": "On Going",
+    "date": "2023-09-23T20:45:00Z"
+  }
+]

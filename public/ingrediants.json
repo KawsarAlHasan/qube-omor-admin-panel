@@ -1,0 +1,101 @@
+[
+  {
+    "_id": 1,
+    "ingredient_name": "Chicken Breast",
+    "ingredient_image": "https://assets-jpcust.jwpsrv.com/thumbnails/4Bjx60lU-1280.jpg",
+    "quantity": 19,
+    "price": 10,
+    "cost_on_me": 6,
+    "status": "Active"
+  },
+  {
+    "_id": 2,
+    "ingredient_name": "Lettuce",
+    "ingredient_image": "https://cdn.britannica.com/77/170677-050-F7333D51/lettuce.jpg",
+    "quantity": 1,
+    "price": 3,
+    "cost_on_me": 1,
+    "status": "Active"
+  },
+  {
+    "_id": 3,
+    "ingredient_name": "Tomato",
+    "ingredient_image": "https://foodcare.in/cdn/shop/files/tomatoes-canva.webp?v=1725364526",
+    "quantity": 19,
+    "price": 4,
+    "cost_on_me": 2,
+    "status": "Deactive"
+  },
+  {
+    "_id": 4,
+    "ingredient_name": "Cheese",
+    "ingredient_image": "cheese_image_url",
+    "quantity": 10,
+    "price": 5,
+    "cost_on_me": 2,
+    "status": "Deactive"
+  },
+  {
+    "_id": 5,
+    "ingredient_name": "Onions",
+    "ingredient_image": "onions_image_url",
+    "quantity": 19,
+    "price": 2,
+    "cost_on_me": 1,
+    "status": "Active"
+  },
+  {
+    "_id": 6,
+    "ingredient_name": "Cucumber",
+    "ingredient_image": "cucumber_image_url",
+    "quantity": 19,
+    "price": 3,
+    "cost_on_me": 1.5,
+    "status": "Active"
+  },
+  {
+    "_id": 7,
+    "ingredient_name": "Bacon",
+    "ingredient_image": "bacon_image_url",
+    "quantity": 19,
+    "price": 7,
+    "cost_on_me": 4,
+    "status": "Deactive"
+  },
+  {
+    "_id": 8,
+    "ingredient_name": "Avocado",
+    "ingredient_image": "avocado_image_url",
+    "quantity": 19,
+    "price": 6,
+    "cost_on_me": 3,
+    "status": "Active"
+  },
+  {
+    "_id": 9,
+    "ingredient_name": "Pickles",
+    "ingredient_image": "pickles_image_url",
+    "quantity": 19,
+    "price": 2,
+    "cost_on_me": 1,
+    "status": "Active"
+  },
+  {
+    "_id": 10,
+    "ingredient_name": "Olives",
+    "ingredient_image": "olives_image_url",
+    "quantity": 19,
+    "price": 4,
+    "cost_on_me": 2,
+    "status": "Active"
+  },
+  {
+    "_id": 11,
+    "ingredient_name": "Eggs",
+    "ingredient_image": "eggs_image_url",
+    "quantity": 19,
+    "price": 3,
+    "cost_on_me": 1.5,
+    "status": "Active"
+  }
+]

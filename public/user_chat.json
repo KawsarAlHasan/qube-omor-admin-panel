@@ -1,0 +1,65 @@
+[
+    {
+        "id": 1,
+        "sender": "bot",
+        "receiver": 2,
+        "message": "Hello! Bot",
+        "date": "2025-07-16T16:50:00Z"
+    },
+    {
+        "id": 2,
+        "sender": 2,
+        "receiver": "bot",
+        "message": "Hello! How can I help you? Hello! How can I help you? Hello! How can I help you? Hello! How can I help you?",
+        "date": "2025-07-16T16:50:00Z"
+    },
+    {
+        "id": 3,
+        "sender": "bot",
+        "receiver": 2,
+        "message": "Can you tell me today’s weather?",
+        "date": "2025-07-16T16:51:00Z"
+    },
+    {
+        "id": 4,
+        "sender": 2,
+        "receiver": "bot",
+        "message": "Sure! The weather is sunny with 28°C.",
+        "date": "2025-07-16T16:52:00Z"
+    },
+    {
+        "id": 5,
+        "sender": "bot",
+        "receiver": 2,
+        "message": "Great! Can you also set a reminder for 6 PM?",
+        "date": "2025-07-16T16:53:00Z"
+    },
+    {
+        "id": 6,
+        "sender": 2,
+        "receiver": "bot",
+        "message": "Reminder set for 6 PM.",
+        "date": "2025-07-16T16:54:00Z"
+    },
+    {
+        "id": 7,
+        "sender": "bot",
+        "receiver": 2,
+        "message": "Thank you!  ",
+        "date": "2025-07-16T16:55:00Z"
+    },
+    {
+        "id": 8,
+        "sender": 2,
+        "receiver": "bot",
+        "message": "You're welcome! 😊",
+        "date": "2025-07-16T16:56:00Z"
+    },
+    {
+        "id": 9,
+        "sender": 2,
+        "receiver": "bot",
+        "message": "You're welcome! 😊",
+        "date": "2025-07-16T16:56:00Z"
+    }
+]

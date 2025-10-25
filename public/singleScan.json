@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "image": "https://s3-media0.fl.yelpcdn.com/bphoto/ERfBUd_QD9SntK8Tw-cbGQ/348s.jpg",
+    "name": "Wings Blast"
+  },
+  {
+    "id": 2,
+    "image": "https://www.177milkstreet.com/assets/site/Recipes/Pizza-Pepperoni-Mozzarella-Hot-Honey-FB.jpg",
+    "name": "Pizza"
+  },
+  {
+    "id": 3,
+    "image": "https://img.freepik.com/premium-photo/plate-food-with-rice-rice-vegetables_1288657-55200.jpg",
+    "name": "Rice Platter with Vegetables"
+  },
+  {
+    "id": 4,
+    "image": "https://i.cbc.ca/1.7438794.1737582409!/fileImage/httpImage/image.jpg_gen/derivatives/original_1180/one-pan-spatchcock-chicken-and-rice.jpg",
+    "name": "Rice Platter with Chicken"
+  }
+]
