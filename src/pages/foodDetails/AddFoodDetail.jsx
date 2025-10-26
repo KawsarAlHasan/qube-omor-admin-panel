@@ -18,7 +18,7 @@ import { API } from "../../api/api";
 const { TextArea } = Input;
 const { Option } = Select;
 
-function AddFoodDetail() {
+function AddFoodDetail({refetch}) {
   const { ingredients = [], isLoading: isLoadingIngredients } = useIngredients({
     status: "Active",
   });
@@ -158,6 +158,7 @@ function AddFoodDetail() {
 
       message.success("✅ Food added successfully!");
       handleCancel();
+      refetch();
       console.log("Food created:", response.data);
     } catch (error) {
       console.error("❌ Submission Failed:", error);

@@ -237,7 +237,7 @@ const [selectedCategory, setSelectedCategory] = useState(null);
           style={{ width: 300 }}
         />
 
-        <AddFoodDetail />
+        <AddFoodDetail refetch={refetch} />
       </div>
 
       <Table
