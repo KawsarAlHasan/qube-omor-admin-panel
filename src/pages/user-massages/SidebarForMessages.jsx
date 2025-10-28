@@ -9,7 +9,8 @@ import {
   CloseOutlined,
 } from "@ant-design/icons";
 import { Link, useSearchParams } from "react-router-dom";
-import { useUsersForMessage } from "../../api/userApi";
+import { useUsersForMessages } from "../../api/userApi";
+import socket from "../../socket";
 
 const { Search } = Input;
 const { Text } = Typography;
@@ -20,13 +21,12 @@ function SidebarForMessages({ vendorID, isMobile, onUserSelect }) {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const { usersForMessage, isLoading, isError, error, refetch } =
-    useUsersForMessage();
+  const { usersForMessages, isLoading, isError, error, refetch } =
+    useUsersForMessages({
+      search: searchQuery,
+    });
 
-  // Filter users based on search query
-  const filteredUsers = usersForMessage?.filter(user =>
-    user.full_name?.toLowerCase().includes(searchQuery.toLowerCase())
-  ) || [];
+  const myID = "000000000000000000000001";
 
   // Format timestamp to relative time
   const formatTime = (dateString) => {
@@ -83,6 +83,11 @@ function SidebarForMessages({ vendorID, isMobile, onUserSelect }) {
     setDrawerVisible(!drawerVisible);
   };
 
+  // Connect user to socket server
+  useEffect(() => {
+    socket.emit("userConnected", myID);
+  }, [myID]);
+
   const sidebarContent = (
     <div className="h-full flex flex-col">
       {/* Header */}
@@ -126,13 +131,13 @@ function SidebarForMessages({ vendorID, isMobile, onUserSelect }) {
         >
           <List
             itemLayout="horizontal"
-            dataSource={filteredUsers}
+            dataSource={usersForMessages}
             loading={isLoading}
             renderItem={(user) => (
               <List.Item
                 className={`p-3 mx-2 my-1 rounded-lg border-0 hover:bg-gray-50 cursor-pointer transition-all ${
-                  selectedUser?.id === user.id 
-                    ? "bg-blue-50 border-l-4 border-l-blue-500" 
+                  selectedUser?.id === user.id
+                    ? "bg-blue-50 border-l-4 border-l-blue-500"
                     : ""
                 } ${isMobile ? "p-4" : "p-3"}`}
                 onClick={() => handleUserSelect(user)}
@@ -165,8 +170,8 @@ function SidebarForMessages({ vendorID, isMobile, onUserSelect }) {
                           size={isMobile ? 56 : 50}
                           src={
                             <img
-                              src={user.profile}
-                              alt={user.full_name}
+                              src={user.profile_image}
+                              alt={user.name}
                               className="object-cover w-full h-full"
                             />
                           }
@@ -176,31 +181,29 @@ function SidebarForMessages({ vendorID, isMobile, onUserSelect }) {
                   }
                   title={
                     <div className="flex items-center">
-                      <Text 
-                        strong 
-                        className={`${isMobile ? "text-lg" : "text-base"} truncate max-w-[120px]`}
+                      <Text
+                        strong
+                        className={`${
+                          isMobile ? "text-lg" : "text-base"
+                        } truncate max-w-[120px]`}
                       >
-                        {user.full_name}
+                        {user.name}
                       </Text>
-                      {user.is_active && (
-                        <CheckCircleOutlined
-                          className="text-green-500 ml-2"
-                          style={{ fontSize: isMobile ? 16 : 14 }}
-                        />
-                      )}
                     </div>
                   }
                   description={
                     <div className="flex items-center mt-1">
                       {!user.is_active && (
-                        <ClockCircleOutlined 
-                          className="text-gray-400 mr-1" 
+                        <ClockCircleOutlined
+                          className="text-gray-400 mr-1"
                           style={{ fontSize: isMobile ? 14 : 12 }}
                         />
                       )}
                       <Text
                         ellipsis
-                        className={`${isMobile ? "text-base" : "text-sm"} max-w-[150px]`}
+                        className={`${
+                          isMobile ? "text-base" : "text-sm"
+                        } max-w-[150px]`}
                         type="secondary"
                       >
                         {user.last_message}
@@ -241,7 +244,7 @@ function SidebarForMessages({ vendorID, isMobile, onUserSelect }) {
         >
           Conversations
         </Button>
-        <Badge count={13} style={{ backgroundColor: '#1890ff' }} />
+        <Badge count={13} style={{ backgroundColor: "#1890ff" }} />
       </div>
 
       {/* Drawer for mobile */}
@@ -254,7 +257,7 @@ function SidebarForMessages({ vendorID, isMobile, onUserSelect }) {
         bodyStyle={{ padding: 0 }}
         className="mobile-messages-drawer"
         styles={{
-          body: { padding: 0 }
+          body: { padding: 0 },
         }}
       >
         {sidebarContent}

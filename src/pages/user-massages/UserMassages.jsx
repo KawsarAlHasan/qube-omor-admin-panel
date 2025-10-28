@@ -26,7 +26,7 @@ function UserMassages() {
 
   const handleUserSelect = (user) => {
     // Handle user selection
-    console.log("Selected user:", user);
+    // console.log("Selected user:", user);
   };
 
   return (
@@ -40,7 +40,7 @@ function UserMassages() {
         </div>
         <div className="col-span-3 md:col-span-2">
           {senderId ? (
-            <MessageBox user={senderId} />
+            <MessageBox senderId={senderId} />
           ) : (
             <div className="flex flex-col h-full">
               {/* <div className="p-4 border-b border-gray-200 bg-gray-50"></div> */}
