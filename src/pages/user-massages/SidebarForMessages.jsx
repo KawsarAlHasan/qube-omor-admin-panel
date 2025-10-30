@@ -7,6 +7,7 @@ import {
   SearchOutlined,
   MenuOutlined,
   CloseOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import { Link, useSearchParams } from "react-router-dom";
 import { useUsersForMessages } from "../../api/userApi";
@@ -15,7 +16,7 @@ import socket from "../../socket";
 const { Search } = Input;
 const { Text } = Typography;
 
-function SidebarForMessages({ vendorID, isMobile, onUserSelect }) {
+function SidebarForMessages({ isMobile, onUserSelect }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedUser, setSelectedUser] = useState(null);
   const [drawerVisible, setDrawerVisible] = useState(false);
@@ -67,12 +68,10 @@ function SidebarForMessages({ vendorID, isMobile, onUserSelect }) {
     }
 
     try {
-      const sendReadData = {
-        sender_id: senderId,
-        receiver_id: vendorID,
-      };
-      // await API.put("/message/read-message", sendReadData);
-      // refetch();
+      socket.emit("adminMessageRead", {
+        userId: senderId,
+      });
+      await refetch();
     } catch (error) {
       console.error(error);
     }
@@ -87,6 +86,17 @@ function SidebarForMessages({ vendorID, isMobile, onUserSelect }) {
   useEffect(() => {
     socket.emit("userConnected", myID);
   }, [myID]);
+
+  useEffect(() => {
+    socket.on("receiveMessage", (message) => {
+      console.log("New message received:", message);
+      refetch();
+    });
+
+    return () => {
+      socket.off("receiveMessage");
+    };
+  }, [refetch]);
 
   const sidebarContent = (
     <div className="h-full flex flex-col">
@@ -168,13 +178,10 @@ function SidebarForMessages({ vendorID, isMobile, onUserSelect }) {
                       >
                         <Avatar
                           size={isMobile ? 56 : 50}
-                          src={
-                            <img
-                              src={user.profile_image}
-                              alt={user.name}
-                              className="object-cover w-full h-full"
-                            />
-                          }
+                          icon={user?.profile_image === "" && <UserOutlined />}
+                          src={user?.profile_image}
+                          alt={user?.name}
+                          className="object-cover"
                         />
                       </Badge>
                     </div>
