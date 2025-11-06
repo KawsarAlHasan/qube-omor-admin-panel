@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 export const API = axios.create({
-  // baseURL: "http://localhost:8000/api/v1",
-  // baseURL: "http://localhost:8099/api/v1",
-  baseURL: "https://qube.dsrt321.online/api/v1",
+  baseURL: `${BASE_URL}/api/v1`,
 });
 
 API.interceptors.request.use((config) => {
@@ -138,28 +138,6 @@ export const getMockAdministrators = async () => {
   const response = await axios.get("/administrators_8.json");
 
   return response.data;
-};
-
-// administrators
-export const getMockDriverList = async () => {
-  const response = await axios.get("/driverList.json");
-
-  return response.data;
-};
-
-export const useAllMockDriverList = () => {
-  const {
-    data: allMockDriverList = [],
-    isLoading,
-    isError,
-    error,
-    refetch,
-  } = useQuery({
-    queryKey: ["allMockDriverList"],
-    queryFn: getMockDriverList,
-  });
-
-  return { allMockDriverList, isLoading, isError, error, refetch };
 };
 
 // payments

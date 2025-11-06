@@ -87,16 +87,25 @@ function SidebarForMessages({ isMobile, onUserSelect }) {
     socket.emit("userConnected", myID);
   }, [myID]);
 
-  useEffect(() => {
-    socket.on("receiveMessage", (message) => {
-      console.log("New message received:", message);
-      refetch();
-    });
+  socket.on(`newMessage::${myID}`, (message) => {
+    console.log("Testing:", message);
+  });
 
-    return () => {
-      socket.off("receiveMessage");
-    };
-  }, [refetch]);
+  // socket.on(`getMessage::${myID}`, (message) => {
+  //   console.log("New message received testing:", message);
+  //   refetch();
+  // });
+
+  // useEffect(() => {
+  //   socket.on("receiveMessage", (message) => {
+  //     console.log("New message received:", message);
+  //     refetch();
+  //   });
+
+  //   return () => {
+  //     socket.off("receiveMessage");
+  //   };
+  // }, [refetch]);
 
   const sidebarContent = (
     <div className="h-full flex flex-col">

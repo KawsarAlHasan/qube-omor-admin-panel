@@ -2,61 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { API } from "./api";
 
-// food
-export const useMockFoods = ({
-  page = 1,
-  limit = 10,
-  food_name = null,
-  status = null,
-}) => {
-  const getData = async () => {
-    const response = await axios.get("/foods.json");
-
-    let filteredData = response.data;
-
-    if (food_name && food_name.trim() !== "") {
-      filteredData = filteredData.filter((item) =>
-        item.food_name?.toLowerCase().includes(food_name.toLowerCase())
-      );
-    }
-
-    if (status) {
-      filteredData = filteredData.filter((item) => item.status === status);
-    }
-
-    const totalItems = filteredData.length;
-    const totalPages = Math.ceil(totalItems / limit);
-
-    const paginatedData = filteredData.slice((page - 1) * limit, page * limit);
-
-    return {
-      data: paginatedData,
-      pagination: {
-        totalItems,
-        page,
-        limit,
-        totalPages,
-      },
-    };
-  };
-
-  const {
-    data: response = {},
-    isLoading,
-    isError,
-    error,
-    refetch,
-  } = useQuery({
-    queryKey: ["mockFoods", page, limit, food_name, status],
-    queryFn: getData,
-    keepPreviousData: true,
-  });
-
-  const { data: mockFoods = [], pagination = {} } = response;
-
-  return { mockFoods, pagination, isLoading, isError, error, refetch };
-};
-
 export const useFoods = ({
   page = 1,
   limit = 10,
@@ -105,7 +50,6 @@ export const useMockCategory = (params) => {
   return { mockCategory, isLoading, isError, error, refetch };
 };
 
-
 // ingrediants
 export const useIngredients = (params) => {
   const getData = async () => {
@@ -126,3 +70,27 @@ export const useIngredients = (params) => {
 
   return { ingredients, isLoading, isError, error, refetch };
 };
+
+// get all food-orders
+export const useAllFoodOrders = ({ page = 1, limit = 10, status = null }) => {
+  const getData = async () => {
+    const response = await API.get("/food-order/all", {
+      params: { page, limit, status },
+    });
+    return response.data;
+  };
+
+  const {
+    data: allFoodOrders = [],
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["allFoodOrders", page, limit, status],
+    queryFn: getData,
+  });
+
+  return { allFoodOrders, isLoading, isError, error, refetch };
+};
+

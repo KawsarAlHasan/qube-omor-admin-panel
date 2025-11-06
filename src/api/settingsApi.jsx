@@ -20,3 +20,5 @@ export const useTermsPrivacy = (filter) => {
 
   return { termsPrivacy, isLoading, isError, error, refetch };
 };
+
+

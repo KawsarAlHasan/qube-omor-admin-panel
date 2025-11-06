@@ -1,23 +1,18 @@
 import React, { useState } from "react";
-import {
-  DeleteFilled,
-  EditOutlined,
-  EyeOutlined,
-  PhoneOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { EyeOutlined } from "@ant-design/icons";
 import {
   Button,
   Modal,
   Tag,
   Divider,
-  Descriptions,
-  Image,
   Avatar,
   Card,
   Row,
   Col,
+  Image,
 } from "antd";
+import driverIcon from "../../assets/icons/driverIcon.png";
+import userIcon from "../../assets/icons/userIcon.png";
 
 const FoodOrderDetails = ({ record, refetch }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -66,6 +61,7 @@ const FoodOrderDetails = ({ record, refetch }) => {
 
   // Format date
   const formatDate = (dateString) => {
+    if (!dateString) return "N/A";
     return new Date(dateString).toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",
@@ -73,6 +69,22 @@ const FoodOrderDetails = ({ record, refetch }) => {
       hour: "2-digit",
       minute: "2-digit",
     });
+  };
+
+  // Calculate total price for a food item including ingredients
+  const calculateFoodItemTotal = (item) => {
+    let basePrice = item.food_price || 0;
+
+    // Add extra ingredients price
+    if (item.extra_Ingredients && item.extra_Ingredients.length > 0) {
+      const extraPrice = item.extra_Ingredients.reduce(
+        (sum, ing) => sum + (ing.price || 0),
+        0
+      );
+      basePrice += extraPrice;
+    }
+
+    return (basePrice * (item.food_quantity || 0)).toFixed(2);
   };
 
   return (
@@ -122,20 +134,16 @@ const FoodOrderDetails = ({ record, refetch }) => {
             >
               <div className="flex items-center space-x-4">
                 <Avatar
-                  src={record.user?.profile}
+                  src={record?.user?.profile_image || userIcon}
                   size={64}
                   className="border-2 border-gray-200"
-                >
-                  {record.user?.name?.charAt(0)}
-                </Avatar>
+                ></Avatar>
                 <div>
                   <h3 className="text-lg font-semibold text-gray-800">
                     {record.user?.name}
                   </h3>
                   <p className="text-gray-600">{record.user?.email}</p>
-                  <p className="text-gray-500 text-sm">
-                    {record.contact_number}
-                  </p>
+                  <p className="text-gray-500 text-sm">{record.user?.phone}</p>
                 </div>
               </div>
 
@@ -152,7 +160,9 @@ const FoodOrderDetails = ({ record, refetch }) => {
                 </div>
                 <div>
                   <h4 className="font-medium text-gray-700 mb-2">Order Date</h4>
-                  <p className="text-gray-600">{formatDate(record.date)}</p>
+                  <p className="text-gray-600">
+                    {formatDate(record.createdAt)}
+                  </p>
                 </div>
               </div>
             </Card>
@@ -163,34 +173,93 @@ const FoodOrderDetails = ({ record, refetch }) => {
                 {record.food?.map((item) => (
                   <div
                     key={item._id}
-                    className="flex items-center space-x-4 p-3 bg-gray-50 rounded-lg"
+                    className="flex items-start space-x-4 p-3 bg-gray-50 rounded-lg"
                   >
                     <Image
                       width={80}
                       height={80}
-                      src={item.image}
-                      alt={item.name}
+                      src={item.food_image}
+                      alt={item.food_name}
                       className="rounded-md object-cover"
-                      preview={false}
+                      preview={true}
                     />
                     <div className="flex-1">
                       <h4 className="font-semibold text-gray-800">
-                        {item.name}
+                        {item.food_name}
                       </h4>
-                      <p className="text-gray-600 text-sm">{item.category}</p>
-                      <p className="text-gray-500 text-xs line-clamp-1">
-                        {item.description}
+                      <p className="text-gray-600 text-sm">
+                        Base Price: ${item.food_price}
                       </p>
+
+                      {/* Food Ingredients */}
+                      {item.food_ingredients &&
+                        item.food_ingredients.length > 0 && (
+                          <div className="mt-2">
+                            <p className="text-xs font-medium text-gray-700">
+                              Ingredients:
+                            </p>
+                            <div className="flex flex-wrap gap-1 mt-1">
+                              {item.food_ingredients.map((ing) => (
+                                <Tag
+                                  key={ing._id}
+                                  color="blue"
+                                  className="text-xs"
+                                >
+                                  {ing.name}
+                                </Tag>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                      {/* Extra Ingredients */}
+                      {item.extra_Ingredients &&
+                        item.extra_Ingredients.length > 0 && (
+                          <div className="mt-2">
+                            <p className="text-xs font-medium text-gray-700">
+                              Extra Ingredients:
+                            </p>
+                            <div className="flex flex-wrap gap-1 mt-1">
+                              {item.extra_Ingredients.map((ing) => (
+                                <Tag
+                                  key={ing._id}
+                                  color="green"
+                                  className="text-xs"
+                                >
+                                  {ing.name} (+${ing.price})
+                                </Tag>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                      {/* Removed Ingredients */}
+                      {item.remove_ingredients &&
+                        item.remove_ingredients.length > 0 && (
+                          <div className="mt-2">
+                            <p className="text-xs font-medium text-gray-700">
+                              Removed:
+                            </p>
+                            <div className="flex flex-wrap gap-1 mt-1">
+                              {item.remove_ingredients.map((ing, index) => (
+                                <Tag
+                                  key={index}
+                                  color="red"
+                                  className="text-xs"
+                                >
+                                  {ing.name || ing}
+                                </Tag>
+                              ))}
+                            </div>
+                          </div>
+                        )}
                     </div>
                     <div className="text-right">
-                      <p className="font-semibold text-gray-800">
-                        ${item.price}
-                      </p>
                       <p className="text-gray-600 text-sm">
-                        Qty: {item.quantity}
+                        Qty: {item.food_quantity}
                       </p>
-                      <p className="font-medium text-green-600">
-                        ${(item.price * item.quantity).toFixed(2)}
+                      <p className="font-medium text-green-600 text-lg">
+                        ${item.amount}
                       </p>
                     </div>
                   </div>
@@ -203,8 +272,8 @@ const FoodOrderDetails = ({ record, refetch }) => {
               <Row gutter={[16, 16]} className="text-gray-700">
                 <Col span={12}>
                   <div className="flex justify-between py-2 border-b">
-                    <span>Food Cost:</span>
-                    <span className="font-medium">${record.food_cost}</span>
+                    <span>Sub Total:</span>
+                    <span className="font-medium">${record.sub_total}</span>
                   </div>
                 </Col>
                 <Col span={12}>
@@ -218,15 +287,13 @@ const FoodOrderDetails = ({ record, refetch }) => {
                 <Col span={12}>
                   <div className="flex justify-between py-2 border-b">
                     <span>Delivery Fee:</span>
-                    <span className="font-medium">${record?.delivery_fee}</span>
+                    <span className="font-medium">${record.delivery_fee}</span>
                   </div>
                 </Col>
                 <Col span={12}>
                   <div className="flex justify-between py-2 border-b">
-                    <span>Coupon Discount:</span>
-                    <span className="font-medium">
-                      -${record?.coupon_discount}
-                    </span>
+                    <span>Food Cost:</span>
+                    <span className="font-medium">${record.food_cost}</span>
                   </div>
                 </Col>
                 <Col span={12}>
@@ -258,27 +325,31 @@ const FoodOrderDetails = ({ record, refetch }) => {
             </Card>
 
             {/* Driver Information */}
-            {record.driver ? (
+            {record?.driver ? (
               <Card
                 title="Driver Information"
                 size="small"
                 className="shadow-sm"
               >
                 <div className="flex items-center space-x-4">
-                  <Avatar size={48} src={record.driver.profile} />
-                  <div className="mt-3">
+                  <Avatar
+                    size={48}
+                    src={record?.driver?.profile_image || driverIcon}
+                  >
+                    {record?.driver?.name?.charAt(0).toUpperCase()}
+                  </Avatar>
+                  <div>
                     <h4 className="font-semibold text-gray-800">
-                      {record.driver.name}
+                      {record?.driver?.name}
                     </h4>
                     <p className="text-gray-600 text-sm">
-                      {record.driver.email}
+                      {record?.driver?.email}
+                    </p>
+                    <p className="text-gray-600 text-sm">
+                      Phone: {record?.driver?.phone}
                     </p>
                   </div>
                 </div>
-                {/* <p className="text-gray-600 mt-2">Driver ID: {record.driver._id}</p> */}
-                <p className="text-gray-600 mt-2">
-                  Driver phone: {record.driver.phone}
-                </p>
               </Card>
             ) : (
               <Card
@@ -286,7 +357,7 @@ const FoodOrderDetails = ({ record, refetch }) => {
                 size="small"
                 className="shadow-sm"
               >
-                Not Assigned
+                <p className="text-gray-500">Driver Not Assigned</p>
               </Card>
             )}
           </div>

@@ -27,8 +27,7 @@ import { API } from "../../api/api";
 const { Search } = Input;
 
 function FoodDetails() {
-
-const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
   const [newStatus, setNewStatus] = useState("");
   const [isStatusChangeLoading, setIsStatusChangeLoading] = useState(false);
@@ -46,13 +45,11 @@ const [selectedCategory, setSelectedCategory] = useState(null);
 
   const { allFoods, isLoading, isError, error, refetch } = useFoods(filters);
 
-  
   const openStatusModal = (record) => {
     setSelectedCategory(record);
     setNewStatus(record.food_status);
     setIsStatusModalOpen(true);
   };
-
 
   const openDeleteModal = (record) => {
     setSelectedFood(record);
@@ -78,35 +75,37 @@ const [selectedCategory, setSelectedCategory] = useState(null);
     }
   };
 
-    const handleStatusChange = async () => {
-      if (!selectedCategory) return;
-  
-      setIsStatusChangeLoading(true);
-  
-      try {
-        // Simulate API call
-        await API.put(`/food/status-change/${selectedCategory._id}`, {
-          food_status: newStatus,
-        });
-  
-        message.success("Food status updated successfully!");
-        setIsStatusModalOpen(false);
-        setSelectedCategory(null);
-        setNewStatus("");
-        refetch();
-      } catch (err) {
-        console.log(err.response);
-        message.error(
-          err.response?.data?.message || "Failed to update Food status"
-        );
-      } finally {
-        setIsStatusChangeLoading(false);
-      }
-    };
+  const handleStatusChange = async () => {
+    if (!selectedCategory) return;
+
+    setIsStatusChangeLoading(true);
+
+    try {
+      // Simulate API call
+      await API.put(`/food/status-change/${selectedCategory._id}`, {
+        food_status: newStatus,
+      });
+
+      message.success("Food status updated successfully!");
+      setIsStatusModalOpen(false);
+      setSelectedCategory(null);
+      setNewStatus("");
+      refetch();
+    } catch (err) {
+      console.log(err.response);
+      message.error(
+        err.response?.data?.message || "Failed to update Food status"
+      );
+    } finally {
+      setIsStatusChangeLoading(false);
+    }
+  };
 
   const handleTableChange = (pagination, tableFilters) => {
     const { current: page, pageSize: limit } = pagination;
-    const status = tableFilters.food_status ? tableFilters.food_status[0] : null;
+    const status = tableFilters.food_status
+      ? tableFilters.food_status[0]
+      : null;
     const food_name = tableFilters.food_name ? tableFilters.food_name[0] : null;
 
     setFilters((prevFilters) => ({
@@ -276,8 +275,7 @@ const [selectedCategory, setSelectedCategory] = useState(null);
         </p>
       </Modal>
 
-
-         {/* Status Change Modal */}
+      {/* Status Change Modal */}
       <Modal
         title="Change Food Status"
         open={isStatusModalOpen}
@@ -296,7 +294,6 @@ const [selectedCategory, setSelectedCategory] = useState(null);
           <Select.Option value="Deactive">Deactive</Select.Option>
         </Select>
       </Modal>
-
     </div>
   );
 }

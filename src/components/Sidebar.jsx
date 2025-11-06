@@ -21,6 +21,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { TbMessageMinus } from "react-icons/tb";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import { signOutAdmin } from "../api/api";
+import driverIcon from "../assets/icons/driverIcon.png";
 
 const Sidebar = ({ onClick }) => {
   const location = useLocation();
@@ -50,6 +51,8 @@ const Sidebar = ({ onClick }) => {
     if (path === "/user-management") return ["user-management"];
     if (path === "/user-massages") return ["user-massages"];
     if (path === "/administrators") return ["administrators"];
+    if (path === "/drivers") return ["drivers", "settings"];
+    if (path === "/instructors") return ["instructors", "settings"];
     if (path === "/terms-and-conditions")
       return ["terms-and-conditions", "settings"];
     if (path === "/privacy-policy") return ["privacy-policy", "settings"];
@@ -127,10 +130,10 @@ const Sidebar = ({ onClick }) => {
       ],
     },
     {
-          key: "credits",
-          icon: <FaBoxes />,
-          label: <Link to="/credits">Credits</Link>,
-        },
+      key: "credits",
+      icon: <FaBoxes />,
+      label: <Link to="/credits">Credits</Link>,
+    },
 
     {
       key: "user-management",
@@ -159,6 +162,16 @@ const Sidebar = ({ onClick }) => {
       icon: <IoSettingsOutline />,
       label: "Settings",
       children: [
+        {
+          key: "drivers",
+          icon: <img className="w-4" src={driverIcon} alt="driver" />,
+          label: <Link to="/drivers">Drivers</Link>,
+        },
+        {
+          key: "instructors",
+          icon: <FaFileContract />,
+          label: <Link to="/instructors">Instructors</Link>,
+        },
         {
           key: "terms-and-conditions",
           icon: <FaFileContract />,
