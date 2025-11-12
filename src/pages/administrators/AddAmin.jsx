@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Modal, Form, Input, Select, message } from "antd";
 import { FaPlus } from "react-icons/fa";
-// import { API } from "../../api/api";
+import { API } from "../../api/api";
 
 const { Option } = Select;
 
@@ -15,12 +15,13 @@ const AddAdmin = ({ refetch }) => {
   const handleFinish = async (values) => {
     try {
       setLoading(true);
-      // await API.post("/admin/administrators/create/", values);
+
+      await API.post("/admin/create/", values);
       message.success("Admin created successfully!");
       refetch?.();
       setIsModalOpen(false);
     } catch (err) {
-      message.error(err.response?.data?.detail || "Failed to create admin");
+      message.error(err.response?.data?.message || "Failed to create admin");
     } finally {
       setLoading(false);
     }
@@ -64,6 +65,14 @@ const AddAdmin = ({ refetch }) => {
           </Form.Item>
 
           <Form.Item
+            label="Password"
+            name="password"
+            rules={[{ required: true, message: "Please enter admin password" }]}
+          >
+            <Input placeholder="Enter admin password" />
+          </Form.Item>
+
+          <Form.Item
             label="Phone Number"
             name="phone"
             rules={[{ required: true, message: "Please enter phone number" }]}
@@ -77,9 +86,9 @@ const AddAdmin = ({ refetch }) => {
             rules={[{ required: true, message: "Please select role" }]}
           >
             <Select placeholder="Select role">
-              <Option value="superadmin">Super Admin</Option>
-              <Option value="admin">Admin</Option>
-              <Option value="driver">Driver</Option>
+              <Option value="Super Admin">Super Admin</Option>
+              <Option value="Admin">Admin</Option>
+              <Option value="Staff">Staff</Option>
             </Select>
           </Form.Item>
 

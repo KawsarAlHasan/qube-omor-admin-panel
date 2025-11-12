@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { EditOutlined, UserOutlined } from "@ant-design/icons";
+import { useState } from "react";
+import { EditOutlined } from "@ant-design/icons";
 import { Button, Modal, Form, Input, message, Select } from "antd";
-// import { API } from "../../api/api";
+import { API } from "../../api/api";
 
 const AdminEdit = ({ adminProfile, refetch }) => {
-  const isSuperAdmin = adminProfile.role === "superadmin";
+  const isSuperAdmin = adminProfile.role === "Super Admin";
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -15,26 +15,14 @@ const AdminEdit = ({ adminProfile, refetch }) => {
     try {
       setLoading(true);
 
-      const submitData = {
-        full_name: values.full_name,
-        email: values.email,
-        phone: values.phone,
-        role: values.role,
-      };
-
-      console.log(submitData, "submitData");
-
-      // await API.put(
-      //   `/admin/administrators/${adminProfile.id}/update/`,
-      //   submitData
-      // );
+      await API.put(`/admin/update/${adminProfile?._id}`, values);
 
       message.success("Admin updated successfully!");
       refetch();
       setIsModalOpen(false);
     } catch (err) {
       console.log(err, "err");
-      message.error(err.response?.data?.error || "Failed to update Admin");
+      message.error(err.response?.data?.message || "Failed to update Admin");
     } finally {
       setLoading(false);
     }
@@ -62,7 +50,7 @@ const AdminEdit = ({ adminProfile, refetch }) => {
           onFinish={handleFinish}
           initialValues={{
             id: adminProfile?.id,
-            full_name: adminProfile?.full_name,
+            name: adminProfile?.name,
             email: adminProfile?.email,
             phone: adminProfile?.phone,
             role: adminProfile?.role,
@@ -70,7 +58,7 @@ const AdminEdit = ({ adminProfile, refetch }) => {
         >
           <Form.Item
             label="Name"
-            name="full_name"
+            name="name"
             rules={[{ required: true, message: "Please enter your name" }]}
           >
             <Input />

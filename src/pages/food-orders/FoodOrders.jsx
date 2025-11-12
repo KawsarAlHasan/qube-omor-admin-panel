@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, Tag, Button, Modal, Select, message } from "antd";
+import { Table, Tag, Button, Modal, Select, message, Input } from "antd";
 import IsError from "../../components/IsError";
 import IsLoading from "../../components/IsLoading";
 import { EditOutlined } from "@ant-design/icons";
@@ -11,7 +11,11 @@ import { useUsersList } from "../../api/userApi";
 import driverIcon from "../../assets/icons/driverIcon.png";
 import userIcon from "../../assets/icons/userIcon.png";
 
+const { Search } = Input;
+
 function FoodOrders() {
+  const [searchText, setSearchText] = useState("");
+
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -23,6 +27,7 @@ function FoodOrders() {
     page: 1,
     limit: 10,
     status: currentFilter,
+    search: searchText,
   });
 
   // Sync filter status with URL parameter
@@ -349,36 +354,49 @@ function FoodOrders() {
 
   return (
     <div className="p-4">
-      <div className="flex gap-2 mb-4">
-        {[
-          "All",
-          "Pending",
-          "Processing",
-          "On Going",
-          "Delivered",
-          "Cancelled",
-        ].map((filterType) => (
-          <Button
-            key={filterType}
-            type={currentFilter === filterType ? "primary" : "default"}
-            onClick={() => handleFilterChange(filterType)}
-            className={currentFilter === filterType ? "my-main-button" : ""}
-          >
-            {filterType === "On Going"
-              ? "On Going"
-              : filterType === "Cancelled"
-              ? "Cancelled"
-              : filterType}{" "}
-            Orders
-          </Button>
-        ))}
-      </div>
+      <div className="flex justify-between">
+        <div className="flex gap-2 mb-4">
+          {[
+            "All",
+            "Pending",
+            "Processing",
+            "On Going",
+            "Delivered",
+            "Cancelled",
+          ].map((filterType) => (
+            <Button
+              key={filterType}
+              type={currentFilter === filterType ? "primary" : "default"}
+              onClick={() => handleFilterChange(filterType)}
+              className={currentFilter === filterType ? "my-main-button" : ""}
+            >
+              {filterType === "On Going"
+                ? "On Going"
+                : filterType === "Cancelled"
+                ? "Cancelled"
+                : filterType}{" "}
+              Orders
+            </Button>
+          ))}
+        </div>
 
-      {/* <Select.Option value="Pending">Pending</Select.Option>
-          <Select.Option value="Processing">Processing</Select.Option>
-          <Select.Option value="On Going">On Going</Select.Option>
-          <Select.Option value="Delivered">Delivered</Select.Option>
-          <Select.Option value="Cancelled">Cancelled</Select.Option> */}
+        <div>
+          <Search
+            placeholder="Search by User name or email or phone..."
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+            onSearch={(value) => {
+              setFilter((prevFilter) => ({
+                ...prevFilter,
+                search: value || null,
+                page: 1,
+              }));
+            }}
+            style={{ width: 350 }}
+            allowClear
+          />
+        </div>
+      </div>
 
       <Table
         columns={columns}

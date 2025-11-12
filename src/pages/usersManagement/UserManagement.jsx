@@ -1,18 +1,17 @@
 import { useState } from "react";
-import { Table, Space, Tag, Button, Modal, Select, message } from "antd";
-import { MdBlock } from "react-icons/md";
+import { Table, Space, Tag, Button, Modal, Select, message, Input } from "antd";
 import IsError from "../../components/IsError";
 import IsLoading from "../../components/IsLoading";
-import { DeleteFilled, EditOutlined, EyeOutlined } from "@ant-design/icons";
+import { DeleteFilled, EditOutlined } from "@ant-design/icons";
 import ViewUser from "./ViewUser";
-import { useAllUsers } from "../../services/userService";
+import { useUsersList } from "../../api/userApi";
+import userIcon from "../../assets/icons/userIcon.png";
+import { API } from "../../api/api";
+
+const { Search } = Input;
 
 function UserManagement() {
-  const [filter, setFilter] = useState({
-    page: 1,
-    limit: 10,
-  });
-
+  const [searchText, setSearchText] = useState("");
   const [userDetailsData, setUserDetailsData] = useState(null);
 
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
@@ -24,8 +23,16 @@ function UserManagement() {
 
   const [isStatusChangeLoading, setIsStatusChangeLoading] = useState(false);
 
-  const { allUsers, pagination, isLoading, isError, error, refetch } =
-    useAllUsers(filter);
+  // Combine all filter parameters in one state
+  const [filter, setFilter] = useState({
+    role: "User",
+    page: 1,
+    limit: 10,
+    name: "", // search query
+  });
+
+  const { usersList, isLoading, isError, error, refetch } =
+    useUsersList(filter);
 
   const handleUserDetails = (userData) => {
     setUserDetailsData(userData);
@@ -34,19 +41,18 @@ function UserManagement() {
 
   const openStatusModal = (record) => {
     setSelectedCategory(record);
-    setNewStatus(record.status); // default current status
+    setNewStatus(record?.status); // default current status
     setIsStatusModalOpen(true);
   };
 
   const handleStatusChange = async () => {
     if (!selectedCategory) return;
-
     setIsStatusChangeLoading(true);
-
     try {
-      // await API.patch(`/category/${selectedCategory.id}`, {
-      //   status: newStatus,
-      // });
+      await API.put(`/user/status-change/${selectedCategory._id}`, {
+        status: newStatus,
+      });
+
       message.success("User status updated successfully!");
       setIsStatusModalOpen(false);
       setSelectedCategory(null);
@@ -54,7 +60,7 @@ function UserManagement() {
       refetch();
     } catch (err) {
       message.error(
-        err.response?.data?.error || "Failed to update User status"
+        err?.response?.data?.message || "Failed to update User status"
       );
     } finally {
       setIsStatusChangeLoading(false);
@@ -78,22 +84,24 @@ function UserManagement() {
   const columns = [
     {
       title: <span>Sl no.</span>,
-      dataIndex: "serial_number",
-      key: "serial_number",
-      render: (serial_number) => <span>#{serial_number}</span>,
+      dataIndex: "index",
+      key: "index",
+      render: (_, record, index) => (
+        <span>#{index + 1 + (filter.page - 1) * filter.limit}</span>
+      ),
     },
     {
       title: <span>User</span>,
-      dataIndex: "full_name",
-      key: "full_name",
+      dataIndex: "name",
+      key: "name",
       render: (_, record) => (
         <div className="flex flex-items-center gap-2">
           <img
             className="w-[40px] h-[40px] rounded-full"
-            src={record.profile}
-            alt={record.full_name}
+            src={record?.profile_image || userIcon}
+            alt={record?.name}
           />
-          <h1 className="mt-2">{record.full_name}</h1>
+          <h1 className="mt-2">{record?.name}</h1>
         </div>
       ),
     },
@@ -111,9 +119,9 @@ function UserManagement() {
     },
     {
       title: <span>Total Credits</span>,
-      dataIndex: "total_scan",
-      key: "total_scan",
-      render: (total_scan) => <span>{total_scan}</span>,
+      dataIndex: "credit",
+      key: "credit",
+      render: (credit) => <span>{credit} Credits</span>,
     },
 
     {
@@ -162,15 +170,33 @@ function UserManagement() {
 
   return (
     <div className="p-4">
+      <div className="flex justify-between items-center mb-2">
+        <Search
+          placeholder="Search by User name..."
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+          onSearch={(value) => {
+            setFilter((prevFilter) => ({
+              ...prevFilter,
+              name: value || null,
+              page: 1,
+            }));
+          }}
+          style={{ width: 350 }}
+          size="large"
+          allowClear
+        />
+      </div>
+
       <Table
         columns={columns}
-        dataSource={allUsers}
-        rowKey="id"
+        dataSource={usersList?.data?.users}
+        rowKey="_id"
         pagination={{
           current: filter.page,
           pageSize: filter.limit,
-          total: pagination.totalUser,
-          showSizeChanger: false,
+          total: usersList?.data?.pagination?.total,
+          showSizeChanger: true,
           pageSizeOptions: ["10", "20", "50", "100"],
         }}
         onChange={handleTableChange}

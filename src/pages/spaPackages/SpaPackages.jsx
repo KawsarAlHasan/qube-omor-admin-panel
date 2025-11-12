@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useAllSpa } from "../../api/api";
+import React, { useEffect, useState } from "react";
 import IsLoading from "../../components/IsLoading";
 import IsError from "../../components/IsError";
 import { Button, message, Modal, Space, Table, Tag } from "antd";
@@ -7,16 +6,13 @@ import { Link, useLocation } from "react-router-dom";
 import { EditOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import AddSpa from "./AddSpa";
 import EditSpa from "./EditSpa";
+import { useAllSpas } from "../../api/spaApi";
+import { API } from "../../api/api";
 
 function SpaPackages() {
   const [selectedFood, setSelectedFood] = useState(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
-
-  const filter = {
-    page: 1,
-    limit: 10,
-  };
 
   const location = useLocation();
   const pathnames = location.pathname.split("/").filter((x) => x);
@@ -26,8 +22,27 @@ function SpaPackages() {
     ? beforeHyphen.charAt(0).toUpperCase() + beforeHyphen.slice(1)
     : "";
 
-  const { allSpa, pagination, isLoading, isError, error, refetch } =
-    useAllSpa(filter);
+  const [filter, setFilter] = useState({
+    page: 1,
+    limit: 10,
+    type: capitalized,
+  });
+
+  // Update filter when capitalized changes
+  useEffect(() => {
+    setFilter((prev) => ({
+      ...prev,
+      type: capitalized,
+      page: 1, // Reset to first page when type changes
+    }));
+  }, [capitalized]);
+
+  // Pass individual values instead of object
+  const { spaData, isLoading, isError, error, refetch } = useAllSpas({
+    page: filter.page,
+    limit: filter.limit,
+    type: filter.type,
+  });
 
   const openDeleteModal = (record) => {
     setSelectedFood(record);
@@ -43,26 +58,29 @@ function SpaPackages() {
 
     setDeleteLoading(true);
     try {
-      // Simulate API call
-      // await API.delete(`/foods/${selectedFood.id}`);
-
-      message.success("Food item deleted successfully!");
+      await API.delete(`/spa/delete/${selectedFood?._id}`);
+      message.success("Spa service deleted successfully!");
       setIsDeleteModalOpen(false);
       setSelectedFood(null);
       setDeleteLoading(false);
       refetch();
     } catch (err) {
-      message.error(err.response?.data?.error || "Failed to delete food item");
+      message.error(
+        err.response?.data?.message || "Failed to delete spa service"
+      );
       setDeleteLoading(false);
     }
   };
 
+  const handleTableChange = (pagination, filters, sorter) => {
+    setFilter((prev) => ({
+      ...prev,
+      page: pagination.current,
+      limit: pagination.pageSize,
+    }));
+  };
+
   const columns = [
-    {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-    },
     {
       title: "Service Name",
       dataIndex: "service_name",
@@ -80,15 +98,15 @@ function SpaPackages() {
       key: "time",
     },
     {
-      title: "Price",
-      dataIndex: "price",
-      key: "price",
-      render: (text) => `$${text.toFixed(2)}`,
+      title: "Credit",
+      dataIndex: "credit",
+      key: "credit",
+      render: (credit) => <span className="">{credit} Credits</span>,
     },
     {
       title: "Room",
-      dataIndex: "room",
-      key: "room",
+      dataIndex: "room_type",
+      key: "room_type",
     },
     {
       title: "Status",
@@ -122,7 +140,7 @@ function SpaPackages() {
       key: "images",
       render: (images) => (
         <div className="spa-images">
-          {images.slice(0, 2).map((img, index) => (
+          {images?.slice(0, 2).map((img, index) => (
             <img key={index} src={img} alt="spa" className="spa-image" />
           ))}
         </div>
@@ -133,10 +151,11 @@ function SpaPackages() {
       key: "actions",
       render: (_, record) => (
         <Space size="middle">
-          {/* <ViewFoodDetail record={record} />
-
-*/}
-          <EditSpa capitalized={capitalized} record={record} />
+          <EditSpa
+            capitalized={capitalized}
+            record={record}
+            refetch={refetch}
+          />
 
           <DeleteOutlined
             className="text-xl text-red-500 hover:text-red-700 cursor-pointer transition-colors"
@@ -147,21 +166,6 @@ function SpaPackages() {
     },
   ];
 
-  const handleTableChange = (pagination) => {
-    // Here, you can handle page change or sorting if needed
-  };
-
-  const paginationConfig = {
-    current: pagination.page,
-    pageSize: pagination.limit,
-    total: pagination.totalPayments,
-    onChange: (page) => {
-      // Update the page value and refetch data based on new page
-      filter.page = page;
-      refetch();
-    },
-  };
-
   return (
     <div>
       <div className="flex justify-between mb-4">
@@ -170,13 +174,13 @@ function SpaPackages() {
 
       <Table
         columns={columns}
-        dataSource={allSpa}
-        rowKey="id"
+        dataSource={spaData?.data}
+        rowKey="_id"
         pagination={{
           current: filter.page,
           pageSize: filter.limit,
-          total: pagination.totalUser,
-          showSizeChanger: false,
+          total: spaData?.pagination?.total,
+          showSizeChanger: true,
           pageSizeOptions: ["10", "20", "50", "100"],
         }}
         onChange={handleTableChange}
@@ -193,7 +197,7 @@ function SpaPackages() {
         okType="danger"
         confirmLoading={deleteLoading}
       >
-        <p>Are you sure you want to delete this {capitalized}?</p>
+        <p>Are you sure you want to delete this {capitalized} service?</p>
       </Modal>
     </div>
   );

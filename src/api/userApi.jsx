@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { API } from "./api";
 
 // get user List
@@ -23,28 +22,6 @@ export const useUsersList = ({ page = 1, limit = 20, role, status, name }) => {
   });
 
   return { usersList, isLoading, isError, error, refetch };
-};
-
-// users list for messages
-export const getMockUsersForMessages = async () => {
-  const response = await axios.get("/messageUserList.json");
-
-  return response.data;
-};
-
-export const useUsersForMessage = () => {
-  const {
-    data: usersForMessage = [],
-    isLoading,
-    isError,
-    error,
-    refetch,
-  } = useQuery({
-    queryKey: ["usersForMessage"],
-    queryFn: getMockUsersForMessages,
-  });
-
-  return { usersForMessage, isLoading, isError, error, refetch };
 };
 
 // user conversations list for messages

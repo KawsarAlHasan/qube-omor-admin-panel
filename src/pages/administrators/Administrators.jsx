@@ -1,17 +1,40 @@
-import { Avatar, message, Modal, Space, Table } from "antd";
+import { Avatar, Button, message, Modal, Space, Table, Tag } from "antd";
 import IsError from "../../components/IsError";
 import IsLoading from "../../components/IsLoading";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-// import { API, useAllAdmins } from "../../api/api";
 import AddAdmin from "./AddAmin";
 import AdminEdit from "./AdminEdit";
-import { useAdministrators } from "../../services/administratorsService";
+import { API, useAdminList } from "../../api/api";
+import { useState } from "react";
 
 function Administrators() {
-  // const { allAdmins } = useAllAdmins();
+  const { adminList, isLoading, isError, error, refetch } = useAdminList();
+  const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
+  const [selectedAdmin, setSelectedAdmin] = useState(null);
 
-  const { administrators, isLoading, isError, error, refetch } =
-    useAdministrators();
+  // Open status change modal
+  const openStatusModal = (record) => {
+    setSelectedAdmin(record);
+    setIsStatusModalOpen(true);
+  };
+
+  // Handle status change
+  const handleStatusChange = async () => {
+    try {
+      const newStatus =
+        selectedAdmin.status === "Active" ? "Deactive" : "Active";
+
+      await API.put(`/admin/status-change/${selectedAdmin._id}`, {
+        status: newStatus,
+      });
+
+      message.success(`Status changed to ${newStatus} successfully`);
+      setIsStatusModalOpen(false);
+      refetch();
+    } catch (err) {
+      message.error(err?.response?.data?.message || "Failed to change status");
+    }
+  };
 
   // 🗑️ delete confirm modal
   const showDeleteConfirm = (adminId) => {
@@ -23,13 +46,13 @@ function Administrators() {
       cancelText: "Cancel",
       async onOk() {
         try {
-          // await API.post(`/admin/administrators/${adminId}/action/`, {
-          //   action: "delete",
-          // });
+          await API.delete(`/admin/delete/${adminId}`);
           message.success("Admin deleted successfully!");
           refetch();
         } catch (err) {
-          message.error(err.response?.data?.error || "Failed to delete admin");
+          message.error(
+            err.response?.data?.message || "Failed to delete admin"
+          );
         }
       },
     });
@@ -38,15 +61,15 @@ function Administrators() {
   const columns = [
     {
       title: <span>Sl no.</span>,
-      dataIndex: "serial_number",
-      key: "serial_number",
-      render: (serial_number) => <span className="">#{serial_number}</span>,
+      dataIndex: "index",
+      key: "index",
+      render: (_, record, index) => <span className="">#{index + 1}</span>,
     },
     {
       title: <span>Name</span>,
-      dataIndex: "full_name",
-      key: "full_name",
-      render: (full_name) => <span className="">{full_name}</span>,
+      dataIndex: "name",
+      key: "name",
+      render: (name) => <span className="">{name}</span>,
     },
     {
       title: <span>Email</span>,
@@ -67,10 +90,31 @@ function Administrators() {
       render: (role) => <span className="">{role}</span>,
     },
     {
+      title: <span>Status</span>,
+      dataIndex: "status",
+      key: "status",
+      render: (status, record) => (
+        <div className="flex items-center ">
+          {status === "Active" ? (
+            <Tag color="green">Active</Tag>
+          ) : (
+            <Tag color="red">{status}</Tag>
+          )}
+          <Button
+            className="-ml-1"
+            title="Status Change"
+            size="small"
+            icon={<EditOutlined />}
+            onClick={() => openStatusModal(record)}
+          />
+        </div>
+      ),
+    },
+    {
       title: <span>Action</span>,
       key: "action",
       render: (_, record) => {
-        const isSuperAdmin = record.role === "superadmin";
+        const isSuperAdmin = record.role === "Super Admin";
 
         return (
           <Space size="middle">
@@ -83,7 +127,7 @@ function Administrators() {
                   : "hover:text-red-300 cursor-pointer"
               }`}
               onClick={
-                isSuperAdmin ? undefined : () => showDeleteConfirm(record.id)
+                isSuperAdmin ? undefined : () => showDeleteConfirm(record?._id)
               }
             />
           </Space>
@@ -106,11 +150,30 @@ function Administrators() {
 
       <Table
         columns={columns}
-        dataSource={administrators}
-        rowKey="id"
+        dataSource={adminList?.data}
+        rowKey="_id"
         loading={isLoading}
         pagination={false}
       />
+
+      {/* Status Change Modal */}
+      <Modal
+        title="Change Status"
+        open={isStatusModalOpen}
+        onOk={handleStatusChange}
+        onCancel={() => setIsStatusModalOpen(false)}
+        okText="Confirm"
+        cancelText="Cancel"
+      >
+        <p>
+          Are you sure you want to change the status from{" "}
+          <strong>{selectedAdmin?.status}</strong> to{" "}
+          <strong>
+            {selectedAdmin?.status === "Active" ? "Deactive" : "Active"}
+          </strong>
+          ?
+        </p>
+      </Modal>
     </div>
   );
 }

@@ -2,26 +2,39 @@ import React, { useState } from "react";
 import { useUsersList } from "../../../api/userApi";
 import IsLoading from "../../../components/IsLoading";
 import IsError from "../../../components/IsError";
-import { Input, Table, Tag, Avatar, Button, Space, Tooltip } from "antd";
+import {
+  Input,
+  Table,
+  Tag,
+  Avatar,
+  Button,
+  Space,
+  Modal,
+  Select,
+  message,
+} from "antd";
 import {
   UserOutlined,
   EditOutlined,
   DeleteOutlined,
-  DeleteFilled,
-  EyeOutlined,
-  PhoneOutlined,
-  MailOutlined,
+  ExclamationCircleOutlined,
 } from "@ant-design/icons";
 import AddDriver from "./AddDriver";
+import { API } from "../../../api/api";
+import userIcon from "../../../assets/icons/userIcon.png";
 
 const { Search } = Input;
+const { confirm } = Modal;
 
 function Drivers() {
   const [searchText, setSearchText] = useState("");
+  const [selectedDriver, setSelectedDriver] = useState(null);
+  const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
+  const [newStatus, setNewStatus] = useState("");
+  const [isStatusChangeLoading, setIsStatusChangeLoading] = useState(false);
 
   const [filters, setFilters] = useState({
     role: "Driver",
-    status: "Active",
     page: 1,
     limit: 2000,
     name: searchText,
@@ -30,8 +43,59 @@ function Drivers() {
   const { usersList, isLoading, isError, error, refetch } =
     useUsersList(filters);
 
-  if (isLoading) return <IsLoading />;
-  if (isError) return <IsError error={error} refetch={refetch} />;
+  const openStatusModal = (record) => {
+    setSelectedDriver(record);
+    setNewStatus(record?.status);
+    setIsStatusModalOpen(true);
+  };
+
+  const handleStatusChange = async () => {
+    if (!selectedDriver) return;
+
+    setIsStatusChangeLoading(true);
+
+    try {
+      await API.put(`/user/status-change/${selectedDriver._id}`, {
+        status: newStatus,
+      });
+
+      message.success("Driver status updated successfully!");
+      setIsStatusModalOpen(false);
+      setSelectedDriver(null);
+      setNewStatus("");
+      refetch();
+    } catch (err) {
+      console.log(err.response);
+      message.error(
+        err.response?.data?.message || "Failed to update driver status"
+      );
+    } finally {
+      setIsStatusChangeLoading(false);
+    }
+  };
+
+  const handleDeleteDriver = (record) => {
+    confirm({
+      title: "Are you sure you want to delete this driver?",
+      icon: <ExclamationCircleOutlined />,
+      content: `This will permanently delete ${record?.name} from the system.`,
+      okText: "Yes, Delete",
+      okType: "danger",
+      cancelText: "Cancel",
+      onOk: async () => {
+        try {
+          await API.delete(`/auth/delete/${record?._id}`);
+          message.success("Driver deleted successfully!");
+          refetch();
+        } catch (err) {
+          console.log(err.response);
+          message.error(
+            err.response?.data?.message || "Failed to delete driver"
+          );
+        }
+      },
+    });
+  };
 
   const columns = [
     {
@@ -47,13 +111,9 @@ function Drivers() {
       dataIndex: "driver",
       key: "driver",
       render: (_, record) => (
-        <div className="flex flex-items-center gap-2">
-          <Avatar
-            size={40}
-            src={record.profile_image}
-            icon={!record.profile_image && <UserOutlined />}
-          />
-          <h1 className="mt-2">{record.name}</h1>
+        <div className="flex items-center gap-2">
+          <Avatar size={40} src={record?.profile_image || userIcon} />
+          <h1 className="mt-2">{record?.name}</h1>
         </div>
       ),
     },
@@ -69,21 +129,19 @@ function Drivers() {
       key: "phone",
       render: (phone) => <span>{phone}</span>,
     },
-
     {
       title: <span>Status</span>,
       dataIndex: "status",
       key: "status",
       render: (status, record) => (
-        <div className="flex items-center ">
+        <div className="flex items-center gap-1">
           {status === "Active" ? (
             <Tag color="green">Active</Tag>
           ) : (
             <Tag color="red">{status}</Tag>
           )}
           <Button
-            className="-ml-1"
-            title="Status Change"
+            title="Change Status"
             size="small"
             icon={<EditOutlined />}
             onClick={() => openStatusModal(record)}
@@ -91,20 +149,22 @@ function Drivers() {
         </div>
       ),
     },
-
     {
       title: <span>Delete</span>,
       key: "delete",
       render: (_, record) => (
         <Space size="middle">
-          <DeleteFilled
-            className="text-[23px] text-red-400 hover:text-red-300 cursor-pointer"
-            onClick={() => handleUserDetails(record)}
+          <DeleteOutlined
+            className="text-[23px] text-red-400 hover:text-red-500 cursor-pointer transition-colors"
+            onClick={() => handleDeleteDriver(record)}
           />
         </Space>
       ),
     },
   ];
+
+  if (isLoading) return <IsLoading />;
+  if (isError) return <IsError error={error} refetch={refetch} />;
 
   return (
     <div className="p-6 bg-gray-50">
@@ -132,23 +192,36 @@ function Drivers() {
         dataSource={usersList?.data?.users || []}
         rowKey="_id"
         pagination={false}
-        // pagination={{
-        //   current: usersList?.data?.pagination?.page || 1,
-        //   pageSize: usersList?.data?.pagination?.limit || 10,
-        //   total: usersList?.data?.pagination?.total || 0,
-        //   showSizeChanger: true,
-        //   showTotal: (total, range) =>
-        //     `${range[0]}-${range[1]} of ${total} drivers`,
-        //   onChange: (page, pageSize) => {
-        //     setFilters((prev) => ({
-        //       ...prev,
-        //       page,
-        //       limit: pageSize,
-        //     }));
-        //   },
-        // }}
         className="border border-gray-200"
       />
+
+      {/* Status Change Modal */}
+      <Modal
+        title="Change Driver Status"
+        open={isStatusModalOpen}
+        onOk={handleStatusChange}
+        onCancel={() => {
+          setIsStatusModalOpen(false);
+          setSelectedDriver(null);
+          setNewStatus("");
+        }}
+        okText="Update"
+        cancelText="Cancel"
+        confirmLoading={isStatusChangeLoading}
+      >
+        <p className="mb-2">
+          Select new status for <strong>{selectedDriver?.name}</strong>:
+        </p>
+        <Select
+          value={newStatus}
+          onChange={(value) => setNewStatus(value)}
+          style={{ width: "100%" }}
+          size="large"
+        >
+          <Select.Option value="Active">Active</Select.Option>
+          <Select.Option value="Deactive">Deactive</Select.Option>
+        </Select>
+      </Modal>
     </div>
   );
 }

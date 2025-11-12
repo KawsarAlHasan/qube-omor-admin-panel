@@ -42,6 +42,27 @@ export const signOutAdmin = () => {
   window.location.href = "/login";
 };
 
+// all admins list
+export const useAdminList = () => {
+  const getData = async () => {
+    const response = await API.get("/admin/all");
+    return response.data;
+  };
+
+  const {
+    data: adminList = [],
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["adminList"],
+    queryFn: getData,
+  });
+
+  return { adminList, isLoading, isError, error, refetch };
+};
+
 // users list
 export const getMockUsers = async ({ page = 1, limit = 10 }) => {
   const res = await axios.get("/users_100.json");
@@ -138,27 +159,6 @@ export const getMockAdministrators = async () => {
   const response = await axios.get("/administrators_8.json");
 
   return response.data;
-};
-
-// payments
-export const getMockPayments = async ({ page = 1, limit = 10 }) => {
-  const res = await axios.get("/payments.json");
-  const allData = res.data || [];
-
-  // Fake pagination
-  const totalPayments = allData.length;
-  const totalPages = Math.ceil(totalPayments / limit);
-  const paginatedPayments = allData.slice((page - 1) * limit, page * limit);
-
-  return {
-    data: paginatedPayments,
-    pagination: {
-      totalPayments,
-      page,
-      limit,
-      totalPages,
-    },
-  };
 };
 
 // get all Spa

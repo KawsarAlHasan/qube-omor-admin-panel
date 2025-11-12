@@ -72,10 +72,15 @@ export const useIngredients = (params) => {
 };
 
 // get all food-orders
-export const useAllFoodOrders = ({ page = 1, limit = 10, status = null }) => {
+export const useAllFoodOrders = ({
+  page = 1,
+  limit = 10,
+  status = null,
+  search,
+}) => {
   const getData = async () => {
     const response = await API.get("/food-order/all", {
-      params: { page, limit, status },
+      params: { page, limit, status, search },
     });
     return response.data;
   };
@@ -87,10 +92,9 @@ export const useAllFoodOrders = ({ page = 1, limit = 10, status = null }) => {
     error,
     refetch,
   } = useQuery({
-    queryKey: ["allFoodOrders", page, limit, status],
+    queryKey: ["allFoodOrders", page, limit, status, search],
     queryFn: getData,
   });
 
   return { allFoodOrders, isLoading, isError, error, refetch };
 };
-

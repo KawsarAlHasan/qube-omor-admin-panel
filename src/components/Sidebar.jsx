@@ -20,14 +20,13 @@ import {
 import { IoSettingsOutline } from "react-icons/io5";
 import { TbMessageMinus } from "react-icons/tb";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
-import { signOutAdmin } from "../api/api";
+import { signOutAdmin, useAdminDashboard } from "../api/api";
 import driverIcon from "../assets/icons/driverIcon.png";
 
 const Sidebar = ({ onClick }) => {
   const location = useLocation();
 
-  // const { adminDashboard, isLoading, isError, error, refetch } =
-  //   useAdminDashboard();
+  const { adminProfile } = useAdminDashboard();
 
   const navigate = useNavigate();
   const handleSignOut = () => {
@@ -59,7 +58,7 @@ const Sidebar = ({ onClick }) => {
     return ["1"];
   };
 
-  const isSuperAdmin = "superadmin";
+  const isSuperAdmin = adminProfile?.role === "Super Admin";
 
   const sidebarItems = [
     {

@@ -14,13 +14,13 @@ import {
   message,
 } from "antd";
 import {
-  UserOutlined,
   EditOutlined,
   DeleteOutlined,
   ExclamationCircleOutlined,
 } from "@ant-design/icons";
 import AddInstructor from "./AddInstructor";
 import { API } from "../../../api/api";
+import userIcon from "../../../assets/icons/userIcon.png";
 
 const { Search } = Input;
 const { confirm } = Modal;
@@ -44,7 +44,7 @@ function Instructors() {
 
   const openStatusModal = (record) => {
     setSelectedInstructor(record);
-    setNewStatus(record.status);
+    setNewStatus(record?.status);
     setIsStatusModalOpen(true);
   };
 
@@ -77,13 +77,13 @@ function Instructors() {
     confirm({
       title: "Are you sure you want to delete this instructor?",
       icon: <ExclamationCircleOutlined />,
-      content: `This will permanently delete ${record.name} from the system.`,
+      content: `This will permanently delete ${record?.name} from the system.`,
       okText: "Yes, Delete",
       okType: "danger",
       cancelText: "Cancel",
       onOk: async () => {
         try {
-          await API.delete(`/auth/delete/${record._id}`);
+          await API.delete(`/auth/delete/${record?._id}`);
           message.success("Instructor deleted successfully!");
           refetch();
         } catch (err) {
@@ -111,12 +111,8 @@ function Instructors() {
       key: "instructor",
       render: (_, record) => (
         <div className="flex items-center gap-2">
-          <Avatar
-            size={40}
-            src={record.profile_image}
-            icon={!record.profile_image && <UserOutlined />}
-          />
-          <h1 className="mt-2">{record.name}</h1>
+          <Avatar size={40} src={record?.profile_image || userIcon} />
+          <h1 className="mt-2">{record?.name}</h1>
         </div>
       ),
     },

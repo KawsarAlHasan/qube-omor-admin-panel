@@ -12,6 +12,7 @@ import {
 import { Link, useSearchParams } from "react-router-dom";
 import { useUsersForMessages } from "../../api/userApi";
 import socket from "../../socket";
+import userIcon from "../../assets/icons/userIcon.png";
 
 const { Search } = Input;
 const { Text } = Typography;
@@ -53,7 +54,7 @@ function SidebarForMessages({ isMobile, onUserSelect }) {
   };
 
   const handleUserSelect = async (user) => {
-    const senderId = user.id;
+    const senderId = user?.id;
     searchParams.set("sender", senderId);
     setSearchParams(searchParams);
     setSelectedUser(user);
@@ -87,25 +88,16 @@ function SidebarForMessages({ isMobile, onUserSelect }) {
     socket.emit("userConnected", myID);
   }, [myID]);
 
-  socket.on(`newMessage::${myID}`, (message) => {
-    console.log("Testing:", message);
-  });
+  useEffect(() => {
+    socket.on("receiveMessage", (message) => {
+      console.log("New message received:", message);
+      refetch();
+    });
 
-  // socket.on(`getMessage::${myID}`, (message) => {
-  //   console.log("New message received testing:", message);
-  //   refetch();
-  // });
-
-  // useEffect(() => {
-  //   socket.on("receiveMessage", (message) => {
-  //     console.log("New message received:", message);
-  //     refetch();
-  //   });
-
-  //   return () => {
-  //     socket.off("receiveMessage");
-  //   };
-  // }, [refetch]);
+    return () => {
+      socket.off("receiveMessage");
+    };
+  }, [refetch]);
 
   const sidebarContent = (
     <div className="h-full flex flex-col">
@@ -116,7 +108,7 @@ function SidebarForMessages({ isMobile, onUserSelect }) {
             to={`/user-massages`}
             className="text-xl font-semibold text-center flex-1"
           >
-            Users Messages (13)
+            Users Messages
           </Link>
           {isMobile && (
             <Button
@@ -155,7 +147,7 @@ function SidebarForMessages({ isMobile, onUserSelect }) {
             renderItem={(user) => (
               <List.Item
                 className={`p-3 mx-2 my-1 rounded-lg border-0 hover:bg-gray-50 cursor-pointer transition-all ${
-                  selectedUser?.id === user.id
+                  selectedUser?.id === user?.id
                     ? "bg-blue-50 border-l-4 border-l-blue-500"
                     : ""
                 } ${isMobile ? "p-4" : "p-3"}`}
@@ -163,11 +155,11 @@ function SidebarForMessages({ isMobile, onUserSelect }) {
                 extra={
                   <div className="flex flex-col items-end">
                     <Text type="secondary" className="text-xs">
-                      {formatTime(user.last_message_time)}
+                      {formatTime(user?.last_message_time)}
                     </Text>
-                    {user.un_read_message > 0 && (
+                    {user?.un_read_message > 0 && (
                       <Badge
-                        count={user.un_read_message}
+                        count={user?.un_read_message}
                         style={{ backgroundColor: "#1890ff" }}
                         className="mt-1"
                         size={isMobile ? "default" : "small"}
@@ -181,14 +173,13 @@ function SidebarForMessages({ isMobile, onUserSelect }) {
                     <div className="relative">
                       <Badge
                         dot
-                        color={user.is_active ? "#52c41a" : "#f5222d"}
+                        color={user?.is_active ? "#52c41a" : "#f5222d"}
                         offset={isMobile ? [-5, 40] : [-5, 35]}
                         size={isMobile ? "default" : "small"}
                       >
                         <Avatar
                           size={isMobile ? 56 : 50}
-                          icon={user?.profile_image === "" && <UserOutlined />}
-                          src={user?.profile_image}
+                          src={user?.profile_image || userIcon}
                           alt={user?.name}
                           className="object-cover"
                         />
@@ -203,13 +194,13 @@ function SidebarForMessages({ isMobile, onUserSelect }) {
                           isMobile ? "text-lg" : "text-base"
                         } truncate max-w-[120px]`}
                       >
-                        {user.name}
+                        {user?.name}
                       </Text>
                     </div>
                   }
                   description={
                     <div className="flex items-center mt-1">
-                      {!user.is_active && (
+                      {!user?.is_active && (
                         <ClockCircleOutlined
                           className="text-gray-400 mr-1"
                           style={{ fontSize: isMobile ? 14 : 12 }}
@@ -222,7 +213,7 @@ function SidebarForMessages({ isMobile, onUserSelect }) {
                         } max-w-[150px]`}
                         type="secondary"
                       >
-                        {user.last_message}
+                        {user?.last_message}
                       </Text>
                     </div>
                   }
