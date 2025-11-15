@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useUsersList } from "../../../api/userApi";
+import { useUsersDriverList } from "../../../api/userApi";
 import IsLoading from "../../../components/IsLoading";
 import IsError from "../../../components/IsError";
 import {
@@ -14,7 +14,6 @@ import {
   message,
 } from "antd";
 import {
-  UserOutlined,
   EditOutlined,
   DeleteOutlined,
   ExclamationCircleOutlined,
@@ -41,7 +40,7 @@ function Drivers() {
   });
 
   const { usersList, isLoading, isError, error, refetch } =
-    useUsersList(filters);
+    useUsersDriverList(filters);
 
   const openStatusModal = (record) => {
     setSelectedDriver(record);
@@ -111,17 +110,20 @@ function Drivers() {
       dataIndex: "driver",
       key: "driver",
       render: (_, record) => (
-        <div className="flex items-center gap-2">
-          <Avatar size={40} src={record?.profile_image || userIcon} />
-          <h1 className="mt-2">{record?.name}</h1>
+        <div className="flex flex-items-center gap-2">
+          <img
+            className="w-[40px] h-[40px] rounded-full mt-1"
+            src={record?.profile_image || userIcon}
+            alt={record?.name}
+          />
+          <div className="">
+            <h1 className="">{record?.name}</h1>
+            <p className="text-sm text-gray-600 mt-[-5px]">
+              {record?.email}
+            </p>
+          </div>
         </div>
       ),
-    },
-    {
-      title: <span>Email</span>,
-      dataIndex: "email",
-      key: "email",
-      render: (email) => <span>{email}</span>,
     },
     {
       title: <span>Phone</span>,
@@ -129,6 +131,41 @@ function Drivers() {
       key: "phone",
       render: (phone) => <span>{phone}</span>,
     },
+
+    {
+      title: <span>Today Delivered Orders</span>,
+      dataIndex: "stats",
+      key: "stats",
+      render: (stats) => (
+        <span>
+          ${stats?.todayDeliveryEarnings?.toFixed(2) || 0} (
+          {stats?.deliveredOrdersCount || 0})
+        </span>
+      ),
+    },
+    {
+      title: <span>Today Ongoing Orders</span>,
+      dataIndex: "stats",
+      key: "stats",
+      render: (stats) => (
+        <span>
+          ${stats?.ongoingDeliveryEarnings?.toFixed(2) || 0} (
+          {stats?.ongoingOrdersCount || 0})
+        </span>
+      ),
+    },
+    {
+      title: <span>Today Cancelled Orders</span>,
+      dataIndex: "stats",
+      key: "stats",
+      render: (stats) => (
+        <span>
+          ${stats?.cancelledAmount?.toFixed(2) || 0} (
+          {stats?.cancelledOrdersCount || 0})
+        </span>
+      ),
+    },
+
     {
       title: <span>Status</span>,
       dataIndex: "status",

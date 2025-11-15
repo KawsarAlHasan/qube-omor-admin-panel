@@ -19,7 +19,7 @@ import {
   EyeOutlined,
   EditOutlined,
 } from "@ant-design/icons";
-import { useIngredients, useMockCategory } from "../../api/foodApi";
+import { useIngredients, useAllCategory } from "../../api/foodApi";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -28,7 +28,7 @@ function EditFoodDetail({ record }) {
   const { ingredients, isLoading: isLoadingIngredients } = useIngredients({
       status: "Active",
     });
-  const { mockCategory } = useMockCategory();
+  const { mockCategory } = useAllCategory();
   const [form] = Form.useForm();
 
   const [isModalOpen, setIsModalOpen] = useState(false);

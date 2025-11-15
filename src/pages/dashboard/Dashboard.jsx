@@ -2,7 +2,7 @@ import React from "react";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { FaCircleDollarToSlot } from "react-icons/fa6";
 import { FaSackDollar } from "react-icons/fa6";
-// import { useAdminDashboard } from "../../api/api";
+// import { useAdminProfile } from "../../api/api";
 import IsLoading from "../../components/IsLoading";
 import IsError from "../../components/IsError";
 import {
@@ -18,7 +18,7 @@ import EarningsGrowth from "./EarningsGrowth";
 
 function Dashboard() {
   // const { adminDashboard, isLoading, isError, error, refetch } =
-  //   useAdminDashboard();
+  //   useAdminProfile();
 
   const adminDashboard = {
     admin_profile: {

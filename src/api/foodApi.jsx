@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { API } from "./api";
 
 export const useFoods = ({
@@ -30,7 +29,7 @@ export const useFoods = ({
 };
 
 // category
-export const useMockCategory = (params) => {
+export const useAllCategory = (params) => {
   const getData = async () => {
     const response = await API.get("/food-category/all", { params });
     return response.data.data;

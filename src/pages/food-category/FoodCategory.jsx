@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Table, Space, Tag, Button, Modal, Select, message, Image } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import { useMockCategory } from "../../api/foodApi";
+import { useAllCategory } from "../../api/foodApi";
 import IsLoading from "../../components/IsLoading";
 import IsError from "../../components/IsError";
 import AddNewCategory from "./AddNewCategory";
@@ -20,7 +20,7 @@ function FoodCategory() {
 
   const params = { status: "all" };
   const { mockCategory, isLoading, isError, error, refetch } =
-    useMockCategory(params);
+    useAllCategory(params);
 
   const openStatusModal = (record) => {
     setSelectedCategory(record);

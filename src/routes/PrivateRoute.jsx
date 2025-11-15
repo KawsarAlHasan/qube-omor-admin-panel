@@ -1,11 +1,11 @@
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import { useAdminDashboard } from "../api/api";
+import { useAdminProfile } from "../api/api";
 import Loading from "../components/Loading";
 
 const PrivateRoute = ({ children }) => {
   const { adminProfile, isLoading, isError, error, refetch } =
-    useAdminDashboard();
+    useAdminProfile();
 
   const location = useLocation();
   const token = localStorage.getItem("token");

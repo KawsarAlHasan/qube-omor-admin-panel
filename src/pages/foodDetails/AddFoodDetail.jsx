@@ -12,7 +12,7 @@ import {
   Image,
 } from "antd";
 import { UploadOutlined, DeleteOutlined } from "@ant-design/icons";
-import { useIngredients, useMockCategory } from "../../api/foodApi";
+import { useIngredients, useAllCategory } from "../../api/foodApi";
 import { API } from "../../api/api";
 
 const { TextArea } = Input;
@@ -22,7 +22,7 @@ function AddFoodDetail({refetch}) {
   const { ingredients = [], isLoading: isLoadingIngredients } = useIngredients({
     status: "Active",
   });
-  const { mockCategory = [], isLoading: isLoadingCategory } = useMockCategory({
+  const { mockCategory = [], isLoading: isLoadingCategory } = useAllCategory({
     status: "Active",
   });
 

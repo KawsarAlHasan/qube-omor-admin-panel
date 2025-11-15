@@ -20,13 +20,13 @@ import {
 import { IoSettingsOutline } from "react-icons/io5";
 import { TbMessageMinus } from "react-icons/tb";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
-import { signOutAdmin, useAdminDashboard } from "../api/api";
+import { signOutAdmin, useAdminProfile } from "../api/api";
 import driverIcon from "../assets/icons/driverIcon.png";
 
 const Sidebar = ({ onClick }) => {
   const location = useLocation();
 
-  const { adminProfile } = useAdminDashboard();
+  const { adminProfile } = useAdminProfile();
 
   const navigate = useNavigate();
   const handleSignOut = () => {

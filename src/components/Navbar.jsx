@@ -4,11 +4,11 @@ import logoImage from "../assets/logo.png";
 import { MenuOutlined, UserOutlined, LogoutOutlined } from "@ant-design/icons";
 import ChangePassword from "./ChangePassword";
 import AccountSetting from "./AccountSetting";
-import { signOutAdmin, useAdminDashboard } from "../api/api";
+import { signOutAdmin, useAdminProfile } from "../api/api";
 
 const Navbar = ({ showDrawer }) => {
   const { adminProfile, isLoading, isError, error, refetch } =
-    useAdminDashboard();
+    useAdminProfile();
 
   const navigate = useNavigate();
 

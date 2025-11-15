@@ -6,7 +6,6 @@ import PasswordUpdateLogin from "../pages/login/PasswordUpdateLogin";
 import MainLayout from "../layout/MainLayout";
 import Dashboard from "../pages/dashboard/Dashboard";
 import NotFound from "../components/NotFound";
-import Test from "../Test";
 import UserManagement from "../pages/usersManagement/UserManagement";
 import CheckCode from "../pages/login/CheckCode";
 import Administrators from "../pages/administrators/Administrators";
@@ -19,8 +18,6 @@ import FoodCategory from "../pages/food-category/FoodCategory";
 import UserMassages from "../pages/user-massages/UserMassages";
 import Ingredients from "../pages/ingredients/Ingredients";
 import SpaBooking from "../pages/spa-booking/SpaBooking";
-import PhysioBooking from "../pages/physio-booking/PhysioBooking";
-import PhysioPackages from "../pages/physio-packages/PhysioPackages";
 import TermsAndConditions from "../pages/settings/terms-and-conditions/TermsAndConditions";
 import PrivacyPolicy from "../pages/settings/privacy-policy/PrivacyPolicy";
 import Credits from "../pages/credits/Credits";
@@ -127,11 +124,6 @@ export const router = createBrowserRouter([
       {
         path: "/privacy-policy",
         element: <PrivacyPolicy />,
-      },
-
-      {
-        path: "/test",
-        element: <Test />,
       },
     ],
   },

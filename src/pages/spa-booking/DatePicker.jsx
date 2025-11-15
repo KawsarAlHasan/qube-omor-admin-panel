@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./DatePicker.css";
 
-const DateScrollSelector = () => {
+const DateScrollSelector = ({ onDateChange }) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [dates, setDates] = useState([]);
   const scrollContainerRef = useRef(null);
@@ -28,7 +28,6 @@ const DateScrollSelector = () => {
   const handleDateSelect = (date) => {
     const dateString = date.toDateString();
     setSelectedDate(dateString);
-    console.log("Selected Date:", dateString);
   };
 
   useEffect(() => {
@@ -43,6 +42,10 @@ const DateScrollSelector = () => {
           inline: "center",
         });
       }
+    }
+
+    if (onDateChange) {
+      onDateChange(selectedDate);
     }
   }, [selectedDate]);
 

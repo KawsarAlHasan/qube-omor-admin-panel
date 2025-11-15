@@ -1,33 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { API } from "./api";
 
-// spa booking data
-export const useMockSpaBooking = () => {
-  const getData = async () => {
-    const response = await axios.get("/spaBooking.json");
-    return response.data;
-  };
-
-  const {
-    data: mockSpaBooking = [],
-    isLoading,
-    isError,
-    error,
-    refetch,
-  } = useQuery({
-    queryKey: ["mockSpaBooking"],
-    queryFn: getData,
-  });
-
-  return { mockSpaBooking, isLoading, isError, error, refetch };
-};
-
 // get all spa
-export const useAllSpas = ({ page = 1, limit = 20, type }) => {
+export const useAllSpas = ({ page = 1, limit = 20, type, date }) => {
   const getData = async () => {
     const response = await API.get("/spa/admin", {
-      params: { page, limit, type },
+      params: { page, limit, type, date },
     });
     return response.data;
   };
@@ -39,11 +17,34 @@ export const useAllSpas = ({ page = 1, limit = 20, type }) => {
     error,
     refetch,
   } = useQuery({
-    queryKey: ["spaData", page, limit, type],
+    queryKey: ["spaData", page, limit, type, date],
     queryFn: getData,
   });
 
   return { spaData, isLoading, isError, error, refetch };
+};
+
+// single spa data
+export const useSingleSpaData = ({ id }, options = {}) => {
+  const getData = async ({ queryKey }) => {
+    const [_key, id] = queryKey;
+    const response = await API.get(`/spa/with-users/${id}`);
+    return response.data;
+  };
+
+  const {
+    data: singleSpaData = [],
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["singleSpaData", id],
+    queryFn: getData,
+    enabled: !!id && (options.enabled ?? true),
+  });
+
+  return { singleSpaData, isLoading, isError, error, refetch };
 };
 
 // get Credits
