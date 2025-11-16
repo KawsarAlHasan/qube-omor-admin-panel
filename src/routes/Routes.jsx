@@ -23,6 +23,7 @@ import PrivacyPolicy from "../pages/settings/privacy-policy/PrivacyPolicy";
 import Credits from "../pages/credits/Credits";
 import Drivers from "../pages/settings/drivers/Drivers";
 import Instructors from "../pages/settings/instructors/Instructors";
+import Analytics from "../pages/analytics/Analytics";
 
 export const router = createBrowserRouter([
   {
@@ -56,6 +57,10 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <Dashboard />,
+      },
+      {
+        path: "/analytics",
+        element: <Analytics />,
       },
       {
         path: "/user-management",

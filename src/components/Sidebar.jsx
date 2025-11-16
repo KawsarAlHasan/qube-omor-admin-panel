@@ -22,6 +22,7 @@ import { TbMessageMinus } from "react-icons/tb";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import { signOutAdmin, useAdminProfile } from "../api/api";
 import driverIcon from "../assets/icons/driverIcon.png";
+import { IoMdAnalytics } from "react-icons/io";
 
 const Sidebar = ({ onClick }) => {
   const location = useLocation();
@@ -38,6 +39,7 @@ const Sidebar = ({ onClick }) => {
   const getSelectedKey = () => {
     const path = location.pathname;
     if (path === "/") return ["1"];
+    if (path === "/analytics") return ["analytics"];
     if (path === "/food-details") return ["food-details", "restaurant"];
     if (path === "/food-orders") return ["food-orders", "restaurant"];
     if (path === "/food-category") return ["food-category", "restaurant"];
@@ -66,7 +68,11 @@ const Sidebar = ({ onClick }) => {
       icon: <AppstoreOutlined />,
       label: <Link to="/">Dashboard</Link>,
     },
-
+    {
+      key: "analytics",
+      icon: <IoMdAnalytics />,
+      label: <Link to="/analytics">Analytics</Link>,
+    },
     {
       key: "restaurant",
       icon: <FaUtensils />,

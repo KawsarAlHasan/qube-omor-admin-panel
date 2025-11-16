@@ -15,10 +15,11 @@ import {
   FaTimesCircle, // today_cancelled_orders
 } from "react-icons/fa";
 import EarningsGrowth from "./EarningsGrowth";
+import { useDashboardData } from "../../api/settingsApi";
 
 function Dashboard() {
-  // const { adminDashboard, isLoading, isError, error, refetch } =
-  //   useAdminProfile();
+  const { dashboardData, isLoading, isError, error, refetch } =
+    useDashboardData();
 
   const adminDashboard = {
     admin_profile: {
@@ -59,20 +60,24 @@ function Dashboard() {
   const spa = adminDashboard?.spa;
   const physio = adminDashboard?.physio;
 
-  // if (isLoading) {
-  //   return <IsLoading />;
-  // }
+  if (isLoading) {
+    return <IsLoading />;
+  }
 
-  // if (isError) {
-  //   return <IsError error={error} refetch={refetch} />;
-  // }
+  if (isError) {
+    return <IsError error={error} refetch={refetch} />;
+  }
+
+  console.log("restaurant", dashboardData.restaurant);
+  console.log("spa", dashboardData.spa);
+  console.log("physio", dashboardData.physio);
 
   return (
     <div>
       <div className="bg-white w-full p-4 rounded-md">
         <p className="text-[16px] mt-2">Hi, Good Morning</p>
         <h2 className="text-[24px] font-semibold">
-          {adminDashboard?.admin_profile?.name}
+          {dashboardData?.admin?.name}
         </h2>
       </div>
 
@@ -109,7 +114,7 @@ function Dashboard() {
       </div> */}
 
       <div className="mt-4">
-         <EarningsGrowth />
+        <EarningsGrowth />
       </div>
 
       {/* restaurant */}

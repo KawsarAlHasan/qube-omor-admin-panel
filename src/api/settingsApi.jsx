@@ -1,6 +1,48 @@
 import { useQuery } from "@tanstack/react-query";
 import { API } from "./api";
 
+export const useAnalytics = ({ startDate, endDate }) => {
+  const getData = async () => {
+    const response = await API.get(`/settings/analytics`, {
+      params: { startDate, endDate },
+    });
+    return response?.data?.data;
+  };
+
+  const {
+    data: analyticsData = [],
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["analyticsData", startDate, endDate],
+    queryFn: getData,
+  });
+
+  return { analyticsData, isLoading, isError, error, refetch };
+};
+
+export const useDashboardData = () => {
+  const getData = async () => {
+    const response = await API.get(`/settings/dashboard`);
+    return response?.data?.data;
+  };
+
+  const {
+    data: dashboardData = [],
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["dashboardData"],
+    queryFn: getData,
+  });
+
+  return { dashboardData, isLoading, isError, error, refetch };
+};
+
 export const useTermsPrivacy = (filter) => {
   const getData = async () => {
     const response = await API.get(`/settings/${filter}`);
@@ -20,5 +62,3 @@ export const useTermsPrivacy = (filter) => {
 
   return { termsPrivacy, isLoading, isError, error, refetch };
 };
-
-
