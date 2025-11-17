@@ -21,6 +21,7 @@ import {
   Col,
   Tag,
   Progress,
+  message,
 } from "antd";
 import {
   ArrowUpOutlined,
@@ -38,6 +39,8 @@ import {
 import dayjs from "dayjs";
 import { useAnalytics } from "../../api/settingsApi";
 import LastOrdersCard from "./LastOrdersCard";
+import DownloadFoodOrder from "./DownloadFoodOrder";
+import { API } from "../../api/api";
 
 const { RangePicker } = DatePicker;
 
@@ -68,6 +71,10 @@ function EarningsGrowth() {
     endDate = today;
 
     switch (dateRange) {
+      case "Today":
+        startDate = new Date(today);
+        startDate.setHours(0, 0, 0, 0);
+        break;
       case "1w":
         startDate = new Date(today);
         startDate.setDate(today.getDate() - 7);
@@ -119,9 +126,8 @@ function EarningsGrowth() {
   };
 
   // Use the analytics hook with dynamic dates
-  const { analyticsData, isLoading, isError, error } = useAnalytics(dateParams);
-
-  console.log("Full API Response:", analyticsData);
+  const { analyticsData, isLoading, isError, error, refetch } =
+    useAnalytics(dateParams);
 
   // Format chart data from API response
   const formatChartData = (data) => {
@@ -286,6 +292,61 @@ function EarningsGrowth() {
     }
   };
 
+  const downloadPDF = async () => {
+    try {
+      const response = await API.get(
+        `/settings/analytics/download-pdf?startDate=${dateParams.startDate}&endDate=${dateParams.endDate}`,
+        {
+          responseType: "blob",
+        }
+      );
+
+      console.log("XLSX Response:", response);
+
+      const contentDisposition = response.headers["content-disposition"];
+      let filename = `analytics-report-${dateParams.startDate}-to-${dateParams.endDate}.xlsx`;
+
+      if (contentDisposition) {
+        const filenameMatch = contentDisposition.match(/filename="?(.+)"?/);
+        if (filenameMatch && filenameMatch[1]) {
+          filename = filenameMatch[1];
+        }
+      }
+
+      const blob = new Blob([response.data], { type: "application/xlsx" });
+
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error downloading PDF:", error);
+
+      // Better error handling
+      if (error.response) {
+        console.error(
+          "Response error:",
+          error.response.status,
+          error.response.data
+        );
+        message.error(
+          `XLSX download failed: ${error.response.status} - ${
+            error.response.data.message || "Unknown error"
+          }`
+        );
+      } else if (error.request) {
+        console.error("Request error:", error.request);
+        message.error("XLSX download failed: No response from server");
+      } else {
+        console.error("Error:", error.message);
+        message.error("XLSX download failed: " + error.message);
+      }
+    }
+  };
   if (isError) {
     return (
       <div className="p-4">
@@ -314,6 +375,7 @@ function EarningsGrowth() {
               buttonStyle="solid"
               disabled={isLoading}
             >
+              <Radio.Button value="Today">Today</Radio.Button>
               <Radio.Button value="1w">1W</Radio.Button>
               <Radio.Button value="1m">1M</Radio.Button>
               <Radio.Button value="3m">3M</Radio.Button>
@@ -332,6 +394,26 @@ function EarningsGrowth() {
                   : null
               }
             />
+
+            <button
+              onClick={downloadPDF}
+              className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 flex items-center gap-2"
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
+              </svg>
+              Download PDF Report
+            </button>
           </Space>
         </div>
 

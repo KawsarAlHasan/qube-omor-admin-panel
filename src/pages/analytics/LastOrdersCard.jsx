@@ -71,12 +71,12 @@ function LastOrdersCard({ ordersList, isLoading }) {
         title={
           <div className="flex items-center justify-between">
             <span>Last Orders</span>
-            {lastOrders.length > 0 && (
+            {/* {lastOrders.length > 0 && (
               <Badge
                 count={lastOrders.length}
                 style={{ backgroundColor: "#52c41a" }}
               />
-            )}
+            )} */}
           </div>
         }
         className="shadow-lg"

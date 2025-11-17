@@ -14,8 +14,8 @@ import {
   FaHourglassHalf, // today_pending_orders
   FaTimesCircle, // today_cancelled_orders
 } from "react-icons/fa";
-import EarningsGrowth from "./EarningsGrowth";
 import { useDashboardData } from "../../api/settingsApi";
+import EarningsGrowth from "../analytics/EarningsGrowth";
 
 function Dashboard() {
   const { dashboardData, isLoading, isError, error, refetch } =
@@ -81,108 +81,8 @@ function Dashboard() {
         </h2>
       </div>
 
-      {/* Dashboard Overview */}
-      {/* <div>
-        <h1 className="text-[24px] lg:text-[30px] font-semibold mt-4">
-          Dashboard Overview
-        </h1>
-        <div className="grid grid-cols-2 lg:grid-cols-6 gap-4">
-          <div className="bg-white p-4 w-full">
-            <div className="bg-[#e6f0f5] w-full rounded-md p-4 flex flex-col items-center">
-              <FaUsers className="bgBlack text-[#FFF] h-[40px] rounded-full w-[40px] p-2" />
-              <h2 className="text-[24px] font-semibold text-[#242424] mt-2">
-                {adminDashboard?.total_users || 0}
-              </h2>
-              <p className="text-[16px]">Total Users</p>
-            </div>
-          </div>
-
-          <div className="bg-white p-4 w-full">
-            <div className="bg-[#e6f0f5] w-full rounded-md p-4 flex flex-col items-center">
-              <AiOutlineUsergroupAdd className="bgBlack text-[#FFF] h-[40px] rounded-full w-[40px] p-2" />
-              <h2 className="text-[24px] font-semibold text-[#242424] mt-2">
-                {adminDashboard?.todays_new_users || 0}
-              </h2>
-              <p className="text-[16px]">Today New Users</p>
-            </div>
-          </div>
-
-          <div className="md:col-span-3">
-           
-          </div>
-        </div>
-      </div> */}
-
-      <div className="mt-4">
+      <div className="mt-8">
         <EarningsGrowth />
-      </div>
-
-      {/* restaurant */}
-      <div>
-        <h1 className="text-[24px] lg:text-[30px] font-semibold mt-12">
-          Restaurant Overview
-        </h1>
-        <div className="grid grid-cols-2 lg:grid-cols-6">
-          <div className="bg-white p-4 w-full">
-            <div className="bg-[#e6f0f5] w-full rounded-md p-4 flex flex-col items-center">
-              <FaMoneyBillWave className="bgBlack text-[#FFF] h-[40px] rounded-full w-[40px] p-2" />
-              <h2 className="text-[24px] font-semibold text-[#242424] mt-2">
-                {restaurant?.total_earnings || 0}
-              </h2>
-              <p className="text-[16px]">Total Earnings</p>
-            </div>
-          </div>
-
-          <div className="bg-white p-4 w-full">
-            <div className="bg-[#e6f0f5] w-full rounded-md p-4 flex flex-col items-center">
-              <FaMoneyCheckAlt className="bgBlack text-[#FFF] h-[40px] rounded-full w-[40px] p-2" />
-              <h2 className="text-[24px] font-semibold text-[#242424] mt-2">
-                {restaurant?.today_earnings || 0}
-              </h2>
-              <p className="text-[16px]">Today Earnings</p>
-            </div>
-          </div>
-
-          <div className="bg-white p-4 w-full">
-            <div className="bg-[#e6f0f5] w-full rounded-md p-4 flex flex-col items-center">
-              <FaShoppingCart className="bgBlack text-[#FFF] h-[40px] rounded-full w-[40px] p-2" />
-              <h2 className="text-[24px] font-semibold text-[#242424] mt-2">
-                {restaurant?.today_total_orders || 0}
-              </h2>
-              <p className="text-[16px]">Today Total Orders</p>
-            </div>
-          </div>
-
-          <div className="bg-white p-4 w-full">
-            <div className="bg-[#e6f0f5] w-full rounded-md p-4 flex flex-col items-center">
-              <FaCheckCircle className="bgBlack text-[#FFF] h-[40px] rounded-full w-[40px] p-2" />
-              <h2 className="text-[24px] font-semibold text-[#242424] mt-2">
-                {restaurant?.today_completed_orders || 0}
-              </h2>
-              <p className="text-[16px]">Today Completed Orders</p>
-            </div>
-          </div>
-
-          <div className="bg-white p-4 w-full">
-            <div className="bg-[#e6f0f5] w-full rounded-md p-4 flex flex-col items-center">
-              <FaHourglassHalf className="bgBlack text-[#FFF] h-[40px] rounded-full w-[40px] p-2" />
-              <h2 className="text-[24px] font-semibold text-[#242424] mt-2">
-                {restaurant?.today_pending_orders || 0}
-              </h2>
-              <p className="text-[16px]">Today Pending Orders</p>
-            </div>
-          </div>
-
-          <div className="bg-white p-4 w-full">
-            <div className="bg-[#e6f0f5] w-full rounded-md p-4 flex flex-col items-center">
-              <FaTimesCircle className="bg-red-700 text-[#FFF] h-[40px] rounded-full w-[40px] p-2" />
-              <h2 className="text-[24px] font-semibold text-[#242424] mt-2">
-                {restaurant?.today_cancelled_orders || 0}
-              </h2>
-              <p className="text-[16px]">Today Cancelled Orders</p>
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* spa */}

@@ -68,11 +68,11 @@ const Sidebar = ({ onClick }) => {
       icon: <AppstoreOutlined />,
       label: <Link to="/">Dashboard</Link>,
     },
-    {
-      key: "analytics",
-      icon: <IoMdAnalytics />,
-      label: <Link to="/analytics">Analytics</Link>,
-    },
+    // {
+    //   key: "analytics",
+    //   icon: <IoMdAnalytics />,
+    //   label: <Link to="/analytics">Analytics</Link>,
+    // },
     {
       key: "restaurant",
       icon: <FaUtensils />,
