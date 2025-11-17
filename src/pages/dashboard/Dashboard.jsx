@@ -86,7 +86,7 @@ function Dashboard() {
       </div>
 
       {/* spa */}
-      <div>
+      {/* <div>
         <h1 className="text-[24px] lg:text-[30px] font-semibold mt-4">
           Spa Overview
         </h1>
@@ -151,10 +151,10 @@ function Dashboard() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* physio */}
-      <div>
+      {/* <div>
         <h1 className="text-[24px] lg:text-[30px] font-semibold mt-4">
           Physio Overview
         </h1>
@@ -219,7 +219,7 @@ function Dashboard() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
