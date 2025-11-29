@@ -62,7 +62,7 @@ function FoodDetails() {
     setDeleteLoading(true);
     try {
       // Simulate API call
-      // await API.delete(`/foods/${selectedFood.id}`);
+      await API.delete(`/food/delete/${selectedFood._id}`);
 
       message.success("Food item deleted successfully!");
       setIsDeleteModalOpen(false);
@@ -70,7 +70,7 @@ function FoodDetails() {
       setDeleteLoading(false);
       refetch();
     } catch (err) {
-      message.error(err.response?.data?.error || "Failed to delete food item");
+      message.error(err.response?.data?.message || "Failed to delete food item");
       setDeleteLoading(false);
     }
   };
@@ -118,11 +118,6 @@ function FoodDetails() {
   };
 
   const columns = [
-    {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-    },
     {
       title: "Food Image",
       dataIndex: "food_images",
@@ -199,7 +194,7 @@ function FoodDetails() {
         <Space size="middle">
           <ViewFoodDetail record={record} />
 
-          <EditFoodDetail record={record} />
+          <EditFoodDetail record={record} refetch={refetch} />
 
           <DeleteOutlined
             className="text-xl text-red-500 hover:text-red-700 cursor-pointer transition-colors"
@@ -216,8 +211,6 @@ function FoodDetails() {
 
   if (isLoading) return <IsLoading />;
   if (isError) return <IsError error={error} refetch={refetch} />;
-
-  console.log(allFoods, "allFoods");
 
   return (
     <div className="p-4">

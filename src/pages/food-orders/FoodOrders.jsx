@@ -110,8 +110,12 @@ function FoodOrders() {
     setIsPaidStatusChangeLoading(true);
 
     try {
-      // Here you would typically make an API call to update paid status
-      // await updateOrderPaidStatus(selectedPaidStatus._id, newPaidStatus);
+      await API.put(
+        `/food-order/paid-status-change/${selectedPaidStatus._id}`,
+        {
+          paid_status: newPaidStatus,
+        }
+      );
 
       message.success("Paid status updated successfully!");
       setIsPaidStatusModalOpen(false);
@@ -120,7 +124,7 @@ function FoodOrders() {
       refetch();
     } catch (err) {
       message.error(
-        err.response?.data?.error || "Failed to update paid status"
+        err.response?.data?.message || "Failed to update paid status"
       );
     } finally {
       setIsPaidStatusChangeLoading(false);
@@ -484,7 +488,6 @@ function FoodOrders() {
         >
           <Select.Option value="Paid">Paid</Select.Option>
           <Select.Option value="COD">COD</Select.Option>
-          <Select.Option value="Online Pay">Online Pay</Select.Option>
         </Select>
       </Modal>
 

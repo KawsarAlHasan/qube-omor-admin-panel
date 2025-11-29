@@ -66,7 +66,7 @@ const MainLayout = () => {
             style={{
               backgroundColor: "#FFFFFF",
               overflow: "auto",
-              height: "100vh",
+              height: "93vh",
               position: "fixed",
               insetInlineStart: 0,
               bottom: 64,

@@ -20,20 +20,13 @@ import {
 import { IoSettingsOutline } from "react-icons/io5";
 import { TbMessageMinus } from "react-icons/tb";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
-import { signOutAdmin, useAdminProfile } from "../api/api";
+import { useAdminProfile } from "../api/api";
 import driverIcon from "../assets/icons/driverIcon.png";
-import { IoMdAnalytics } from "react-icons/io";
 
 const Sidebar = ({ onClick }) => {
   const location = useLocation();
 
   const { adminProfile } = useAdminProfile();
-
-  const navigate = useNavigate();
-  const handleSignOut = () => {
-    signOutAdmin();
-    navigate("/login");
-  };
 
   // Determine the selected key based on current route
   const getSelectedKey = () => {
@@ -189,27 +182,13 @@ const Sidebar = ({ onClick }) => {
         },
       ],
     },
-
-    // Add logout as a menu item at the bottom
-    {
-      key: "logout",
-      icon: <LogoutOutlined />,
-      label: "Logout",
-      className: "bottom-20",
-      onClick: handleSignOut,
-      style: {
-        position: "absolute",
-        width: "100%",
-      },
-      danger: true,
-    },
   ];
 
   return (
     <div
       style={{
         position: "relative",
-        height: "100vh",
+        height: "90vh",
       }}
     >
       <Menu

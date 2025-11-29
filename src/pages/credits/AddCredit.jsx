@@ -83,7 +83,7 @@ function AddCredit({ refetch }) {
             />
           </Form.Item>
 
-          <Form.Item
+          {/* <Form.Item
             label="Price ($)"
             name="price"
             rules={[
@@ -97,7 +97,7 @@ function AddCredit({ refetch }) {
               min={0}
               prefix="$"
             />
-          </Form.Item>
+          </Form.Item> */}
 
           <Form.Item
             label="Description"

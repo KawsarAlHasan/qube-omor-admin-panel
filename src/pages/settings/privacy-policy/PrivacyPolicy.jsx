@@ -62,14 +62,14 @@ function PrivacyPolicy() {
         onCancel={() => setIsModalOpen(false)}
         onOk={handleUpdate}
         confirmLoading={loading}
-        width={800}
+        width={1200}
         okText="Update"
       >
         <ReactQuill
           theme="snow"
           value={content}
           onChange={setContent}
-          style={{ height: "300px", marginBottom: "50px" }}
+          style={{ height: "550px", marginBottom: "50px" }}
         />
       </Modal>
     </div>

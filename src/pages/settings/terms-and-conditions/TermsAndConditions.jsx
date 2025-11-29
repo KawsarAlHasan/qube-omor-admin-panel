@@ -47,7 +47,11 @@ function TermsAndConditions() {
         <h2 className="text-2xl font-semibold text-gray-800">
           {termsPrivacy?.data?.name || "Terms & Conditions"}
         </h2>
-        <Button icon={<MdModeEditOutline />} type="primary" onClick={handleEdit}>
+        <Button
+          icon={<MdModeEditOutline />}
+          type="primary"
+          onClick={handleEdit}
+        >
           Edit
         </Button>
       </div>
@@ -64,14 +68,14 @@ function TermsAndConditions() {
         onCancel={() => setIsModalOpen(false)}
         onOk={handleUpdate}
         confirmLoading={loading}
-        width={800}
+        width={1200}
         okText="Update"
       >
         <ReactQuill
           theme="snow"
           value={content}
           onChange={setContent}
-          style={{ height: "300px", marginBottom: "50px" }}
+          style={{ height: "550px", marginBottom: "50px" }}
         />
       </Modal>
     </div>

@@ -7,104 +7,107 @@ import {
   InputNumber,
   Select,
   Upload,
-  Switch,
   Divider,
   message,
-  Card,
-  Image,
 } from "antd";
 import {
   UploadOutlined,
   DeleteOutlined,
-  EyeOutlined,
   EditOutlined,
 } from "@ant-design/icons";
 import { useIngredients, useAllCategory } from "../../api/foodApi";
+import { API } from "../../api/api";
 
 const { TextArea } = Input;
 const { Option } = Select;
 
-function EditFoodDetail({ record }) {
-  const { ingredients, isLoading: isLoadingIngredients } = useIngredients({
-      status: "Active",
-    });
-  const { mockCategory } = useAllCategory();
-  const [form] = Form.useForm();
+function EditFoodDetail({ record, refetch }) {
+  const { ingredients = [], isLoading: isLoadingIngredients } = useIngredients({
+    status: "Active",
+  });
 
+  const { mockCategory = [], isLoading: isLoadingCategory } = useAllCategory({
+    status: "Active",
+  });
+
+  const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedIngredients, setSelectedIngredients] = useState([]);
   const [selectedExtraIngredients, setSelectedExtraIngredients] = useState([]);
   const [uploadedImages, setUploadedImages] = useState([]);
+  const [existingImages, setExistingImages] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  // record পরিবর্তন হলে ফর্ম ডেটা আপডেট করা
-  useEffect(() => {
-    if (record && isModalOpen) {
-      // ফর্ম ফিল্ডগুলো প্রি-পপুলেট করা
-      form.setFieldsValue({
-        food_name: record.food_name,
-        description: record.description,
-        quantity: record.quantity,
-        price: record.price,
-        cost_on_me: record.cost_on_me,
-        calories: record.calories,
-        category: record.category,
-        cookign_time: record.cookign_time,
-        status: record.status === "Active",
-      });
-
-      // ইঙ্গ্রেডিয়েন্টস সেট করা
-      setSelectedIngredients(record.ingredients || []);
-      setSelectedExtraIngredients(record.extra_ingredients || []);
-
-      // ইমেজগুলো সেট করা
-      if (record.images && record.images.length > 0) {
-        const imageFiles = record.images.map((url, index) => ({
-          uid: index,
-          name: `image-${index}.jpg`,
-          status: "done",
-          url: url,
-        }));
-        setUploadedImages(imageFiles);
-      }
-    }
-  }, [record, isModalOpen, form]);
 
   const showModal = () => {
     setIsModalOpen(true);
+    initializeFormData();
   };
 
-  const handleSubmit = async (values) => {
-    setLoading(true);
-    try {
-      // আপডেটেড ফর্ম ডেটা প্রস্তুত করা
-      const updatedFoodData = {
-        ...record, // পুরানো ডেটা রাখা
-        ...values, // নতুন ভ্যালুগুলো
-        ingredients: selectedIngredients,
-        extra_ingredients: selectedExtraIngredients,
-        images: uploadedImages.map((img) => img.url),
-        status: values.status ? "Active" : "Deactive",
-        items: selectedIngredients,
-        // ID অপরিবর্তিত রাখা
-        id: record.id,
-        _id: record._id || record.id,
-      };
+  const initializeFormData = () => {
+    if (!record) return;
 
-      console.log("Updated Food Data:", updatedFoodData);
+    // Set form values
+    form.setFieldsValue({
+      food_name: record.food_name,
+      food_category: record.food_category,
+      food_description: record.food_description,
+      quentity: record.quentity,
+      food_price: record.food_price,
+      cost_on_me: record.cost_on_me,
+      colories: record.colories,
+      cook_time: record.cook_time,
+      allow_backorder: record.allow_backorder,
+    });
 
-      // এখানে আপনার update API call হবে
-      // await updateFoodAPI(record.id, updatedFoodData);
-
-      message.success("Food updated successfully!");
-      handleCancel();
-    } catch (error) {
-      console.error("Update Failed:", error);
-      message.error("Failed to update food. Please try again.");
-    } finally {
-      setLoading(false);
+    // Set existing images
+    if (record.food_images && record.food_images.length > 0) {
+      setExistingImages(record.food_images);
     }
+
+    // Set uploaded images to empty (for new uploads)
+    setUploadedImages([]);
   };
+
+  // Initialize ingredients when modal opens and ingredients are loaded
+  useEffect(() => {
+    if (isModalOpen && ingredients.length > 0 && record) {
+      // Set main ingredients
+      if (record.food_ingredients && record.food_ingredients.length > 0) {
+        const mainIngs = record.food_ingredients
+          .map((ingId) => {
+            const ingredient = ingredients.find((ing) => ing._id === ingId);
+            if (ingredient) {
+              return {
+                id: ingredient._id,
+                name: ingredient.ingredient_name,
+                price: ingredient.price,
+              };
+            }
+            return null;
+          })
+          .filter(Boolean);
+        setSelectedIngredients(mainIngs);
+      }
+
+      // Set extra ingredients
+      if (record.extra_ingredients && record.extra_ingredients.length > 0) {
+        const extraIngs = record.extra_ingredients
+          .map((ingId) => {
+            const ingredient = ingredients.find((ing) => ing._id === ingId);
+            if (ingredient) {
+              return {
+                id: ingredient._id,
+                name: ingredient.ingredient_name,
+                price: ingredient.price,
+              };
+            }
+            return null;
+          })
+          .filter(Boolean);
+        setSelectedExtraIngredients(extraIngs);
+      }
+    }
+  }, [isModalOpen, ingredients, record]);
 
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -112,11 +115,12 @@ function EditFoodDetail({ record }) {
     setSelectedIngredients([]);
     setSelectedExtraIngredients([]);
     setUploadedImages([]);
+    setExistingImages([]);
   };
 
-  // ইঙ্গ্রেডিয়েন্ট যোগ করার ফাংশন
-  const addIngredient = (ingredientId, type = "main") => {
-    const ingredient = mockIngredients.find((ing) => ing._id === ingredientId);
+  // 🧩 Ingredient add
+  const addIngredient = (ingredientId, type) => {
+    const ingredient = ingredients.find((ing) => ing._id === ingredientId);
     if (!ingredient) return;
 
     if (type === "main") {
@@ -131,45 +135,47 @@ function EditFoodDetail({ record }) {
         ]);
       }
     } else {
-      if (!selectedExtraIngredients.find((ing) => ing._id === ingredientId)) {
+      if (!selectedExtraIngredients.find((ing) => ing.id === ingredientId)) {
         setSelectedExtraIngredients((prev) => [
           ...prev,
           {
-            ...ingredient,
-            quentity: 1,
+            id: ingredient._id,
+            name: ingredient.ingredient_name,
+            price: ingredient.price,
           },
         ]);
       }
     }
   };
 
-  // ইঙ্গ্রেডিয়েন্ট সরানোর ফাংশন
-  const removeIngredient = (ingredientId, type = "main") => {
+  // 🧩 Ingredient remove
+  const removeIngredient = (ingredientId, type) => {
     if (type === "main") {
       setSelectedIngredients((prev) =>
         prev.filter((ing) => ing.id !== ingredientId)
       );
     } else {
       setSelectedExtraIngredients((prev) =>
-        prev.filter((ing) => ing._id !== ingredientId)
+        prev.filter((ing) => ing.id !== ingredientId)
       );
     }
   };
 
-  // ইমেজ আপলোড হ্যান্ডলার - মাল্টিপল ইমেজ সাপোর্ট
+  // 🖼️ Remove existing image
+  const removeExistingImage = (imageUrl) => {
+    setExistingImages((prev) => prev.filter((img) => img !== imageUrl));
+  };
+
+  // 🖼️ Image upload handler
   const handleImageUpload = (info) => {
     let fileList = [...info.fileList];
 
-    // শুধুমাত্র ইমেজ ফাইল allow করা
     fileList = fileList.filter((file) => {
       const isImage = file.type?.startsWith("image/");
-      if (!isImage) {
-        message.error("You can only upload image files!");
-      }
+      if (!isImage) message.error("You can only upload image files!");
       return isImage;
     });
 
-    // File reader দিয়ে temporary URL তৈরি করা
     fileList = fileList.map((file) => {
       if (file.originFileObj) {
         file.url = URL.createObjectURL(file.originFileObj);
@@ -180,27 +186,6 @@ function EditFoodDetail({ record }) {
     setUploadedImages(fileList);
   };
 
-  // ইমেজ ডিলিট করার ফাংশন
-  const removeImage = (uid) => {
-    setUploadedImages((prev) => prev.filter((img) => img.uid !== uid));
-  };
-
-  // ইমেজ প্রিভিউ দেখানোর ফাংশন
-  const previewImage = (url) => {
-    Modal.info({
-      title: "Image Preview",
-      content: (
-        <div className="text-center">
-          <Image src={url} alt="Preview" style={{ maxWidth: "100%" }} />
-        </div>
-      ),
-      icon: null,
-      okText: "Close",
-      width: 600,
-    });
-  };
-
-  // ইমেজ আপলোডের প্রপস
   const uploadProps = {
     beforeUpload: (file) => {
       const isImage = file.type.startsWith("image/");
@@ -208,14 +193,12 @@ function EditFoodDetail({ record }) {
         message.error("You can only upload image files!");
         return Upload.LIST_IGNORE;
       }
-
       const isLt5M = file.size / 1024 / 1024 < 5;
       if (!isLt5M) {
         message.error("Image must be smaller than 5MB!");
         return Upload.LIST_IGNORE;
       }
-
-      return false; // Prevent automatic upload
+      return false;
     },
     multiple: true,
     accept: "image/*",
@@ -223,17 +206,64 @@ function EditFoodDetail({ record }) {
     onChange: handleImageUpload,
   };
 
-  // সক্রিয় ক্যাটাগরি ফিল্টার
-  const activeCategories = mockCategory.filter(
-    (cat) => cat.status === "Active"
-  );
+  // 🧾 Submit Handler
+  const handleSubmit = async (values) => {
+    setLoading(true);
+    try {
+      const formData = new FormData();
 
+      formData.append("food_name", values.food_name);
+      formData.append("food_category", values.food_category);
+      formData.append("food_description", values.food_description || "");
+      formData.append("quentity", values.quentity);
+      formData.append("food_price", values.food_price);
+      formData.append("cost_on_me", values.cost_on_me);
+      formData.append("colories", values.colories || "");
+      formData.append("cook_time", values.cook_time || "");
+      formData.append("allow_backorder", values.allow_backorder ?? true);
+
+      formData.append(
+        "food_ingredients",
+        JSON.stringify(selectedIngredients.map((ing) => ing.id))
+      );
+      formData.append(
+        "extra_ingredients",
+        JSON.stringify(selectedExtraIngredients.map((ing) => ing.id))
+      );
+
+      // Send existing images that weren't removed
+      formData.append("existing_images", JSON.stringify(existingImages));
+
+      // Append new uploaded images
+      if (uploadedImages && uploadedImages.length > 0) {
+        uploadedImages.forEach((file) => {
+          if (file.originFileObj) {
+            formData.append("food_images", file.originFileObj);
+          }
+        });
+      }
+
+      const response = await API.put(`/food/update/${record._id}`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      message.success("✅ Food updated successfully!");
+      handleCancel();
+      refetch();
+      console.log("Food updated:", response.data);
+    } catch (error) {
+      console.error("❌ Update Failed:", error);
+      message.error(error?.response?.data?.message || "Failed to update food.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (!record) return null;
 
   return (
     <div>
-      <EditOutlined className="text-blue-500 text-xl" onClick={showModal} />
+      <EditOutlined className="text-blue-500 text-xl cursor-pointer" onClick={showModal} />
 
       <Modal
         title={`Edit Food: ${record.food_name}`}
@@ -242,6 +272,7 @@ function EditFoodDetail({ record }) {
         width={900}
         style={{ top: 20 }}
         footer={null}
+        destroyOnClose
       >
         <Form
           form={form}
@@ -250,7 +281,7 @@ function EditFoodDetail({ record }) {
           onFinish={handleSubmit}
           scrollToFirstError
         >
-          {/* Basic Information */}
+          {/* 🧾 Basic Information */}
           <Divider orientation="left">Basic Information</Divider>
 
           <div className="grid grid-cols-2 gap-4">
@@ -264,30 +295,30 @@ function EditFoodDetail({ record }) {
 
             <Form.Item
               label="Category"
-              name="category"
+              name="food_category"
               rules={[{ required: true, message: "Please select category!" }]}
             >
-              <Select placeholder="Select category">
-                {activeCategories.map((category) => (
-                  <Option key={category._id} value={category.category_name}>
-                    {category.category_name}
+              <Select placeholder="Select category" loading={isLoadingCategory}>
+                {mockCategory.map((cat) => (
+                  <Option key={cat._id} value={cat._id}>
+                    {cat.category_name}
                   </Option>
                 ))}
               </Select>
             </Form.Item>
           </div>
 
-          <Form.Item label="Description" name="description">
+          <Form.Item label="Description" name="food_description">
             <TextArea rows={3} placeholder="Enter food description" />
           </Form.Item>
 
-          {/* Price & Quantity */}
+          {/* 💰 Price & Quantity */}
           <Divider orientation="left">Price & Quantity</Divider>
 
           <div className="grid grid-cols-3 gap-4">
             <Form.Item
               label="Quantity"
-              name="quantity"
+              name="quentity"
               rules={[{ required: true, message: "Please input quantity!" }]}
             >
               <InputNumber min={0} className="w-full" placeholder="0" />
@@ -295,18 +326,10 @@ function EditFoodDetail({ record }) {
 
             <Form.Item
               label="Price"
-              name="price"
+              name="food_price"
               rules={[{ required: true, message: "Please input price!" }]}
             >
-              <InputNumber
-                min={0}
-                className="w-full"
-                placeholder="0.00"
-                formatter={(value) =>
-                  `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                }
-                parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
-              />
+              <InputNumber min={0} className="w-full" placeholder="0.00" />
             </Form.Item>
 
             <Form.Item
@@ -314,37 +337,24 @@ function EditFoodDetail({ record }) {
               name="cost_on_me"
               rules={[{ required: true, message: "Please input cost!" }]}
             >
-              <InputNumber
-                min={0}
-                className="w-full"
-                placeholder="0.00"
-                formatter={(value) =>
-                  `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                }
-                parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
-              />
+              <InputNumber min={0} className="w-full" placeholder="0.00" />
             </Form.Item>
           </div>
 
-          {/* Other Details */}
+          {/* 🍳 Other Details */}
           <Divider orientation="left">Other Details</Divider>
 
           <div className="grid grid-cols-2 gap-4">
-            <Form.Item label="Calories" name="calories">
+            <Form.Item label="Calories" name="colories">
               <Input placeholder="e.g., 100 calories" />
             </Form.Item>
 
-            <Form.Item label="Cooking Time" name="cookign_time">
+            <Form.Item label="Cooking Time" name="cook_time">
               <Input placeholder="e.g., 10 minutes" />
             </Form.Item>
           </div>
 
-          {/* Status */}
-          <Form.Item label="Status" name="status" valuePropName="checked">
-            <Switch checkedChildren="Active" unCheckedChildren="Inactive" />
-          </Form.Item>
-
-          {/* Main Ingredients */}
+          {/* 🧂 Main Ingredients */}
           <Divider orientation="left">Main Ingredients</Divider>
 
           <Form.Item>
@@ -352,35 +362,35 @@ function EditFoodDetail({ record }) {
               placeholder="Select main ingredients"
               onChange={(value) => addIngredient(value, "main")}
               allowClear
+              loading={isLoadingIngredients}
+              value={undefined}
             >
-              {ingredients.map((ingredient) => (
-                <Option key={ingredient._id} value={ingredient._id}>
-                  {ingredient.ingredient_name} - ${ingredient.price}
+              {ingredients.map((ing) => (
+                <Option key={ing._id} value={ing._id}>
+                  {ing.ingredient_name} - ${ing.price}
                 </Option>
               ))}
             </Select>
           </Form.Item>
 
-          <div className="mb-4">
-            {selectedIngredients.map((ingredient) => (
-              <div
-                key={ingredient.id}
-                className="flex justify-between items-center bg-gray-50 p-2 rounded mb-2"
-              >
-                <span>
-                  {ingredient.name} - ${ingredient.price}
-                </span>
-                <Button
-                  type="text"
-                  danger
-                  icon={<DeleteOutlined />}
-                  onClick={() => removeIngredient(ingredient.id, "main")}
-                />
-              </div>
-            ))}
-          </div>
+          {selectedIngredients.map((ing) => (
+            <div
+              key={ing.id}
+              className="flex justify-between items-center bg-gray-50 p-2 rounded mb-2"
+            >
+              <span>
+                {ing.name} - ${ing.price}
+              </span>
+              <Button
+                type="text"
+                danger
+                icon={<DeleteOutlined />}
+                onClick={() => removeIngredient(ing.id, "main")}
+              />
+            </div>
+          ))}
 
-          {/* Extra Ingredients */}
+          {/* 🧁 Extra Ingredients */}
           <Divider orientation="left">Extra Ingredients</Divider>
 
           <Form.Item>
@@ -388,66 +398,84 @@ function EditFoodDetail({ record }) {
               placeholder="Select extra ingredients"
               onChange={(value) => addIngredient(value, "extra")}
               allowClear
+              loading={isLoadingIngredients}
+              value={undefined}
             >
-              {ingredients.map((ingredient) => (
-                <Option key={ingredient._id} value={ingredient._id}>
-                  {ingredient.ingredient_name} - ${ingredient.price}
+              {ingredients.map((ing) => (
+                <Option key={ing._id} value={ing._id}>
+                  {ing.ingredient_name} - ${ing.price}
                 </Option>
               ))}
             </Select>
           </Form.Item>
 
-          <div className="mb-4">
-            {selectedExtraIngredients.map((ingredient) => (
-              <div
-                key={ingredient._id}
-                className="flex justify-between items-center bg-gray-50 p-2 rounded mb-2"
-              >
-                <span>
-                  {ingredient.ingredient_name} - ${ingredient.price}
-                </span>
-                <Button
-                  type="text"
-                  danger
-                  icon={<DeleteOutlined />}
-                  onClick={() => removeIngredient(ingredient._id, "extra")}
-                />
-              </div>
-            ))}
-          </div>
-
-          {/* Food Images */}
-          <Divider orientation="left">Food Images</Divider>
-
-          <Form.Item>
-            <Upload
-              listType="picture"
-              multiple
-              maxCount={10}
-              onChange={handleImageUpload}
-              {...uploadProps}
+          {selectedExtraIngredients.map((ing) => (
+            <div
+              key={ing.id}
+              className="flex justify-between items-center bg-gray-50 p-2 rounded mb-2"
             >
-              <Button icon={<UploadOutlined />} className="mb-4">
-                Upload Images (Max 10)
-              </Button>
+              <span>
+                {ing.name} - ${ing.price}
+              </span>
+              <Button
+                type="text"
+                danger
+                icon={<DeleteOutlined />}
+                onClick={() => removeIngredient(ing.id, "extra")}
+              />
+            </div>
+          ))}
+
+          {/* 📸 Existing Food Images */}
+          <Divider orientation="left">Existing Images</Divider>
+          
+          {existingImages.length > 0 ? (
+            <div className="flex flex-wrap gap-3 mb-4">
+              {existingImages.map((imageUrl, index) => (
+                <div
+                  key={index}
+                  className="relative group border rounded-lg overflow-hidden"
+                  style={{ width: 100, height: 100 }}
+                >
+                  <img
+                    src={imageUrl}
+                    alt={`Food ${index + 1}`}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <Button
+                      type="text"
+                      danger
+                      icon={<DeleteOutlined style={{ color: "white", fontSize: 18 }} />}
+                      onClick={() => removeExistingImage(imageUrl)}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-gray-400 mb-4">No existing images</p>
+          )}
+
+          {/* 📸 Upload New Images */}
+          <Divider orientation="left">Upload New Images</Divider>
+          <Form.Item>
+            <Upload listType="picture" maxCount={10} {...uploadProps}>
+              <Button icon={<UploadOutlined />}>Upload Images (Max 10)</Button>
             </Upload>
           </Form.Item>
 
-          {/* Submit Button */}
+          {/* 🚀 Submit */}
           <Divider />
-          <div className="grid grid-cols-2 gap-4">
-            <Button onClick={handleCancel} disabled={loading}>
-              Cancel
-            </Button>
-            <Button
-              type="primary"
-              htmlType="submit"
-              loading={loading}
-              className="my-main-button"
-            >
-              {loading ? "Updating..." : "Update Food"}
-            </Button>
-          </div>
+          <Button
+            block
+            type="primary"
+            htmlType="submit"
+            loading={loading}
+            className="my-main-button"
+          >
+            {loading ? "Updating..." : "Update Food"}
+          </Button>
         </Form>
       </Modal>
     </div>

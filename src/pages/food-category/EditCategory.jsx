@@ -12,7 +12,6 @@ import {
 import { UploadOutlined } from "@ant-design/icons";
 import { useForm, Controller } from "react-hook-form";
 import { API } from "../../api/api";
-// import { API } from "../../api/api";
 
 const { Title } = Typography;
 

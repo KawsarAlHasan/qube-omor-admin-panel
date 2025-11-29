@@ -18,7 +18,7 @@ function SpaBooking() {
   // Initialize filter with proper date format
   const [filter, setFilter] = useState({
     page: 1,
-    limit: 10,
+    limit: 100,
     type: capitalized,
     date: null,
   });
@@ -63,11 +63,9 @@ function SpaBooking() {
     console.log(`selected ${value}`);
   };
 
-  // console.log("spaData", spaData?.data);
-
   return (
     <div>
-      <div className="flex gap-2">
+      {/* <div className="flex gap-2">
         <Select
           size="large"
           placeholder="Class"
@@ -168,11 +166,12 @@ function SpaBooking() {
             },
           ]}
         />
-      </div>
+      </div> */}
 
       <DatePicker onDateChange={handleDateGet} />
 
       <BookingList
+        date={filter?.date}
         spaData={spaData?.data}
         isLoading={isLoading}
         isError={isError}

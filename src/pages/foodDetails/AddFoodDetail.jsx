@@ -18,7 +18,7 @@ import { API } from "../../api/api";
 const { TextArea } = Input;
 const { Option } = Select;
 
-function AddFoodDetail({refetch}) {
+function AddFoodDetail({ refetch }) {
   const { ingredients = [], isLoading: isLoadingIngredients } = useIngredients({
     status: "Active",
   });
@@ -43,7 +43,7 @@ function AddFoodDetail({refetch}) {
     setUploadedImages([]);
   };
 
-  // 🧩 Ingredient যোগ করা
+  // 🧩 Ingredient add
   const addIngredient = (ingredientId, type) => {
     const ingredient = ingredients.find((ing) => ing._id === ingredientId);
     if (!ingredient) return;
@@ -73,16 +73,20 @@ function AddFoodDetail({refetch}) {
     }
   };
 
-  // 🧩 Ingredient সরানো
+  // 🧩 Ingredient remove
   const removeIngredient = (ingredientId, type) => {
     if (type === "main") {
-      setSelectedIngredients((prev) => prev.filter((ing) => ing.id !== ingredientId));
+      setSelectedIngredients((prev) =>
+        prev.filter((ing) => ing.id !== ingredientId)
+      );
     } else {
-      setSelectedExtraIngredients((prev) => prev.filter((ing) => ing.id !== ingredientId));
+      setSelectedExtraIngredients((prev) =>
+        prev.filter((ing) => ing.id !== ingredientId)
+      );
     }
   };
 
-  // 🖼️ ইমেজ হ্যান্ডলার
+  // 🖼️ image handler
   const handleImageUpload = (info) => {
     let fileList = [...info.fileList];
 
@@ -138,7 +142,10 @@ function AddFoodDetail({refetch}) {
       formData.append("cook_time", values.cook_time || "");
       formData.append("allow_backorder", values.allow_backorder ?? true);
 
-      formData.append("food_ingredients", JSON.stringify(selectedIngredients.map((ing) => ing.id)));
+      formData.append(
+        "food_ingredients",
+        JSON.stringify(selectedIngredients.map((ing) => ing.id))
+      );
       formData.append(
         "extra_ingredients",
         JSON.stringify(selectedExtraIngredients.map((ing) => ing.id))

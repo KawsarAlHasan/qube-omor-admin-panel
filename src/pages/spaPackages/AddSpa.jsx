@@ -11,6 +11,7 @@ import {
   Switch,
   Row,
   Col,
+  Checkbox,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import React, { useState } from "react";
@@ -21,11 +22,24 @@ import userIcon from "../../assets/icons/userIcon.png";
 const { TextArea } = Input;
 const { Option } = Select;
 
+const DAYS_OF_WEEK = [
+  { label: "Saturday", value: "Saturday" },
+  { label: "Sunday", value: "Sunday" },
+  { label: "Monday", value: "Monday" },
+  { label: "Tuesday", value: "Tuesday" },
+  { label: "Wednesday", value: "Wednesday" },
+  { label: "Thursday", value: "Thursday" },
+  { label: "Friday", value: "Friday" },
+];
+
 function AddSpa({ capitalized = "Spa", refetch }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [form] = Form.useForm();
   const [imageList, setImageList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isEveryDay, setIsEveryDay] = useState(false);
+  const [selectedDays, setSelectedDays] = useState([]);
+  const [allSelected, setAllSelected] = useState(false);
 
   // Fetch instructors list
   const { usersList, isLoading: isInstructorLoading } = useUsersList({
@@ -42,6 +56,19 @@ function AddSpa({ capitalized = "Spa", refetch }) {
   const handleOk = async () => {
     try {
       const values = await form.validateFields();
+
+      // Validate days selection if repeat daily is enabled
+      if (isEveryDay && selectedDays.length === 0) {
+        message.error("Please select at least one day!");
+        return;
+      }
+
+      // Validate date if repeat daily is disabled
+      if (!isEveryDay && !values.date) {
+        message.error("Please select a date!");
+        return;
+      }
+
       setLoading(true);
 
       // Create FormData for multipart/form-data
@@ -52,7 +79,9 @@ function AddSpa({ capitalized = "Spa", refetch }) {
       formData.append("description", values.description);
       formData.append("credit", values.credit.toString());
       formData.append("room_type", values.room_type);
-      formData.append("date", values.date.format("YYYY-MM-DD"));
+      if (!isEveryDay && values.date) {
+        formData.append("date", values.date.format("YYYY-MM-DD"));
+      }
       formData.append("time", values.time);
       formData.append("time_slote", values.time_slote);
       formData.append("class_capacity", values.class_capacity.toString());
@@ -61,19 +90,29 @@ function AddSpa({ capitalized = "Spa", refetch }) {
         (values.waiting_list_capacity || 0).toString()
       );
       formData.append("instructor", values.instructor);
-      formData.append("is_every_day", values.is_every_day ? "true" : "false");
+      formData.append("is_every_day", isEveryDay ? "true" : "false");
       formData.append("type", capitalized);
+
+      // Add selected days if repeat daily is enabled
+      if (isEveryDay) {
+        formData.append("repeat_days", JSON.stringify(selectedDays));
+      }
 
       // Add image if uploaded
       if (imageList.length > 0) {
         formData.append("images", imageList[0].originFileObj);
       }
 
-      await API.post(`/spa/create`, formData);
+      const response = await API.post(`/spa/create`, formData);
+
+      console.log("Response:", response);
 
       message.success(`${capitalized} class added successfully`);
       form.resetFields();
       setImageList([]);
+      setIsEveryDay(false);
+      setSelectedDays([]);
+      setAllSelected(false);
       setIsModalOpen(false);
       refetch?.();
     } catch (error) {
@@ -90,6 +129,9 @@ function AddSpa({ capitalized = "Spa", refetch }) {
   const handleCancel = () => {
     form.resetFields();
     setImageList([]);
+    setIsEveryDay(false);
+    setSelectedDays([]);
+    setAllSelected(false);
     setIsModalOpen(false);
   };
 
@@ -97,6 +139,36 @@ function AddSpa({ capitalized = "Spa", refetch }) {
   const handleUpload = ({ fileList }) => {
     // Limit to one file as per API
     setImageList(fileList.slice(-1));
+  };
+
+  // Handle repeat daily switch change
+  const handleRepeatDailyChange = (checked) => {
+    setIsEveryDay(checked);
+    if (checked) {
+      // Clear date when switching to repeat daily
+      form.setFieldValue("date", null);
+    } else {
+      // Clear selected days when switching to single date
+      setSelectedDays([]);
+      setAllSelected(false);
+    }
+  };
+
+  // Handle "All" checkbox change
+  const handleAllChange = (e) => {
+    const checked = e.target.checked;
+    setAllSelected(checked);
+    if (checked) {
+      setSelectedDays(DAYS_OF_WEEK.map((day) => day.value));
+    } else {
+      setSelectedDays([]);
+    }
+  };
+
+  // Handle individual day checkbox change
+  const handleDayChange = (checkedValues) => {
+    setSelectedDays(checkedValues);
+    setAllSelected(checkedValues.length === DAYS_OF_WEEK.length);
   };
 
   // Custom upload props
@@ -259,10 +331,7 @@ function AddSpa({ capitalized = "Spa", refetch }) {
                   { required: true, message: "Please input the credits!" },
                 ]}
               >
-                <InputNumber
-                  style={{ width: "100%" }}
-                  placeholder="e.g., 3"
-                />
+                <InputNumber style={{ width: "100%" }} placeholder="e.g., 3" />
               </Form.Item>
             </Col>
             <Col span={8}>
@@ -306,15 +375,6 @@ function AddSpa({ capitalized = "Spa", refetch }) {
           <Row gutter={16}>
             <Col span={8}>
               <Form.Item
-                name="date"
-                label="Date"
-                rules={[{ required: true, message: "Please select the date!" }]}
-              >
-                <DatePicker style={{ width: "100%" }} />
-              </Form.Item>
-            </Col>
-            <Col span={8}>
-              <Form.Item
                 name="time_slote"
                 label="Time Slot"
                 rules={[
@@ -346,10 +406,106 @@ function AddSpa({ capitalized = "Spa", refetch }) {
                 label="Repeat Daily"
                 valuePropName="checked"
               >
-                <Switch checkedChildren="Yes" unCheckedChildren="No" />
+                <Switch
+                  checkedChildren="Yes"
+                  unCheckedChildren="No"
+                  checked={isEveryDay}
+                  onChange={handleRepeatDailyChange}
+                />
               </Form.Item>
             </Col>
+            {/* Date field - Shows when Repeat Daily is disabled */}
+            {!isEveryDay && (
+              <Col span={8}>
+                <Form.Item
+                  name="date"
+                  label="Date"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please select the date!",
+                    },
+                  ]}
+                >
+                  <DatePicker style={{ width: "100%" }} />
+                </Form.Item>
+              </Col>
+            )}
           </Row>
+
+          {/* Days Selection Row - Shows when Repeat Daily is enabled */}
+          {isEveryDay && (
+            <Row gutter={16}>
+              <Col span={24}>
+                <Form.Item label="Select Days">
+                  <div
+                    style={{
+                      padding: "12px",
+                      border: "1px solid #d9d9d9",
+                      borderRadius: "8px",
+                      background: "#fafafa",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        flexWrap: "wrap",
+                        gap: "12px",
+                        alignItems: "center",
+                      }}
+                    >
+                      {/* All Checkbox */}
+                      <Checkbox
+                        checked={allSelected}
+                        onChange={handleAllChange}
+                        style={{
+                          fontWeight: "bold",
+                          marginRight: "16px",
+                          padding: "4px 12px",
+                          background: allSelected ? "#1890ff" : "#fff",
+                          color: allSelected ? "#fff" : "#000",
+                          borderRadius: "4px",
+                          border: "1px solid #d9d9d9",
+                        }}
+                      >
+                        All
+                      </Checkbox>
+
+                      {/* Individual Day Checkboxes */}
+                      <Checkbox.Group
+                        value={selectedDays}
+                        onChange={handleDayChange}
+                        style={{
+                          display: "flex",
+                          flexWrap: "wrap",
+                          gap: "8px",
+                        }}
+                      >
+                        {DAYS_OF_WEEK.map((day) => (
+                          <Checkbox
+                            key={day.value}
+                            value={day.value}
+                            style={{
+                              padding: "4px 12px",
+                              background: selectedDays.includes(day.value)
+                                ? "#e6f7ff"
+                                : "#fff",
+                              borderRadius: "4px",
+                              border: selectedDays.includes(day.value)
+                                ? "1px solid #1890ff"
+                                : "1px solid #d9d9d9",
+                            }}
+                          >
+                            {day.label}
+                          </Checkbox>
+                        ))}
+                      </Checkbox.Group>
+                    </div>
+                  </div>
+                </Form.Item>
+              </Col>
+            </Row>
+          )}
 
           <Row gutter={16}>
             <Col span={12}>

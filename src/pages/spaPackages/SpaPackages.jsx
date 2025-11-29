@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import IsLoading from "../../components/IsLoading";
 import IsError from "../../components/IsError";
-import { Button, message, Modal, Space, Table, Tag } from "antd";
-import { Link, useLocation } from "react-router-dom";
+import { message, Modal, Space, Table, Tag } from "antd";
+import { useLocation } from "react-router-dom";
 import { EditOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import AddSpa from "./AddSpa";
 import EditSpa from "./EditSpa";
@@ -82,6 +82,18 @@ function SpaPackages() {
 
   const columns = [
     {
+      title: "Images",
+      dataIndex: "images",
+      key: "images",
+      render: (images) => (
+        <div className="spa-images">
+          {images?.slice(0, 2).map((img, index) => (
+            <img key={index} src={img} alt="spa" className="spa-image" />
+          ))}
+        </div>
+      ),
+    },
+    {
       title: "Service Name",
       dataIndex: "service_name",
       key: "service_name",
@@ -133,18 +145,6 @@ function SpaPackages() {
           </Tag>
         );
       },
-    },
-    {
-      title: "Images",
-      dataIndex: "images",
-      key: "images",
-      render: (images) => (
-        <div className="spa-images">
-          {images?.slice(0, 2).map((img, index) => (
-            <img key={index} src={img} alt="spa" className="spa-image" />
-          ))}
-        </div>
-      ),
     },
     {
       title: "Actions",

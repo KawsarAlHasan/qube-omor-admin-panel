@@ -29,7 +29,7 @@ export const useFoods = ({
 };
 
 // category
-export const useAllCategory = (params) => {
+export const useAllCategory = (params, options = {}) => {
   const getData = async () => {
     const response = await API.get("/food-category/all", { params });
     return response.data.data;
@@ -44,13 +44,14 @@ export const useAllCategory = (params) => {
   } = useQuery({
     queryKey: ["mockCategory", params],
     queryFn: getData,
+    enabled: options.enabled ?? true,
   });
 
   return { mockCategory, isLoading, isError, error, refetch };
 };
 
 // ingrediants
-export const useIngredients = (params) => {
+export const useIngredients = (params, options = {}) => {
   const getData = async () => {
     const response = await API.get("/food-ingredient/all", { params });
     return response.data.data;
@@ -65,6 +66,7 @@ export const useIngredients = (params) => {
   } = useQuery({
     queryKey: ["ingredients", params],
     queryFn: getData,
+    enabled: options.enabled ?? true,
   });
 
   return { ingredients, isLoading, isError, error, refetch };

@@ -4,7 +4,7 @@ import IsLoading from "../../components/IsLoading";
 import IsError from "../../components/IsError";
 import BookingModal from "./BookingModal";
 
-function BookingList({ spaData, isLoading, isError, error, refetch }) {
+function BookingList({ date, spaData, isLoading, isError, error, refetch }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState(null);
 
@@ -44,7 +44,7 @@ function BookingList({ spaData, isLoading, isError, error, refetch }) {
             <p className="text-sm">
               Attendees: {singleData?.class_capacity} People
             </p>
-            <p className="text-sm">Schedule: {singleData?.date}</p>
+            <p className="text-sm">Schedule: {date}</p>
             <Button
               type="primary"
               className="mt-4 my-main-button py-3"
@@ -64,6 +64,7 @@ function BookingList({ spaData, isLoading, isError, error, refetch }) {
 
       {/* BookingModal component */}
       <BookingModal
+        date={date}
         singleData={selectedBooking}
         isVisible={isModalVisible}
         onClose={handleCancel}

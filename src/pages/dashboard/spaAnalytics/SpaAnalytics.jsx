@@ -37,9 +37,8 @@ import {
   SyncOutlined,
 } from "@ant-design/icons";
 import dayjs from "dayjs";
-import { useAnalytics } from "../../api/settingsApi";
-import LastOrdersCard from "./LastOrdersCard";
-import { API } from "../../api/api";
+import { useAnalytics } from "../../../api/settingsApi";
+import { API } from "../../../api/api";
 
 const { RangePicker } = DatePicker;
 
@@ -55,7 +54,7 @@ const COLORS = {
   orange: "#fa8c16",
 };
 
-function EarningsGrowth() {
+function SpaAnalytics({ selectType }) {
   const [dateRange, setDateRange] = useState("1m");
   const [customRange, setCustomRange] = useState(null);
   const [dateParams, setDateParams] = useState({
@@ -364,7 +363,7 @@ function EarningsGrowth() {
       <div className="">
         <div className="flex justify-between mb-4">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">
-            Restaurant Analytics
+            {selectType === "spa" ? "Spa" : "Physio"} Analytics
           </h1>
 
           <Space direction="horizontal" size="middle">
@@ -395,7 +394,7 @@ function EarningsGrowth() {
             />
 
             <button
-              onClick={downloadPDF}
+            //   onClick={downloadPDF}
               className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 flex items-center gap-2"
             >
               <svg
@@ -416,325 +415,13 @@ function EarningsGrowth() {
           </Space>
         </div>
 
-        {/* Key Metrics Cards */}
-        <Row gutter={[16, 16]} className="mb-6">
-          <Col xs={24} sm={12} lg={6}>
-            <Card className="shadow-md hover:shadow-lg transition-shadow">
-              <Statistic
-                title={
-                  <>
-                    <DollarOutlined /> Total Earnings
-                  </>
-                }
-                value={stats.totalEarnings}
-                precision={2}
-                valueStyle={{ color: COLORS.success }}
-                prefix="$"
-                loading={isLoading}
-              />
-            </Card>
-          </Col>
 
-          <Col xs={24} sm={12} lg={6}>
-            <Card className="shadow-md hover:shadow-lg transition-shadow">
-              <Statistic
-                title={
-                  <>
-                    <ShoppingCartOutlined /> Total Orders
-                  </>
-                }
-                value={stats.totalOrders}
-                precision={0}
-                valueStyle={{ color: COLORS.primary }}
-                loading={isLoading}
-              />
-            </Card>
-          </Col>
+        
 
-          <Col xs={24} sm={12} lg={6}>
-            <Card className="shadow-md hover:shadow-lg transition-shadow">
-              <Statistic
-                title={
-                  <>
-                    <ShopOutlined /> Total Items
-                  </>
-                }
-                value={stats.totalItems}
-                precision={0}
-                valueStyle={{ color: COLORS.purple }}
-                loading={isLoading}
-              />
-            </Card>
-          </Col>
-
-          <Col xs={24} sm={12} lg={6}>
-            <Card className="shadow-md hover:shadow-lg transition-shadow">
-              <Statistic
-                title={
-                  <>
-                    <WalletOutlined /> Avg Order Value
-                  </>
-                }
-                value={stats.avgOrderValue}
-                precision={2}
-                valueStyle={{ color: COLORS.orange }}
-                prefix="$"
-                loading={isLoading}
-              />
-            </Card>
-          </Col>
-        </Row>
-
-        {/* Financial Metrics */}
-        <Row gutter={[16, 16]} className="mb-6">
-          <Col xs={24} sm={12} lg={6}>
-            <Card className="shadow-md hover:shadow-lg transition-shadow">
-              <Statistic
-                title="Total Food Cost"
-                value={stats.totalFoodCost}
-                precision={2}
-                valueStyle={{ color: COLORS.danger }}
-                prefix="$"
-                loading={isLoading}
-              />
-            </Card>
-          </Col>
-
-          <Col xs={24} sm={12} lg={6}>
-            <Card className="shadow-md hover:shadow-lg transition-shadow">
-              <Statistic
-                title={
-                  <>
-                    <TruckOutlined /> Delivery Fee
-                  </>
-                }
-                value={stats.totalDeliveryFee}
-                precision={2}
-                valueStyle={{ color: COLORS.cyan }}
-                prefix="$"
-                loading={isLoading}
-              />
-            </Card>
-          </Col>
-
-          <Col xs={24} sm={12} lg={6}>
-            <Card className="shadow-md hover:shadow-lg transition-shadow">
-              <Statistic
-                title="Net Profit"
-                value={stats.profit}
-                precision={2}
-                valueStyle={{
-                  color: stats.profit > 0 ? COLORS.success : COLORS.danger,
-                }}
-                prefix="$"
-                loading={isLoading}
-              />
-            </Card>
-          </Col>
-
-          <Col xs={24} sm={12} lg={6}>
-            <Card className="shadow-md hover:shadow-lg transition-shadow">
-              <Statistic
-                title={
-                  <>
-                    <PercentageOutlined /> Profit Margin
-                  </>
-                }
-                value={stats.profitMargin}
-                precision={2}
-                valueStyle={{
-                  color:
-                    stats.profitMargin > 10
-                      ? COLORS.success
-                      : stats.profitMargin > 5
-                      ? COLORS.warning
-                      : COLORS.danger,
-                }}
-                suffix="%"
-                loading={isLoading}
-              />
-            </Card>
-          </Col>
-        </Row>
-
-        {/* Growth Card */}
-        <Row gutter={[16, 16]} className="mb-6">
-          <Col span={24}>
-            <Card className="shadow-md hover:shadow-lg transition-shadow">
-              <Row align="middle" justify="space-between">
-                <Col>
-                  <Statistic
-                    title={`Growth Rate (${stats.period})`}
-                    value={Math.abs(stats.growthPercentage)}
-                    precision={2}
-                    valueStyle={{
-                      color: stats.isPositiveGrowth
-                        ? COLORS.success
-                        : COLORS.danger,
-                      fontSize: "28px",
-                    }}
-                    prefix={
-                      stats.isPositiveGrowth ? (
-                        <ArrowUpOutlined />
-                      ) : (
-                        <ArrowDownOutlined />
-                      )
-                    }
-                    suffix="%"
-                    loading={isLoading}
-                  />
-                </Col>
-                <Col>
-                  <Tag
-                    color={stats.isPositiveGrowth ? "success" : "error"}
-                    style={{ fontSize: "16px", padding: "8px 16px" }}
-                  >
-                    {stats.isPositiveGrowth
-                      ? "Positive Growth"
-                      : "Negative Growth"}
-                  </Tag>
-                </Col>
-              </Row>
-            </Card>
-          </Col>
-        </Row>
-
-        {/* Main Chart */}
-        <Card
-          title="Earnings Over Time"
-          className="shadow-lg mb-6"
-          extra={
-            isLoading && (
-              <Space>
-                <Spin size="small" />
-                <span className="text-gray-500">Loading...</span>
-              </Space>
-            )
-          }
-        >
-          <div className="h-80 md:h-96">
-            {isLoading ? (
-              <div className="flex items-center justify-center h-full">
-                <Spin size="large" />
-              </div>
-            ) : stats.chartData && stats.chartData.length > 0 ? (
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart
-                  data={stats.chartData}
-                  margin={{
-                    top: 5,
-                    right: 30,
-                    left: 20,
-                    bottom: 5,
-                  }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="date" tickFormatter={formatXAxis} />
-                  <YAxis tickFormatter={formatYAxis} />
-                  <Tooltip
-                    formatter={formatTooltip}
-                    labelFormatter={(value) => {
-                      try {
-                        return `Date: ${new Date(value).toLocaleDateString(
-                          "en-US",
-                          {
-                            weekday: "long",
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                          }
-                        )}`;
-                      } catch (error) {
-                        return `Date: ${value}`;
-                      }
-                    }}
-                  />
-                  <Legend />
-                  <Line
-                    type="monotone"
-                    dataKey="earnings"
-                    stroke={COLORS.primary}
-                    activeDot={{ r: 8 }}
-                    strokeWidth={2}
-                    name="Earnings"
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="orders"
-                    stroke={COLORS.success}
-                    activeDot={{ r: 8 }}
-                    strokeWidth={2}
-                    name="Orders"
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="items"
-                    stroke={COLORS.purple}
-                    activeDot={{ r: 8 }}
-                    strokeWidth={2}
-                    name="Items"
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            ) : (
-              <div className="flex items-center justify-center h-full">
-                <p className="text-gray-500">
-                  No data available for the selected period
-                </p>
-              </div>
-            )}
-          </div>
-        </Card>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
-          {/* Order Status and Payment Methods */}
-          <Card
-            title="Order Status Distribution"
-            className="shadow-lg"
-            loading={isLoading}
-          >
-            {stats.orderStatus && stats.orderStatus.length > 0 ? (
-              <>
-                <div className="space-y-3">
-                  {stats.orderStatus.map((status, index) => (
-                    <div
-                      key={status._id}
-                      className="flex justify-between items-center p-3 bg-gray-50 rounded-lg"
-                    >
-                      <div className="flex items-center gap-2">
-                        {getStatusIcon(status._id)}
-                        <Tag color={getStatusColor(status._id)}>
-                          {status._id}
-                        </Tag>
-                      </div>
-                      <div className="text-right">
-                        <div className="font-semibold">
-                          ${status.total.toFixed(2)}
-                        </div>
-                        <div className="text-sm text-gray-500">
-                          {status.count} orders
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </>
-            ) : (
-              <div className="text-center text-gray-500 py-8">
-                No order status data available
-              </div>
-            )}
-          </Card>
-
-          {/* Last orders */}
-          <LastOrdersCard
-            ordersList={analyticsData?.ordersList}
-            isLoading={isLoading}
-          />
-        </div>
+   
       </div>
     </div>
   );
 }
 
-export default EarningsGrowth;
+export default SpaAnalytics;

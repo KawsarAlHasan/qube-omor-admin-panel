@@ -26,7 +26,7 @@ import { useSingleSpaData } from "../../api/spaApi";
 import IsError from "../../components/IsError";
 import { API } from "../../api/api";
 
-function BookingModal({ singleData, isVisible, onClose }) {
+function BookingModal({ date, singleData, isVisible, onClose }) {
   const { singleSpaData, isLoading, isError, error, refetch } =
     useSingleSpaData(
       { id: singleData?._id },
@@ -116,7 +116,7 @@ function BookingModal({ singleData, isVisible, onClose }) {
                   <CalendarOutlined className="text-2xl text-blue-500 mb-2" />
                   <p className="text-xs text-gray-500 mb-1">Date</p>
                   <p className="font-semibold text-gray-800">
-                    {formatDate(data.spaDetails?.date)}
+                    {formatDate(new Date(date)) || "N/A"}
                   </p>
                 </div>
               </Col>

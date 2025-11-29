@@ -239,7 +239,7 @@ function Credits() {
             <InputNumber className="w-full" placeholder="Enter credit amount" />
           </Form.Item>
 
-          <Form.Item
+          {/* <Form.Item
             label="Price"
             name="price"
             rules={[
@@ -252,7 +252,7 @@ function Credits() {
               placeholder="Enter price"
               prefix="$"
             />
-          </Form.Item>
+          </Form.Item> */}
 
           <Form.Item
             label="Description"
