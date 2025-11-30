@@ -23,6 +23,28 @@ export const useAnalytics = ({ startDate, endDate }) => {
   return { analyticsData, isLoading, isError, error, refetch };
 };
 
+export const useSpaAnalytics = ({ startDate, endDate, type }) => {
+  const getData = async () => {
+    const response = await API.get(`/settings/spa-analytics`, {
+      params: { startDate, endDate, type },
+    });
+    return response?.data?.data;
+  };
+
+  const {
+    data: spaAnalyticsData = [],
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["spaAnalyticsData", startDate, endDate, type],
+    queryFn: getData,
+  });
+
+  return { spaAnalyticsData, isLoading, isError, error, refetch };
+};
+
 export const useDashboardData = () => {
   const getData = async () => {
     const response = await API.get(`/settings/dashboard`);

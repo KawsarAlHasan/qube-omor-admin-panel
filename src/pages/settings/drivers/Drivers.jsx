@@ -118,9 +118,7 @@ function Drivers() {
           />
           <div className="">
             <h1 className="">{record?.name}</h1>
-            <p className="text-sm text-gray-600 mt-[-5px]">
-              {record?.email}
-            </p>
+            <p className="text-sm text-gray-600 mt-[-5px]">{record?.email}</p>
           </div>
         </div>
       ),
@@ -165,6 +163,16 @@ function Drivers() {
         </span>
       ),
     },
+    {
+      title: <span>Today Paid US</span>,
+      dataIndex: "stats",
+      key: "stats",
+      render: (stats) => (
+        <span>
+          ${stats?.paidAmountUs?.toFixed(2) || 0} / $100
+        </span>
+      ),
+    },
 
     {
       title: <span>Status</span>,
@@ -204,7 +212,7 @@ function Drivers() {
   if (isError) return <IsError error={error} refetch={refetch} />;
 
   return (
-    <div className="p-6 bg-gray-50">
+    <div className="p-4 bg-gray-50">
       <div className="flex justify-between items-center mb-2">
         <Search
           placeholder="Search by driver name..."
