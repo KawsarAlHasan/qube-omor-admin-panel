@@ -51,15 +51,14 @@ function Dashboard() {
         <Radio.Button value="restaurant">Restaurant</Radio.Button>
         <Radio.Button value="spa">Spa Analytics</Radio.Button>
         <Radio.Button value="physio">Physio Analytics</Radio.Button>
+        <Radio.Button value="classes">Classes Analytics</Radio.Button>
       </Radio.Group>
 
-      {selectType === "restaurant" && (
+      {selectType === "restaurant" ? (
         <EarningsGrowth dashboardData={dashboardData} />
+      ) : (
+        <SpaAnalytics selectType={selectType} />
       )}
-
-      {selectType === "spa" && <SpaAnalytics selectType={selectType} />}
-
-      {selectType === "physio" && <SpaAnalytics selectType={selectType} />}
     </div>
   );
 }

@@ -103,6 +103,14 @@ export const router = createBrowserRouter([
         element: <SpaBooking />,
       },
       {
+        path: "/classes",
+        element: <SpaPackages />,
+      },
+      {
+        path: "/classes-booking",
+        element: <SpaBooking />,
+      },
+      {
         path: "/restaurant-order",
         element: <RestaurantOrder />,
       },

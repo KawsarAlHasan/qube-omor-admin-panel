@@ -31,7 +31,7 @@ const Sidebar = ({ onClick }) => {
   // Determine the selected key based on current route
   const getSelectedKey = () => {
     const path = location.pathname;
-    if (path === "/") return ["1"];
+    if (path === "/") return ["dashboard"];
     if (path === "/analytics") return ["analytics"];
     if (path === "/food-details") return ["food-details", "restaurant"];
     if (path === "/food-orders") return ["food-orders", "restaurant"];
@@ -41,6 +41,9 @@ const Sidebar = ({ onClick }) => {
     if (path === "/spa-booking") return ["spa-booking", "spa"];
     if (path === "/physio-classes") return ["physio-classes", "physio"];
     if (path === "/physio-booking") return ["physio-booking", "physio"];
+    if (path === "/classes") return ["classes", "classes-management"];
+    if (path === "/classes-booking")
+      return ["classes-booking", "classes-management"];
     if (path === "/credits") return ["credits"];
     if (path === "/user-management") return ["user-management"];
     if (path === "/user-massages") return ["user-massages"];
@@ -50,14 +53,14 @@ const Sidebar = ({ onClick }) => {
     if (path === "/terms-and-conditions")
       return ["terms-and-conditions", "settings"];
     if (path === "/privacy-policy") return ["privacy-policy", "settings"];
-    return ["1"];
+    return ["dashboard"];
   };
 
   const isSuperAdmin = adminProfile?.role === "Super Admin";
 
   const sidebarItems = [
     {
-      key: "1",
+      key: "dashboard",
       icon: <AppstoreOutlined />,
       label: <Link to="/">Dashboard</Link>,
     },
@@ -124,6 +127,23 @@ const Sidebar = ({ onClick }) => {
           key: "physio-booking",
           icon: <FaCalendarAlt />,
           label: <Link to="/physio-booking">Physio Booking</Link>,
+        },
+      ],
+    },
+    {
+      key: "classes-management",
+      icon: <FaUserMd />,
+      label: "Classes",
+      children: [
+        {
+          key: "classes",
+          icon: <FaHeartbeat />,
+          label: <Link to="/classes">Classes</Link>,
+        },
+        {
+          key: "classes-booking",
+          icon: <FaCalendarAlt />,
+          label: <Link to="/classes-booking">Classes Booking</Link>,
         },
       ],
     },

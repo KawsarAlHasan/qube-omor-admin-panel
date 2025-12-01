@@ -120,32 +120,32 @@ function SpaPackages() {
       dataIndex: "room_type",
       key: "room_type",
     },
-    {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-      render: (status) => {
-        let color;
-        switch (status) {
-          case "Available":
-            color = "green";
-            break;
-          case "Not Available":
-            color = "red";
-            break;
-          case "Declined":
-            color = "orange";
-            break;
-          default:
-            color = "blue";
-        }
-        return (
-          <Tag className="py-0.5 px-2" color={color}>
-            {status}
-          </Tag>
-        );
-      },
-    },
+    // {
+    //   title: "Status",
+    //   dataIndex: "status",
+    //   key: "status",
+    //   render: (status) => {
+    //     let color;
+    //     switch (status) {
+    //       case "Available":
+    //         color = "green";
+    //         break;
+    //       case "Not Available":
+    //         color = "red";
+    //         break;
+    //       case "Declined":
+    //         color = "orange";
+    //         break;
+    //       default:
+    //         color = "blue";
+    //     }
+    //     return (
+    //       <Tag className="py-0.5 px-2" color={color}>
+    //         {status}
+    //       </Tag>
+    //     );
+    //   },
+    // },
     {
       title: "Actions",
       key: "actions",

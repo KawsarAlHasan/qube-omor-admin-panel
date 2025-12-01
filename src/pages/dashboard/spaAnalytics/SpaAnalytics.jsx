@@ -38,6 +38,7 @@ import CreditPurchases from "./CreditPurchases";
 import TopCreditBuyers from "./TopCreditBuyers";
 import RecentBookings from "./RecentBookings";
 import DateSelect from "../../../components/DateSelect";
+import { API } from "../../../api/api";
 const { TabPane } = Tabs;
 
 // Color palette for charts
@@ -62,7 +63,13 @@ function SpaAnalytics({ selectType }) {
   });
 
   const type =
-    selectType == "spa" ? "Spa" : selectType == "physio" ? "Physio" : null;
+    selectType == "spa"
+      ? "Spa"
+      : selectType == "physio"
+      ? "Physio"
+      : selectType == "classes"
+      ? "Classes"
+      : null;
 
   // Use the analytics hook with dynamic dates
   const { spaAnalyticsData, isLoading, isError, error, refetch } =
@@ -91,6 +98,7 @@ function SpaAnalytics({ selectType }) {
       uniqueUsers: item.uniqueUsers || 0,
       spaBookings: item.spaBookings || 0,
       physioBookings: item.physioBookings || 0,
+      classesBookings: item.classesBookings || 0,
     }));
   };
 
@@ -113,7 +121,7 @@ function SpaAnalytics({ selectType }) {
           avgPricePerPurchase: 0,
           creditUtilizationRate: 0,
         },
-        typeComparison: { spa: null, physio: null },
+        typeComparison: { spa: null, physio: null, classes: null },
         chartData: [],
         topCreditBuyers: [],
         recentBookings: [],
@@ -127,6 +135,7 @@ function SpaAnalytics({ selectType }) {
       typeComparison: spaAnalyticsData.typeComparison || {
         spa: null,
         physio: null,
+        classes: null,
       },
       chartData: formatChartData(spaAnalyticsData),
       topCreditBuyers: spaAnalyticsData.topCreditBuyers || [],
@@ -150,6 +159,8 @@ function SpaAnalytics({ selectType }) {
     }
   };
 
+  // http://localhost:8099/api/v1/settings/spa-analytics/download-pdf?startDate=2025-01-10&endDate=2026-01-01&type=Spa
+
   // excel download
   const downloadPDF = async () => {
     try {
@@ -163,7 +174,7 @@ function SpaAnalytics({ selectType }) {
       console.log("XLSX Response:", response);
 
       const contentDisposition = response.headers["content-disposition"];
-      let filename = `${type}-analytics-report-${dateRange.start_date}-to-${dateRange.end_date}.xlsx`;
+      let filename = `spa-physio-classes-analytics-report-${dateRange.start_date}-to-${dateRange.end_date}.xlsx`;
 
       if (contentDisposition) {
         const filenameMatch = contentDisposition.match(/filename="?(.+)"?/);
@@ -225,7 +236,12 @@ function SpaAnalytics({ selectType }) {
       {/* Header */}
       <div className="flex flex-wrap justify-between items-center mb-6 gap-4">
         <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
-          {selectType === "spa" ? "Spa" : "Physio"} Analytics
+          {selectType === "spa"
+            ? "Spa"
+            : selectType === "physio"
+            ? "Physio"
+            : "Classes"}{" "}
+          Analytics
         </h1>
 
         <Space direction="horizontal" size="middle" wrap>
