@@ -11,6 +11,7 @@ import {
   FaCalendarCheck, // Spa Booking
   FaUserMd, // Physio / Doctor
   FaHeartbeat, // Physio Service
+  FaHome,
   FaCalendarAlt,
   FaBoxes,
   FaCarrot, // Physio Booking
@@ -50,6 +51,7 @@ const Sidebar = ({ onClick }) => {
     if (path === "/administrators") return ["administrators"];
     if (path === "/drivers") return ["drivers", "settings"];
     if (path === "/instructors") return ["instructors", "settings"];
+    if (path === "/banner") return ["banner", "settings"];
     if (path === "/terms-and-conditions")
       return ["terms-and-conditions", "settings"];
     if (path === "/privacy-policy") return ["privacy-policy", "settings"];
@@ -132,7 +134,7 @@ const Sidebar = ({ onClick }) => {
     },
     {
       key: "classes-management",
-      icon: <FaUserMd />,
+      icon: <FaHome />,
       label: "Classes",
       children: [
         {
@@ -189,6 +191,11 @@ const Sidebar = ({ onClick }) => {
           key: "instructors",
           icon: <FaFileContract />,
           label: <Link to="/instructors">Instructors</Link>,
+        },
+        {
+          key: "banner",
+          icon: <FaFileContract />,
+          label: <Link to="/banner">Banner</Link>,
         },
         {
           key: "terms-and-conditions",

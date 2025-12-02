@@ -23,6 +23,7 @@ import PrivacyPolicy from "../pages/settings/privacy-policy/PrivacyPolicy";
 import Credits from "../pages/credits/Credits";
 import Drivers from "../pages/settings/drivers/Drivers";
 import Instructors from "../pages/settings/instructors/Instructors";
+import Banner from "../pages/settings/banner/Banner";
 
 export const router = createBrowserRouter([
   {
@@ -125,6 +126,10 @@ export const router = createBrowserRouter([
       {
         path: "/instructors",
         element: <Instructors />,
+      },
+      {
+        path: "/banner",
+        element: <Banner />,
       },
       {
         path: "/terms-and-conditions",

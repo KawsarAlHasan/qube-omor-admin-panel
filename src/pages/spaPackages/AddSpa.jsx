@@ -195,11 +195,11 @@ function AddSpa({ capitalized = "Spa", refetch }) {
   return (
     <div>
       <Button onClick={showModal} className="my-main-button" type="primary">
-        + Add {capitalized} Class
+        + Add {capitalized} {capitalized == "Classes" ? "" : "Class"}
       </Button>
 
       <Modal
-        title={`Add ${capitalized} Class`}
+        title={`Add ${capitalized} ${capitalized == "Classes" ? "" : "Class"}`}
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}

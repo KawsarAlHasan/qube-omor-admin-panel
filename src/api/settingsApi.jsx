@@ -84,3 +84,25 @@ export const useTermsPrivacy = (filter) => {
 
   return { termsPrivacy, isLoading, isError, error, refetch };
 };
+
+export const useBannerData = (type) => {
+  const getData = async () => {
+    const response = await API.get(`/settings/banner`, {
+      params: { type },
+    });
+    return response?.data?.data;
+  };
+
+  const {
+    data: bannerData = [],
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["bannerData", type],
+    queryFn: getData,
+  });
+
+  return { bannerData, isLoading, isError, error, refetch };
+};

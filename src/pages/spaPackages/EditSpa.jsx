@@ -271,7 +271,9 @@ function EditSpa({ capitalized = "Spa", record, refetch }) {
       />
 
       <Modal
-        title={`Update ${capitalized} Class`}
+        title={`Update ${capitalized} ${
+          capitalized == "Classes" ? "" : "Class"
+        }`}
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
@@ -487,10 +489,7 @@ function EditSpa({ capitalized = "Spa", record, refetch }) {
                     },
                   ]}
                 >
-                  <DatePicker 
-                    style={{ width: "100%" }} 
-                    format="YYYY-MM-DD"
-                  />
+                  <DatePicker style={{ width: "100%" }} format="YYYY-MM-DD" />
                 </Form.Item>
               </Col>
             )}
