@@ -3,7 +3,7 @@ import { Table, Tag, Button, Modal, Select, message, Input } from "antd";
 import IsError from "../../components/IsError";
 import IsLoading from "../../components/IsLoading";
 import { EditOutlined } from "@ant-design/icons";
-import { API } from "../../api/api";
+import { API, useAdminProfile } from "../../api/api";
 import FoodOrderDetails from "./FoodOrderDetails";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAllFoodOrders } from "../../api/foodApi";
@@ -14,6 +14,8 @@ import userIcon from "../../assets/icons/userIcon.png";
 const { Search } = Input;
 
 function FoodOrders() {
+  const { adminProfile } = useAdminProfile();
+
   const [searchText, setSearchText] = useState("");
 
   const location = useLocation();
@@ -183,6 +185,8 @@ function FoodOrders() {
     }
   };
 
+  const isSuperAdmin = adminProfile?.role === "Super Admin";
+
   const columns = [
     {
       title: <span>Sl no.</span>,
@@ -266,46 +270,69 @@ function FoodOrders() {
             </div>
           )}
 
-          <Button
-            className={`-ml-0.5 ${record.driver == null ? "" : "mt-2.5"}`}
-            title={record.driver == null ? "Assign Driver" : "Change Driver"}
-            size="small"
-            icon={<EditOutlined />}
-            onClick={() => openDriverAssignModal(record)}
-          />
-        </div>
-      ),
-    },
-    {
-      title: <span>Paid Status</span>,
-      dataIndex: "paid_status",
-      key: "paid_status",
-      render: (paid_status, record) => (
-        <div className="flex flex-items-center gap-2">
-          {paid_status == "COD" ? (
-            <div className="flex flex-items-center gap-2">
-              <Tag className="p-0.5 px-3" color="blue">
-                {paid_status}
-              </Tag>
-              {/* <Button
-                className="-ml-3"
-                title="Change Paid Status"
-                size="small"
-                icon={<EditOutlined />}
-                onClick={() => openPaidStatusModal(record)}
-              /> */}
-            </div>
-          ) : (
-            <Tag
-              className="p-0.5 px-3"
-              color={paid_status === "Paid" ? "green" : "orange"}
-            >
-              {paid_status}
-            </Tag>
+          {record?.order_type === "Delivery" && (
+            <Button
+              className={`-ml-0.5 ${record.driver == null ? "" : "mt-2.5"}`}
+              title={record.driver == null ? "Assign Driver" : "Change Driver"}
+              size="small"
+              icon={<EditOutlined />}
+              onClick={() => openDriverAssignModal(record)}
+            />
           )}
         </div>
       ),
     },
+    {
+      title: <span>Order Type</span>,
+      dataIndex: "order_type",
+      key: "order_type",
+      render: (order_type) => (
+        <div>
+          <Tag
+            className="p-0.5 px-3"
+            color={
+              order_type === "Delivery"
+                ? "blue"
+                : order_type === "Pickup"
+                ? "red"
+                : "green"
+            }
+          >
+            {order_type}
+          </Tag>
+        </div>
+      ),
+    },
+    // {
+    //   title: <span>Paid Status</span>,
+    //   dataIndex: "paid_status",
+    //   key: "paid_status",
+    //   render: (paid_status, record) => (
+    //     <div className="flex flex-items-center gap-2">
+    //       {paid_status == "COD" ? (
+    //         <div className="flex flex-items-center gap-2">
+    //           <Tag className="p-0.5 px-3" color="blue">
+    //             {paid_status}
+    //           </Tag>
+    //           {/* <Button
+    //             className="-ml-3"
+    //             title="Change Paid Status"
+    //             size="small"
+    //             icon={<EditOutlined />}
+    //             onClick={() => openPaidStatusModal(record)}
+    //           /> */}
+    //         </div>
+    //       ) : (
+    //         <Tag
+    //           className="p-0.5 px-3"
+    //           color={paid_status === "Paid" ? "green" : "orange"}
+    //         >
+    //           {paid_status}
+    //         </Tag>
+    //       )}
+    //     </div>
+    //   ),
+    // },
     {
       title: <span>Status</span>,
       dataIndex: "status",
@@ -328,13 +355,17 @@ function FoodOrders() {
           {status === "Delivered" ? (
             ""
           ) : (
-            <Button
-              className="-ml-1"
-              title="Status Change"
-              size="small"
-              icon={<EditOutlined />}
-              onClick={() => openStatusModal(record)}
-            />
+            <>
+              {isSuperAdmin && (
+                <Button
+                  className="-ml-1"
+                  title="Status Change"
+                  size="small"
+                  icon={<EditOutlined />}
+                  onClick={() => openStatusModal(record)}
+                />
+              )}
+            </>
           )}
         </div>
       ),

@@ -10,6 +10,7 @@ import {
   Divider,
   message,
   Image,
+  Radio,
 } from "antd";
 import { UploadOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useIngredients, useAllCategory } from "../../api/foodApi";
@@ -128,6 +129,7 @@ function AddFoodDetail({ refetch }) {
 
   // 🧾 Submit Handler
   const handleSubmit = async (values) => {
+    console.log("values", values.allow_backorder);
     setLoading(true);
     try {
       const formData = new FormData();
@@ -140,7 +142,7 @@ function AddFoodDetail({ refetch }) {
       formData.append("cost_on_me", values.cost_on_me);
       formData.append("colories", values.colories || "");
       formData.append("cook_time", values.cook_time || "");
-      formData.append("allow_backorder", values.allow_backorder ?? true);
+      formData.append("allow_backorder", values.allow_backorder);
 
       formData.append(
         "food_ingredients",
@@ -259,7 +261,19 @@ function AddFoodDetail({ refetch }) {
           {/* 🍳 Other Details */}
           <Divider orientation="left">Other Details</Divider>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-3 gap-4">
+            {/* Allow purchese when out of stock redio button */}
+            <Form.Item
+              label="Allow purchese when out of stock"
+              name="allow_backorder"
+              initialValue={true}
+            >
+              <Radio.Group>
+                <Radio value={true}>Yes</Radio>
+                <Radio value={false}>No</Radio>
+              </Radio.Group>
+            </Form.Item>
+
             <Form.Item label="Calories" name="colories">
               <Input placeholder="e.g., 100 calories" />
             </Form.Item>

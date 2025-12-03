@@ -70,7 +70,9 @@ function FoodDetails() {
       setDeleteLoading(false);
       refetch();
     } catch (err) {
-      message.error(err.response?.data?.message || "Failed to delete food item");
+      message.error(
+        err.response?.data?.message || "Failed to delete food item"
+      );
       setDeleteLoading(false);
     }
   };
@@ -142,7 +144,20 @@ function FoodDetails() {
       title: "Quantity",
       dataIndex: "quentity",
       key: "quentity",
-      render: (quentity) => <span>{quentity}</span>,
+      render: (quentity) => (
+        <span
+          className={
+            "font-semibold " +
+            (quentity > 0
+              ? "text-green-500"
+              : quentity < 0
+              ? " text-red-700"
+              : "text-red-500")
+          }
+        >
+          {quentity == 0 ? "Out of Stock" : quentity}
+        </span>
+      ),
     },
     {
       title: "Price",

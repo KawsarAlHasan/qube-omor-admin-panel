@@ -10,7 +10,6 @@ import UserManagement from "../pages/usersManagement/UserManagement";
 import CheckCode from "../pages/login/CheckCode";
 import Administrators from "../pages/administrators/Administrators";
 import PrivateRoute from "./PrivateRoute";
-import RestaurantOrder from "../pages/restaurantOrder/RestaurantOrder";
 import FoodDetails from "../pages/foodDetails/FoodDetails";
 import SpaPackages from "../pages/spaPackages/SpaPackages";
 import FoodOrders from "../pages/food-orders/FoodOrders";
@@ -110,10 +109,6 @@ export const router = createBrowserRouter([
       {
         path: "/classes-booking",
         element: <SpaBooking />,
-      },
-      {
-        path: "/restaurant-order",
-        element: <RestaurantOrder />,
       },
       {
         path: "/credits",

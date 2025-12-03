@@ -312,6 +312,12 @@ const FoodOrderDetails = ({ record, refetch }) => {
                     </Tag>
                   </div>
                 </Col>
+                <Col span={12}>
+                  <div className="flex justify-between py-2 border-b">
+                    <span>Order Type:</span>
+                    <Tag color="purple">{record.order_type}</Tag>
+                  </div>
+                </Col>
 
                 <Col span={24}>
                   <div className="flex justify-between py-2 bg-blue-50 px-3 rounded mt-2">

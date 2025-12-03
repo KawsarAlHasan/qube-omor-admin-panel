@@ -9,6 +9,7 @@ import {
   Upload,
   Divider,
   message,
+  Radio,
 } from "antd";
 import {
   UploadOutlined,
@@ -220,7 +221,7 @@ function EditFoodDetail({ record, refetch }) {
       formData.append("cost_on_me", values.cost_on_me);
       formData.append("colories", values.colories || "");
       formData.append("cook_time", values.cook_time || "");
-      formData.append("allow_backorder", values.allow_backorder ?? true);
+      formData.append("allow_backorder", values.allow_backorder);
 
       formData.append(
         "food_ingredients",
@@ -263,7 +264,10 @@ function EditFoodDetail({ record, refetch }) {
 
   return (
     <div>
-      <EditOutlined className="text-blue-500 text-xl cursor-pointer" onClick={showModal} />
+      <EditOutlined
+        className="text-blue-500 text-xl cursor-pointer"
+        onClick={showModal}
+      />
 
       <Modal
         title={`Edit Food: ${record.food_name}`}
@@ -344,7 +348,17 @@ function EditFoodDetail({ record, refetch }) {
           {/* 🍳 Other Details */}
           <Divider orientation="left">Other Details</Divider>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-3 gap-4">
+            {/* Allow purchese when out of stock redio button */}
+            <Form.Item
+              label="Allow purchese when out of stock"
+              name="allow_backorder"
+            >
+              <Radio.Group>
+                <Radio value={true}>Yes</Radio>
+                <Radio value={false}>No</Radio>
+              </Radio.Group>
+            </Form.Item>
             <Form.Item label="Calories" name="colories">
               <Input placeholder="e.g., 100 calories" />
             </Form.Item>
@@ -428,7 +442,7 @@ function EditFoodDetail({ record, refetch }) {
 
           {/* 📸 Existing Food Images */}
           <Divider orientation="left">Existing Images</Divider>
-          
+
           {existingImages.length > 0 ? (
             <div className="flex flex-wrap gap-3 mb-4">
               {existingImages.map((imageUrl, index) => (
@@ -446,7 +460,11 @@ function EditFoodDetail({ record, refetch }) {
                     <Button
                       type="text"
                       danger
-                      icon={<DeleteOutlined style={{ color: "white", fontSize: 18 }} />}
+                      icon={
+                        <DeleteOutlined
+                          style={{ color: "white", fontSize: 18 }}
+                        />
+                      }
                       onClick={() => removeExistingImage(imageUrl)}
                     />
                   </div>

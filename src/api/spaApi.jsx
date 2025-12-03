@@ -2,10 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import { API } from "./api";
 
 // get all spa
-export const useAllSpas = ({ page = 1, limit = 20, type, date }) => {
+export const useAllSpas = ({ type, date }) => {
   const getData = async () => {
     const response = await API.get("/spa/admin", {
-      params: { page, limit, type, date },
+      params: { type, date },
     });
     return response.data;
   };
@@ -17,7 +17,7 @@ export const useAllSpas = ({ page = 1, limit = 20, type, date }) => {
     error,
     refetch,
   } = useQuery({
-    queryKey: ["spaData", page, limit, type, date],
+    queryKey: ["spaData", type, date],
     queryFn: getData,
   });
 

@@ -21,6 +21,16 @@ function BookingList({ date, spaData, isLoading, isError, error, refetch }) {
   if (isLoading) return <IsLoading />;
   if (isError) return <IsError error={error} refetch={refetch} />;
 
+  const formatDate = (dateString) => {
+    if (!dateString) return "N/A";
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  };
+
   return (
     <div className="mt-4 bg-white p-6 rounded-lg">
       <h1 className="text-2xl font-bold">Classes</h1>
@@ -44,7 +54,9 @@ function BookingList({ date, spaData, isLoading, isError, error, refetch }) {
             <p className="text-sm">
               Attendees: {singleData?.class_capacity} People
             </p>
-            <p className="text-sm">Schedule: {date}</p>
+            <p className="text-sm">
+              Schedule: {formatDate(new Date(date)) || "N/A"}
+            </p>
             <Button
               type="primary"
               className="mt-4 my-main-button py-3"
@@ -56,11 +68,13 @@ function BookingList({ date, spaData, isLoading, isError, error, refetch }) {
         ))}
       </div>
 
-      <div className="flex justify-center mt-6">
-        <Button className="mr-2">&lt; Prev</Button>
-        <Button className="mr-2">1</Button>
-        <Button className="ml-2">Next &gt;</Button>
-      </div>
+      {spaData?.length > 6 && (
+        <div className="flex justify-center mt-6">
+          <Button className="mr-2">&lt; Prev</Button>
+          <Button className="mr-2">1</Button>
+          <Button className="ml-2">Next &gt;</Button>
+        </div>
+      )}
 
       {/* BookingModal component */}
       <BookingModal

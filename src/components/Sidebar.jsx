@@ -17,12 +17,14 @@ import {
   FaCarrot, // Physio Booking
   FaFileContract,
   FaShieldAlt,
+  FaChalkboardTeacher,
 } from "react-icons/fa";
 import { IoSettingsOutline } from "react-icons/io5";
 import { TbMessageMinus } from "react-icons/tb";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import { useAdminProfile } from "../api/api";
 import driverIcon from "../assets/icons/driverIcon.png";
+import { GiVerticalBanner } from "react-icons/gi";
 
 const Sidebar = ({ onClick }) => {
   const location = useLocation();
@@ -189,12 +191,12 @@ const Sidebar = ({ onClick }) => {
         },
         {
           key: "instructors",
-          icon: <FaFileContract />,
+          icon: <FaChalkboardTeacher />,
           label: <Link to="/instructors">Instructors</Link>,
         },
         {
           key: "banner",
-          icon: <FaFileContract />,
+          icon: <GiVerticalBanner />,
           label: <Link to="/banner">Banner</Link>,
         },
         {

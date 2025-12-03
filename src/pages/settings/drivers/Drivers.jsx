@@ -168,9 +168,7 @@ function Drivers() {
       dataIndex: "stats",
       key: "stats",
       render: (stats) => (
-        <span>
-          ${stats?.paidAmountUs?.toFixed(2) || 0} / $100
-        </span>
+        <span>${stats?.todayDeliveryEarnings?.toFixed(2) || 0}</span>
       ),
     },
 

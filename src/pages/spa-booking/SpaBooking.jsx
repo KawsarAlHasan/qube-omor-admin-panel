@@ -1,12 +1,17 @@
-import { Select } from "antd";
-import React, { useEffect, useState } from "react";
-import DatePicker from "./DatePicker";
+import { useEffect, useState } from "react";
+import DateScrollSelector from "./DateScrollSelector";
 import BookingList from "./BookingList";
 import { useAllSpas } from "../../api/spaApi";
 import { useLocation } from "react-router-dom";
+import { DatePicker } from "antd";
+import dayjs from "dayjs";
 
 function SpaBooking() {
-  const [pickedDate, setPickedDate] = useState(null);
+  const toDate = new Date();
+  const dateStr = toDate.toDateString();
+
+  const [pickedDate, setPickedDate] = useState(dateStr);
+  const [centerDate, setCenterDate] = useState(null);
   const location = useLocation();
 
   const pathnames = location.pathname.split("/").filter((x) => x);
@@ -15,160 +20,73 @@ function SpaBooking() {
     ? beforeHyphen.charAt(0).toUpperCase() + beforeHyphen.slice(1)
     : "";
 
-  // Initialize filter with proper date format
   const [filter, setFilter] = useState({
-    page: 1,
-    limit: 100,
     type: capitalized,
     date: null,
   });
 
-  // Update filter when capitalized or pickedDate changes
   useEffect(() => {
     setFilter((prev) => ({
       ...prev,
       type: capitalized,
-      page: 1, // Reset to first page when type changes
       date: pickedDate ? formatDateForAPI(pickedDate) : null,
     }));
   }, [capitalized, pickedDate]);
 
-  // Format date for API (you might need to adjust this based on your API requirements)
   const formatDateForAPI = (date) => {
     if (!date) return null;
-
-    // If date is a Date object
     if (date instanceof Date) {
-      return date.toISOString().split("T")[0]; // YYYY-MM-DD format
+      return date.toISOString().split("T")[0];
     }
-
-    // If date is already a string, return as is
     return date;
   };
 
   const handleDateGet = (date) => {
-    console.log("Date received:", date);
     setPickedDate(date);
   };
 
-  // Use the filter values directly in the hook
+  const onChange = (date, dateString) => {
+    if (dateString) {
+      const selectedDate = new Date(dateString);
+      const dateStr = selectedDate.toDateString();
+      setPickedDate(dateStr);
+      setCenterDate(selectedDate);
+    }
+  };
+
   const { spaData, isLoading, isError, error, refetch } = useAllSpas({
-    page: filter.page,
-    limit: filter.limit,
     type: filter.type,
     date: filter.date,
   });
 
-  const onClassChange = (value) => {
-    console.log(`selected ${value}`);
+  const formatDate = (dateString) => {
+    if (!dateString) return "N/A";
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
   };
 
   return (
     <div>
-      {/* <div className="flex gap-2">
-        <Select
+      <div className="flex justify-between">
+        <h1 className="text-2xl font-bold">
+          {capitalized} Booking on {formatDate(new Date(pickedDate)) || "N/A"}
+        </h1>
+        <DatePicker
           size="large"
-          placeholder="Class"
-          optionFilterProp="label"
-          onChange={onClassChange}
-          options={[
-            {
-              value: "jack",
-              label: "Jack",
-            },
-            {
-              value: "lucy",
-              label: "Lucy",
-            },
-            {
-              value: "tom",
-              label: "Tom",
-            },
-          ]}
+          onChange={onChange}
+          value={pickedDate ? dayjs(pickedDate) : null}
         />
-        <Select
-          size="large"
-          placeholder="Spa/Plunges"
-          optionFilterProp="label"
-          onChange={onClassChange}
-          options={[
-            {
-              value: "jack",
-              label: "Jack",
-            },
-            {
-              value: "lucy",
-              label: "Lucy",
-            },
-            {
-              value: "tom",
-              label: "Tom",
-            },
-          ]}
-        />
-        <Select
-          size="large"
-          placeholder="Physio"
-          optionFilterProp="label"
-          onChange={onClassChange}
-          options={[
-            {
-              value: "jack",
-              label: "Jack",
-            },
-            {
-              value: "lucy",
-              label: "Lucy",
-            },
-            {
-              value: "tom",
-              label: "Tom",
-            },
-          ]}
-        />
-        <Select
-          size="large"
-          placeholder="Instructor"
-          optionFilterProp="label"
-          onChange={onClassChange}
-          options={[
-            {
-              value: "jack",
-              label: "Jack",
-            },
-            {
-              value: "lucy",
-              label: "Lucy",
-            },
-            {
-              value: "tom",
-              label: "Tom",
-            },
-          ]}
-        />
-        <Select
-          size="large"
-          placeholder="Time"
-          optionFilterProp="label"
-          onChange={onClassChange}
-          options={[
-            {
-              value: "jack",
-              label: "Jack",
-            },
-            {
-              value: "lucy",
-              label: "Lucy",
-            },
-            {
-              value: "tom",
-              label: "Tom",
-            },
-          ]}
-        />
-      </div> */}
+      </div>
 
-      <DatePicker onDateChange={handleDateGet} />
+      <DateScrollSelector
+        onDateChange={handleDateGet}
+        centerDate={centerDate}
+        selectedDateFromParent={pickedDate}
+      />
 
       <BookingList
         date={filter?.date}

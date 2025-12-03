@@ -158,7 +158,7 @@ function Banner() {
                     type="primary"
                     icon={<EditOutlined />}
                     onClick={() => handleEdit(banner)}
-                    className="flex-1 bg-gradient-to-r from-blue-500 to-blue-600 border-0 hover:from-blue-600 hover:to-blue-700"
+                    className="flex-1 my-main-button"
                   >
                     Update
                   </Button>
@@ -316,7 +316,7 @@ function Banner() {
                 type="primary"
                 htmlType="submit"
                 loading={loading}
-                className="w-full bg-gradient-to-r from-blue-500 to-blue-600 border-0 hover:from-blue-600 hover:to-blue-700 h-10 text-lg"
+                className="w-full my-main-button h-10 text-lg"
               >
                 Update Banner
               </Button>
