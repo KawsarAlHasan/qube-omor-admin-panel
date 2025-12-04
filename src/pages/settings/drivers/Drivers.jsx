@@ -29,7 +29,9 @@ function Drivers() {
   const [searchText, setSearchText] = useState("");
   const [selectedDriver, setSelectedDriver] = useState(null);
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
+  const [isPaidModalOpen, setIsPaidModalOpen] = useState(false);
   const [newStatus, setNewStatus] = useState("");
+  const [newPaidAmount, setNewPaidAmount] = useState("");
   const [isStatusChangeLoading, setIsStatusChangeLoading] = useState(false);
 
   const [filters, setFilters] = useState({
@@ -42,10 +44,46 @@ function Drivers() {
   const { usersList, isLoading, isError, error, refetch } =
     useUsersDriverList(filters);
 
+  const openPaidModal = (record) => {
+    setSelectedDriver(record);
+    setNewStatus(record?.status);
+    setIsPaidModalOpen(true);
+  };
+
   const openStatusModal = (record) => {
     setSelectedDriver(record);
     setNewStatus(record?.status);
     setIsStatusModalOpen(true);
+  };
+
+  const handlePaidAmountChange = async () => {
+    if (!selectedDriver) return;
+
+    if (!newPaidAmount || newPaidAmount < 0) {
+      return message.error("Please enter a valid amount.");
+    }
+
+    setIsStatusChangeLoading(true);
+
+    try {
+      const res = await API.put(`/user/today-paid-us/${selectedDriver._id}`, {
+        toDayPaidUs: Number(newPaidAmount),
+      });
+
+      message.success("Paid amount updated successfully!");
+
+      setIsPaidModalOpen(false);
+      setSelectedDriver(null);
+      setNewPaidAmount("");
+      refetch();
+    } catch (err) {
+      console.log(err.response);
+      message.error(
+        err.response?.data?.message || "Failed to update paid amount"
+      );
+    } finally {
+      setIsStatusChangeLoading(false);
+    }
   };
 
   const handleStatusChange = async () => {
@@ -54,11 +92,11 @@ function Drivers() {
     setIsStatusChangeLoading(true);
 
     try {
-      await API.put(`/user/status-change/${selectedDriver._id}`, {
+      await API.put(`/user/today-paid-us/${selectedDriver._id}`, {
         status: newStatus,
       });
 
-      message.success("Driver status updated successfully!");
+      message.success("Driver paid amount updated successfully!");
       setIsStatusModalOpen(false);
       setSelectedDriver(null);
       setNewStatus("");
@@ -66,7 +104,7 @@ function Drivers() {
     } catch (err) {
       console.log(err.response);
       message.error(
-        err.response?.data?.message || "Failed to update driver status"
+        err.response?.data?.message || "Failed to update driver paid amount"
       );
     } finally {
       setIsStatusChangeLoading(false);
@@ -167,8 +205,19 @@ function Drivers() {
       title: <span>Today Paid US</span>,
       dataIndex: "stats",
       key: "stats",
-      render: (stats) => (
-        <span>${stats?.todayDeliveryEarnings?.toFixed(2) || 0}</span>
+      render: (stats, record) => (
+        <div>
+          <Tag color="blue">
+            ${record?.toDayPaidUs?.toFixed(2) || 0} / $
+            {stats?.todayDeliveryEarnings?.toFixed(2) || 0}
+          </Tag>
+          <Button
+            title="Update Paid Amount"
+            size="small"
+            icon={<EditOutlined />}
+            onClick={() => openPaidModal(record)}
+          />
+        </div>
       ),
     },
 
@@ -237,6 +286,53 @@ function Drivers() {
         pagination={false}
         className="border border-gray-200"
       />
+
+      {/* Paid Amount Modal */}
+      <Modal
+        title={`Update Today’s Payment for ${selectedDriver?.name}`}
+        open={isPaidModalOpen}
+        onOk={handlePaidAmountChange}
+        onCancel={() => {
+          setIsPaidModalOpen(false);
+          setSelectedDriver(null);
+          setNewPaidAmount("");
+        }}
+        okText="Save Changes"
+        cancelText="Cancel"
+        confirmLoading={isStatusChangeLoading}
+      >
+        <div style={{ marginBottom: "10px" }}>
+          <p>
+            <strong>Today's Earnings:</strong> $
+            {selectedDriver?.todayDeliveryEarnings?.toFixed(2) || 0}
+          </p>
+          <p>
+            <strong>Paid So Far:</strong> $
+            {selectedDriver?.toDayPaidUs?.toFixed(2) || 0}
+          </p>
+          <p>
+            <strong>Remaining Amount:</strong> $
+            {(
+              (selectedDriver?.todayDeliveryEarnings || 0) -
+              (selectedDriver?.toDayPaidUs || 0)
+            ).toFixed(2)}
+          </p>
+        </div>
+
+        <p className="mb-2">
+          Enter new paid amount for <strong>{selectedDriver?.name}</strong>:
+        </p>
+
+        <Input
+          type="number"
+          placeholder="Enter updated amount"
+          // value={selectedDriver?.paidAmount}
+          value={newPaidAmount}
+          onChange={(e) => setNewPaidAmount(e.target.value)}
+          style={{ width: "100%" }}
+          size="large"
+        />
+      </Modal>
 
       {/* Status Change Modal */}
       <Modal
