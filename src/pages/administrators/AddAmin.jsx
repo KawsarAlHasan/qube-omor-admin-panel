@@ -88,7 +88,6 @@ const AddAdmin = ({ refetch }) => {
             <Select placeholder="Select role">
               <Option value="Super Admin">Super Admin</Option>
               <Option value="Admin">Admin</Option>
-              <Option value="Staff">Staff</Option>
             </Select>
           </Form.Item>
 

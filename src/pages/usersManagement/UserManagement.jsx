@@ -121,7 +121,18 @@ function UserManagement() {
       title: <span>Total Credits</span>,
       dataIndex: "credit",
       key: "credit",
-      render: (credit) => <span>{credit} Credits</span>,
+      render: (credit) => (
+        <div className="flex gap-2">
+          <span>{credit} Credits </span>
+          <Button
+            className="-ml-1"
+            title="Update Credits"
+            size="small"
+            icon={<EditOutlined />}
+            onClick={() => openStatusModal(record)}
+          />
+        </div>
+      ),
     },
 
     {

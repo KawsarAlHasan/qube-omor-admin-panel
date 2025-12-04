@@ -89,7 +89,6 @@ const AdminEdit = ({ adminProfile, refetch }) => {
             <Select placeholder="Select role">
               <Option value="superadmin">Super Admin</Option>
               <Option value="admin">Admin</Option>
-              <Option value="driver">Driver</Option>
             </Select>
           </Form.Item>
 
