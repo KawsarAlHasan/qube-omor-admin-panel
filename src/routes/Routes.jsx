@@ -23,6 +23,7 @@ import Credits from "../pages/credits/Credits";
 import Drivers from "../pages/settings/drivers/Drivers";
 import Instructors from "../pages/settings/instructors/Instructors";
 import Banner from "../pages/settings/banner/Banner";
+import CreditsBuyers from "../pages/credits-buyers/CreditsBuyers";
 
 export const router = createBrowserRouter([
   {
@@ -113,6 +114,10 @@ export const router = createBrowserRouter([
       {
         path: "/credits",
         element: <Credits />,
+      },
+      {
+        path: "/credits-buyers",
+        element: <CreditsBuyers />,
       },
       {
         path: "/drivers",

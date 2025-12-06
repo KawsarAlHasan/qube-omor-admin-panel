@@ -48,6 +48,7 @@ const Sidebar = ({ onClick }) => {
     if (path === "/classes-booking")
       return ["classes-booking", "classes-management"];
     if (path === "/credits") return ["credits"];
+    if (path === "/credits-buyers") return ["credits-buyers"];
     if (path === "/user-management") return ["user-management"];
     if (path === "/user-massages") return ["user-massages"];
     if (path === "/administrators") return ["administrators"];
@@ -155,6 +156,11 @@ const Sidebar = ({ onClick }) => {
       key: "credits",
       icon: <FaBoxes />,
       label: <Link to="/credits">Credits</Link>,
+    },
+    {
+      key: "credits-buyers",
+      icon: <FaBoxes />,
+      label: <Link to="/credits-buyers">Credits Buyers</Link>,
     },
 
     {

@@ -55,9 +55,8 @@
   background-color: #006699 !important;
 }
 
-
 .bgBlack {
-  background-color: #006699;
+  background-color: #006699 !important;
 }
 
 .my-main-button {
@@ -71,19 +70,6 @@
   color: #fff !important;
   border: none !important;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .spa-images {
   display: flex;

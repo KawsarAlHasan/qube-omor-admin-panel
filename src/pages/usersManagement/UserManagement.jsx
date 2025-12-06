@@ -1,8 +1,18 @@
 import { useState } from "react";
-import { Table, Space, Tag, Button, Modal, Select, message, Input } from "antd";
+import {
+  Table,
+  Space,
+  Tag,
+  Button,
+  Modal,
+  Select,
+  message,
+  Input,
+  Form,
+} from "antd";
 import IsError from "../../components/IsError";
 import IsLoading from "../../components/IsLoading";
-import { DeleteFilled, EditOutlined } from "@ant-design/icons";
+import { DeleteFilled, EditOutlined, DollarOutlined } from "@ant-design/icons";
 import ViewUser from "./ViewUser";
 import { useUsersList } from "../../api/userApi";
 import userIcon from "../../assets/icons/userIcon.png";
@@ -16,19 +26,23 @@ function UserManagement() {
 
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
 
-  // Status change modal states
+  // Status change modal
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null);
   const [newStatus, setNewStatus] = useState("");
+  const [isStatusLoading, setIsStatusLoading] = useState(false);
 
-  const [isStatusChangeLoading, setIsStatusChangeLoading] = useState(false);
+  // Credit modal
+  const [isCreditModalOpen, setIsCreditModalOpen] = useState(false);
+  const [creditAmount, setCreditAmount] = useState("");
+  const [isCreditLoading, setIsCreditLoading] = useState(false);
 
-  // Combine all filter parameters in one state
+  // Filter state
   const [filter, setFilter] = useState({
     role: "User",
     page: 1,
     limit: 10,
-    name: "", // search query
+    name: "",
   });
 
   const { usersList, isLoading, isError, error, refetch } =
@@ -39,41 +53,74 @@ function UserManagement() {
     setIsViewModalOpen(true);
   };
 
-  const openStatusModal = (record) => {
-    setSelectedCategory(record);
-    setNewStatus(record?.status); // default current status
+  // Open status modal
+  const openStatusModal = (user) => {
+    setSelectedUser(user);
+    setNewStatus(user?.status);
     setIsStatusModalOpen(true);
   };
 
+  // Open Credit modal
+  const openCreditModal = (user) => {
+    setSelectedUser(user);
+    setCreditAmount("");
+    setIsCreditModalOpen(true);
+  };
+
+  // Update status
   const handleStatusChange = async () => {
-    if (!selectedCategory) return;
-    setIsStatusChangeLoading(true);
+    if (!selectedUser) return;
+
+    setIsStatusLoading(true);
     try {
-      await API.put(`/user/status-change/${selectedCategory._id}`, {
+      await API.put(`/user/status-change/${selectedUser._id}`, {
         status: newStatus,
       });
 
       message.success("User status updated successfully!");
       setIsStatusModalOpen(false);
-      setSelectedCategory(null);
-      setNewStatus("");
+      setSelectedUser(null);
       refetch();
     } catch (err) {
       message.error(
         err?.response?.data?.message || "Failed to update User status"
       );
     } finally {
-      setIsStatusChangeLoading(false);
+      setIsStatusLoading(false);
+    }
+  };
+
+  // Give Credit
+  const handleGiveCredit = async () => {
+    if (!creditAmount || creditAmount <= 0) {
+      return message.error("Enter a valid credit amount!");
+    }
+
+    setIsCreditLoading(true);
+    try {
+      await API.put(`/credit/admin-give-credit`, {
+        userId: selectedUser._id,
+        creditId: "dhdfod",
+      });
+
+      message.success("Credit added successfully!");
+      setIsCreditModalOpen(false);
+      setCreditAmount("");
+      setSelectedUser(null);
+      refetch();
+    } catch (err) {
+      message.error(err?.response?.data?.message || "Failed to add credit");
+    } finally {
+      setIsCreditLoading(false);
     }
   };
 
   const handleModalClose = () => {
     setUserDetailsData(null);
-
     setIsViewModalOpen(false);
   };
 
-  const handleTableChange = (pagination, filters, sorter) => {
+  const handleTableChange = (pagination) => {
     setFilter((prev) => ({
       ...prev,
       page: pagination.current,
@@ -83,16 +130,7 @@ function UserManagement() {
 
   const columns = [
     {
-      title: <span>Sl no.</span>,
-      dataIndex: "index",
-      key: "index",
-      render: (_, record, index) => (
-        <span>#{index + 1 + (filter.page - 1) * filter.limit}</span>
-      ),
-    },
-    {
-      title: <span>User</span>,
-      dataIndex: "name",
+      title: "User",
       key: "name",
       render: (_, record) => (
         <div className="flex flex-items-center gap-2">
@@ -106,49 +144,32 @@ function UserManagement() {
       ),
     },
     {
-      title: <span>Email</span>,
+      title: "Email",
       dataIndex: "email",
-      key: "email",
-      render: (email) => <span>{email}</span>,
     },
     {
-      title: <span>Phone</span>,
+      title: "Phone",
       dataIndex: "phone",
-      key: "phone",
-      render: (phone) => <span>{phone}</span>,
     },
+
     {
-      title: <span>Total Credits</span>,
-      dataIndex: "credit",
+      title: "Total Credits",
       key: "credit",
-      render: (credit) => (
-        <div className="flex gap-2">
-          <span>{credit} Credits </span>
-          <Button
-            className="-ml-1"
-            title="Update Credits"
-            size="small"
-            icon={<EditOutlined />}
-            onClick={() => openStatusModal(record)}
-          />
+      render: (_, record) => (
+        <div className="flex gap-2 items-center">
+          <span>{record?.credit} Credits</span>
         </div>
       ),
     },
-
     {
-      title: <span>Status</span>,
-      dataIndex: "status",
+      title: "Status",
       key: "status",
-      render: (status, record) => (
-        <div className="flex items-center ">
-          {status === "Active" ? (
-            <Tag color="green">Active</Tag>
-          ) : (
-            <Tag color="red">{status}</Tag>
-          )}
+      render: (_, record) => (
+        <div className="flex items-center gap-2">
+          <Tag color={record.status === "Active" ? "green" : "red"}>
+            {record.status}
+          </Tag>
           <Button
-            className="-ml-1"
-            title="Status Change"
             size="small"
             icon={<EditOutlined />}
             onClick={() => openStatusModal(record)}
@@ -158,7 +179,7 @@ function UserManagement() {
     },
 
     {
-      title: <span>Delete</span>,
+      title: "Delete",
       key: "delete",
       render: (_, record) => (
         <Space size="middle">
@@ -171,13 +192,8 @@ function UserManagement() {
     },
   ];
 
-  if (isLoading) {
-    return <IsLoading />;
-  }
-
-  if (isError) {
-    return <IsError error={error} refetch={refetch} />;
-  }
+  if (isLoading) return <IsLoading />;
+  if (isError) return <IsError error={error} refetch={refetch} />;
 
   return (
     <div className="p-4">
@@ -186,13 +202,9 @@ function UserManagement() {
           placeholder="Search by User name..."
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
-          onSearch={(value) => {
-            setFilter((prevFilter) => ({
-              ...prevFilter,
-              name: value || null,
-              page: 1,
-            }));
-          }}
+          onSearch={(value) =>
+            setFilter((prev) => ({ ...prev, name: value, page: 1 }))
+          }
           style={{ width: 350 }}
           size="large"
           allowClear
@@ -211,9 +223,9 @@ function UserManagement() {
           pageSizeOptions: ["10", "20", "50", "100"],
         }}
         onChange={handleTableChange}
-        loading={isLoading}
       />
 
+      {/* User View Modal */}
       <ViewUser
         userDetailsData={userDetailsData}
         isOpen={isViewModalOpen}
@@ -221,16 +233,16 @@ function UserManagement() {
         refetch={refetch}
       />
 
-      {/* Status Change Modal */}
+      {/* Status Modal */}
       <Modal
         title="Change User Status"
         open={isStatusModalOpen}
         onOk={handleStatusChange}
         onCancel={() => setIsStatusModalOpen(false)}
         okText="Update"
-        confirmLoading={isStatusChangeLoading}
+        confirmLoading={isStatusLoading}
       >
-        <p className="mb-2">Select new status for this user:</p>
+        <p>Select new status:</p>
         <Select
           value={newStatus}
           onChange={(value) => setNewStatus(value)}
@@ -240,6 +252,25 @@ function UserManagement() {
           <Select.Option value="Pending">Pending</Select.Option>
           <Select.Option value="Deactive">Deactive</Select.Option>
         </Select>
+      </Modal>
+
+      {/* Credit Give Modal */}
+      <Modal
+        title="Add Credits to User"
+        open={isCreditModalOpen}
+        onCancel={() => setIsCreditModalOpen(false)}
+        onOk={handleGiveCredit}
+        okText="Add Credits"
+        confirmLoading={isCreditLoading}
+      >
+        <p className="mb-2">Enter credit amount to add:</p>
+
+        <Input
+          type="number"
+          placeholder="Enter credit amount"
+          value={creditAmount}
+          onChange={(e) => setCreditAmount(e.target.value)}
+        />
       </Modal>
     </div>
   );

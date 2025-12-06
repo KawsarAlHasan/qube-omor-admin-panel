@@ -69,3 +69,26 @@ export const useCredits = () => {
 
   return { credits, isLoading, isError, error, refetch };
 };
+
+// /credit/all-buy-credits
+export const useCreditsBuyers = ({ page = 1, limit = 20 }) => {
+  const getData = async () => {
+    const response = await API.get("/credit/all-buy-credits", {
+      params: { page, limit },
+    });
+    return response.data;
+  };
+
+  const {
+    data: creditBuyers = [],
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["creditBuyers", page, limit],
+    queryFn: getData,
+  });
+
+  return { creditBuyers, isLoading, isError, error, refetch };
+};
