@@ -17,10 +17,13 @@ import {
   EditOutlined,
   DeleteOutlined,
   ExclamationCircleOutlined,
+  EyeOutlined,
 } from "@ant-design/icons";
 import AddDriver from "./AddDriver";
 import { API } from "../../../api/api";
 import userIcon from "../../../assets/icons/userIcon.png";
+import ViewDriverOrders from "./ViewDriverOrders";
+import { useNavigate } from "react-router-dom";
 
 const { Search } = Input;
 const { confirm } = Modal;
@@ -33,6 +36,7 @@ function Drivers() {
   const [newStatus, setNewStatus] = useState("");
   const [newPaidAmount, setNewPaidAmount] = useState("");
   const [isStatusChangeLoading, setIsStatusChangeLoading] = useState(false);
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
 
   const [filters, setFilters] = useState({
     role: "Driver",
@@ -44,6 +48,8 @@ function Drivers() {
   const { usersList, isLoading, isError, error, refetch } =
     useUsersDriverList(filters);
 
+  const navitete = useNavigate();
+
   const openPaidModal = (record) => {
     setSelectedDriver(record);
     setNewStatus(record?.status);
@@ -54,6 +60,11 @@ function Drivers() {
     setSelectedDriver(record);
     setNewStatus(record?.status);
     setIsStatusModalOpen(true);
+  };
+
+  const openOrderModal = (record) => {
+    setSelectedDriver(record);
+    setIsOrderModalOpen(true);
   };
 
   const handlePaidAmountChange = async () => {
@@ -222,6 +233,25 @@ function Drivers() {
     },
 
     {
+      title: <span>View Details</span>,
+      dataIndex: "details",
+      key: "details",
+      render: (_, record) => (
+        <div className="flex items-center gap-1">
+          <Button
+            title="Change Status"
+            size="small"
+            icon={<EyeOutlined />}
+            onClick={() => openOrderModal(record)}
+            // onClick={() => navitete(`/drivers/${record?._id}`)}
+          >
+            Details
+          </Button>
+        </div>
+      ),
+    },
+
+    {
       title: <span>Status</span>,
       dataIndex: "status",
       key: "status",
@@ -361,6 +391,12 @@ function Drivers() {
           <Select.Option value="Deactive">Deactive</Select.Option>
         </Select>
       </Modal>
+
+      <ViewDriverOrders
+        record={selectedDriver}
+        isOpen={isOrderModalOpen}
+        onClose={() => setIsOrderModalOpen(false)}
+      />
     </div>
   );
 }

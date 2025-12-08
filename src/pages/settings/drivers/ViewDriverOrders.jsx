@@ -9,11 +9,11 @@ import {
   DollarOutlined,
   ShoppingOutlined,
 } from "@ant-design/icons";
-import { useUsersDriverList } from "../../../api/userApi";
+import { useAssignFoodOrders } from "../../../api/userApi";
 
 function ViewDriverOrders({ record, isOpen, onClose }) {
   const { assignOrder, isLoading, isError, error, refetch } =
-    useUsersDriverList({ userID: record?._id }, { enabled: isOpen });
+    useAssignFoodOrders({ userID: record?._id }, { enabled: isOpen });
 
   useEffect(() => {
     if (isOpen) {

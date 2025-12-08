@@ -72,7 +72,7 @@ function EditFoodDetail({ record, refetch }) {
   // Initialize ingredients when modal opens and ingredients are loaded
   useEffect(() => {
     if (isModalOpen && ingredients.length > 0 && record) {
-      // Set main ingredients
+      // Set main ingredients - Add uniqueKey for each item
       if (record.food_ingredients && record.food_ingredients.length > 0) {
         const mainIngs = record.food_ingredients
           .map((ingId) => {
@@ -82,6 +82,7 @@ function EditFoodDetail({ record, refetch }) {
                 id: ingredient._id,
                 name: ingredient.ingredient_name,
                 price: ingredient.price,
+                uniqueKey: `${ingredient._id}_${Date.now()}_${Math.random()}`, // Unique key
               };
             }
             return null;
@@ -90,7 +91,7 @@ function EditFoodDetail({ record, refetch }) {
         setSelectedIngredients(mainIngs);
       }
 
-      // Set extra ingredients
+      // Set extra ingredients - Add uniqueKey for each item
       if (record.extra_ingredients && record.extra_ingredients.length > 0) {
         const extraIngs = record.extra_ingredients
           .map((ingId) => {
@@ -100,6 +101,7 @@ function EditFoodDetail({ record, refetch }) {
                 id: ingredient._id,
                 name: ingredient.ingredient_name,
                 price: ingredient.price,
+                uniqueKey: `${ingredient._id}_${Date.now()}_${Math.random()}`, // Unique key
               };
             }
             return null;
@@ -119,45 +121,34 @@ function EditFoodDetail({ record, refetch }) {
     setExistingImages([]);
   };
 
-  // 🧩 Ingredient add
+  // 🧩 Ingredient add - ✅ একাধিকবার যোগ করা যাবে (AddFoodDetail এর মতো)
   const addIngredient = (ingredientId, type) => {
     const ingredient = ingredients.find((ing) => ing._id === ingredientId);
     if (!ingredient) return;
 
+    const newIngredient = {
+      id: ingredient._id,
+      name: ingredient.ingredient_name,
+      price: ingredient.price,
+      uniqueKey: Date.now() + Math.random(), // Unique key for each addition
+    };
+
     if (type === "main") {
-      if (!selectedIngredients.find((ing) => ing.id === ingredientId)) {
-        setSelectedIngredients((prev) => [
-          ...prev,
-          {
-            id: ingredient._id,
-            name: ingredient.ingredient_name,
-            price: ingredient.price,
-          },
-        ]);
-      }
+      setSelectedIngredients((prev) => [...prev, newIngredient]);
     } else {
-      if (!selectedExtraIngredients.find((ing) => ing.id === ingredientId)) {
-        setSelectedExtraIngredients((prev) => [
-          ...prev,
-          {
-            id: ingredient._id,
-            name: ingredient.ingredient_name,
-            price: ingredient.price,
-          },
-        ]);
-      }
+      setSelectedExtraIngredients((prev) => [...prev, newIngredient]);
     }
   };
 
-  // 🧩 Ingredient remove
-  const removeIngredient = (ingredientId, type) => {
+  // 🧩 Ingredient remove - uniqueKey দ্বারা রিমুভ করা হবে
+  const removeIngredient = (uniqueKey, type) => {
     if (type === "main") {
       setSelectedIngredients((prev) =>
-        prev.filter((ing) => ing.id !== ingredientId)
+        prev.filter((ing) => ing.uniqueKey !== uniqueKey)
       );
     } else {
       setSelectedExtraIngredients((prev) =>
-        prev.filter((ing) => ing.id !== ingredientId)
+        prev.filter((ing) => ing.uniqueKey !== uniqueKey)
       );
     }
   };
@@ -349,9 +340,9 @@ function EditFoodDetail({ record, refetch }) {
           <Divider orientation="left">Other Details</Divider>
 
           <div className="grid grid-cols-3 gap-4">
-            {/* Allow purchese when out of stock redio button */}
+            {/* Allow purchase when out of stock radio button */}
             <Form.Item
-              label="Allow purchese when out of stock"
+              label="Allow purchase when out of stock"
               name="allow_backorder"
             >
               <Radio.Group>
@@ -368,16 +359,18 @@ function EditFoodDetail({ record, refetch }) {
             </Form.Item>
           </div>
 
-          {/* 🧂 Main Ingredients */}
+          {/* 🧂 Main Ingredients - ✅ একাধিকবার যোগ করা যাবে */}
           <Divider orientation="left">Main Ingredients</Divider>
 
           <Form.Item>
             <Select
               placeholder="Select main ingredients"
-              onChange={(value) => addIngredient(value, "main")}
+              onChange={(value) => {
+                addIngredient(value, "main");
+              }}
               allowClear
               loading={isLoadingIngredients}
-              value={undefined}
+              value={null} // ✅ প্রতিবার সিলেক্ট করার পর reset হবে
             >
               {ingredients.map((ing) => (
                 <Option key={ing._id} value={ing._id}>
@@ -389,7 +382,7 @@ function EditFoodDetail({ record, refetch }) {
 
           {selectedIngredients.map((ing) => (
             <div
-              key={ing.id}
+              key={ing.uniqueKey} // ✅ uniqueKey ব্যবহার করছি
               className="flex justify-between items-center bg-gray-50 p-2 rounded mb-2"
             >
               <span>
@@ -399,21 +392,23 @@ function EditFoodDetail({ record, refetch }) {
                 type="text"
                 danger
                 icon={<DeleteOutlined />}
-                onClick={() => removeIngredient(ing.id, "main")}
+                onClick={() => removeIngredient(ing.uniqueKey, "main")}
               />
             </div>
           ))}
 
-          {/* 🧁 Extra Ingredients */}
+          {/* 🧁 Extra Ingredients - ✅ একাধিকবার যোগ করা যাবে */}
           <Divider orientation="left">Extra Ingredients</Divider>
 
           <Form.Item>
             <Select
               placeholder="Select extra ingredients"
-              onChange={(value) => addIngredient(value, "extra")}
+              onChange={(value) => {
+                addIngredient(value, "extra");
+              }}
               allowClear
               loading={isLoadingIngredients}
-              value={undefined}
+              value={null} // ✅ প্রতিবার সিলেক্ট করার পর reset হবে
             >
               {ingredients.map((ing) => (
                 <Option key={ing._id} value={ing._id}>
@@ -425,7 +420,7 @@ function EditFoodDetail({ record, refetch }) {
 
           {selectedExtraIngredients.map((ing) => (
             <div
-              key={ing.id}
+              key={ing.uniqueKey} // ✅ uniqueKey ব্যবহার করছি
               className="flex justify-between items-center bg-gray-50 p-2 rounded mb-2"
             >
               <span>
@@ -435,7 +430,7 @@ function EditFoodDetail({ record, refetch }) {
                 type="text"
                 danger
                 icon={<DeleteOutlined />}
-                onClick={() => removeIngredient(ing.id, "extra")}
+                onClick={() => removeIngredient(ing.uniqueKey, "extra")}
               />
             </div>
           ))}

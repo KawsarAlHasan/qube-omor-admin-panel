@@ -25,7 +25,13 @@ export const useUsersList = ({ page = 1, limit = 20, role, status, name }) => {
 };
 
 // get user List driver
-export const useUsersDriverList = ({ page = 1, limit = 20, role, status, name }) => {
+export const useUsersDriverList = ({
+  page = 1,
+  limit = 20,
+  role,
+  status,
+  name,
+}) => {
   const getData = async () => {
     const response = await API.get("/user/driver", {
       params: { page, limit, role, status, name },
@@ -111,7 +117,7 @@ export const useAssignFoodOrders = ({ userID }, options = {}) => {
     queryKey: ["assignOrder", userID],
     queryFn: getData,
     enabled: !!userID && (options.enabled ?? true),
-  });
+  }); 
 
   return { assignOrder, isLoading, isError, error, refetch };
 };

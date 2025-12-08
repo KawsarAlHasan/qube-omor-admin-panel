@@ -44,45 +44,34 @@ function AddFoodDetail({ refetch }) {
     setUploadedImages([]);
   };
 
-  // 🧩 Ingredient add
+  // 🧩 Ingredient add - ✅ একাধিকবার যোগ করা যাবে এবং সাথে সাথে reset হবে
   const addIngredient = (ingredientId, type) => {
     const ingredient = ingredients.find((ing) => ing._id === ingredientId);
     if (!ingredient) return;
 
+    const newIngredient = {
+      id: ingredient._id,
+      name: ingredient.ingredient_name,
+      price: ingredient.price,
+      uniqueKey: Date.now() + Math.random(),
+    };
+
     if (type === "main") {
-      if (!selectedIngredients.find((ing) => ing.id === ingredientId)) {
-        setSelectedIngredients((prev) => [
-          ...prev,
-          {
-            id: ingredient._id,
-            name: ingredient.ingredient_name,
-            price: ingredient.price,
-          },
-        ]);
-      }
+      setSelectedIngredients((prev) => [...prev, newIngredient]);
     } else {
-      if (!selectedExtraIngredients.find((ing) => ing.id === ingredientId)) {
-        setSelectedExtraIngredients((prev) => [
-          ...prev,
-          {
-            id: ingredient._id,
-            name: ingredient.ingredient_name,
-            price: ingredient.price,
-          },
-        ]);
-      }
+      setSelectedExtraIngredients((prev) => [...prev, newIngredient]);
     }
   };
 
   // 🧩 Ingredient remove
-  const removeIngredient = (ingredientId, type) => {
+  const removeIngredient = (uniqueKey, type) => {
     if (type === "main") {
       setSelectedIngredients((prev) =>
-        prev.filter((ing) => ing.id !== ingredientId)
+        prev.filter((ing) => ing.uniqueKey !== uniqueKey)
       );
     } else {
       setSelectedExtraIngredients((prev) =>
-        prev.filter((ing) => ing.id !== ingredientId)
+        prev.filter((ing) => ing.uniqueKey !== uniqueKey)
       );
     }
   };
@@ -283,13 +272,16 @@ function AddFoodDetail({ refetch }) {
             </Form.Item>
           </div>
 
-          {/* 🧂 Main Ingredients */}
+          {/* 🧂 Main Ingredients - ✅ সাথে সাথে reset হবে */}
           <Divider orientation="left">Main Ingredients</Divider>
 
           <Form.Item>
             <Select
               placeholder="Select main ingredients"
-              onChange={(value) => addIngredient(value, "main")}
+              value={null}
+              onChange={(value) => {
+                addIngredient(value, "main");
+              }}
               allowClear
               loading={isLoadingIngredients}
             >
@@ -303,7 +295,7 @@ function AddFoodDetail({ refetch }) {
 
           {selectedIngredients.map((ing) => (
             <div
-              key={ing.id}
+              key={ing.uniqueKey}
               className="flex justify-between items-center bg-gray-50 p-2 rounded mb-2"
             >
               <span>
@@ -313,19 +305,23 @@ function AddFoodDetail({ refetch }) {
                 type="text"
                 danger
                 icon={<DeleteOutlined />}
-                onClick={() => removeIngredient(ing.id, "main")}
+                onClick={() => removeIngredient(ing.uniqueKey, "main")}
               />
             </div>
           ))}
 
-          {/* 🧁 Extra Ingredients */}
+          {/* 🧁 Extra Ingredients - ✅ সাথে সাথে reset হবে */}
           <Divider orientation="left">Extra Ingredients</Divider>
 
           <Form.Item>
             <Select
               placeholder="Select extra ingredients"
-              onChange={(value) => addIngredient(value, "extra")}
+              value={null}
+              onChange={(value) => {
+                addIngredient(value, "extra");
+              }}
               allowClear
+              loading={isLoadingIngredients}
             >
               {ingredients.map((ing) => (
                 <Option key={ing._id} value={ing._id}>
@@ -337,7 +333,7 @@ function AddFoodDetail({ refetch }) {
 
           {selectedExtraIngredients.map((ing) => (
             <div
-              key={ing.id}
+              key={ing.uniqueKey}
               className="flex justify-between items-center bg-gray-50 p-2 rounded mb-2"
             >
               <span>
@@ -347,7 +343,7 @@ function AddFoodDetail({ refetch }) {
                 type="text"
                 danger
                 icon={<DeleteOutlined />}
-                onClick={() => removeIngredient(ing.id, "extra")}
+                onClick={() => removeIngredient(ing.uniqueKey, "extra")}
               />
             </div>
           ))}

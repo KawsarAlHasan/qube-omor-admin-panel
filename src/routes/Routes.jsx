@@ -24,6 +24,7 @@ import Drivers from "../pages/settings/drivers/Drivers";
 import Instructors from "../pages/settings/instructors/Instructors";
 import Banner from "../pages/settings/banner/Banner";
 import CreditsBuyers from "../pages/credits-buyers/CreditsBuyers";
+import DriversDetails from "../pages/settings/drivers/driversDetails/DriversDetails";
 
 export const router = createBrowserRouter([
   {
@@ -122,6 +123,10 @@ export const router = createBrowserRouter([
       {
         path: "/drivers",
         element: <Drivers />,
+      },
+      {
+        path: "/drivers/:driverId",
+        element: <DriversDetails />,
       },
       {
         path: "/instructors",

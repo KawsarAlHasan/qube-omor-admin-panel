@@ -1,6 +1,6 @@
 import { Menu } from "antd";
-import { AppstoreOutlined, LogoutOutlined } from "@ant-design/icons";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AppstoreOutlined } from "@ant-design/icons";
+import { Link, matchPath, useLocation } from "react-router-dom";
 import {
   FaUtensils, // Restaurant
   FaPizzaSlice, // Food Details
@@ -53,6 +53,12 @@ const Sidebar = ({ onClick }) => {
     if (path === "/user-massages") return ["user-massages"];
     if (path === "/administrators") return ["administrators"];
     if (path === "/drivers") return ["drivers", "settings"];
+
+    if (matchPath("/drivers/:driverId", path)) {
+      return ["drivers", "settings"];
+    }
+
+    // if (path === `/drivers/${driverId}`) return ["drivers", "settings"];
     if (path === "/instructors") return ["instructors", "settings"];
     if (path === "/banner") return ["banner", "settings"];
     if (path === "/terms-and-conditions")

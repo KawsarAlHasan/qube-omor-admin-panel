@@ -12,11 +12,19 @@ import {
 } from "antd";
 import IsError from "../../components/IsError";
 import IsLoading from "../../components/IsLoading";
-import { DeleteFilled, EditOutlined, DollarOutlined } from "@ant-design/icons";
+import {
+  DeleteFilled,
+  EditOutlined,
+  DollarOutlined,
+  GiftOutlined,
+  CreditCardOutlined,
+  CheckCircleOutlined,
+} from "@ant-design/icons";
 import ViewUser from "./ViewUser";
 import { useUsersList } from "../../api/userApi";
 import userIcon from "../../assets/icons/userIcon.png";
 import { API } from "../../api/api";
+import { useCredits } from "../../api/spaApi";
 
 const { Search } = Input;
 
@@ -33,6 +41,8 @@ function UserManagement() {
   const [isStatusLoading, setIsStatusLoading] = useState(false);
 
   // Credit modal
+  const [selectedCredit, setSelectedCredit] = useState(null);
+
   const [isCreditModalOpen, setIsCreditModalOpen] = useState(false);
   const [creditAmount, setCreditAmount] = useState("");
   const [isCreditLoading, setIsCreditLoading] = useState(false);
@@ -47,6 +57,12 @@ function UserManagement() {
 
   const { usersList, isLoading, isError, error, refetch } =
     useUsersList(filter);
+
+  const {
+    credits,
+    isLoading: creditIsLoading,
+    refetch: creditRefetch,
+  } = useCredits();
 
   const handleUserDetails = (userData) => {
     setUserDetailsData(userData);
@@ -92,22 +108,23 @@ function UserManagement() {
 
   // Give Credit
   const handleGiveCredit = async () => {
-    if (!creditAmount || creditAmount <= 0) {
-      return message.error("Enter a valid credit amount!");
+    if (!selectedCredit) {
+      return message.error("Please select a credit package!");
     }
 
     setIsCreditLoading(true);
     try {
       await API.put(`/credit/admin-give-credit`, {
         userId: selectedUser._id,
-        creditId: "dhdfod",
+        creditId: selectedCredit,
       });
 
       message.success("Credit added successfully!");
       setIsCreditModalOpen(false);
-      setCreditAmount("");
+      setSelectedCredit(null);
       setSelectedUser(null);
       refetch();
+      creditRefetch();
     } catch (err) {
       message.error(err?.response?.data?.message || "Failed to add credit");
     } finally {
@@ -158,6 +175,11 @@ function UserManagement() {
       render: (_, record) => (
         <div className="flex gap-2 items-center">
           <span>{record?.credit} Credits</span>
+          <Button
+            size="small"
+            icon={<EditOutlined />}
+            onClick={() => openCreditModal(record)}
+          />
         </div>
       ),
     },
@@ -255,22 +277,78 @@ function UserManagement() {
       </Modal>
 
       {/* Credit Give Modal */}
+      {/* Credit Give Modal */}
       <Modal
-        title="Add Credits to User"
+        title={
+          <div className="flex items-center gap-3 pb-2">
+            <div className="w-10 h-10 my-main-button rounded-full flex items-center justify-center">
+              <GiftOutlined className="text-white text-lg" />
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 m-0">
+                Give Credit by Cash
+              </h3>
+              <p className="text-xs text-gray-500 m-0">
+                Manually assign credits to users
+              </p>
+            </div>
+          </div>
+        }
         open={isCreditModalOpen}
-        onCancel={() => setIsCreditModalOpen(false)}
+        onCancel={() => {
+          setIsCreditModalOpen(false);
+          setSelectedCredit(null);
+        }}
         onOk={handleGiveCredit}
-        okText="Add Credits"
+        okText="Give Credit by Cash"
         confirmLoading={isCreditLoading}
+        width={500}
       >
-        <p className="mb-2">Enter credit amount to add:</p>
+        {/* Credit Package Selection */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-3">
+            <CreditCardOutlined className="mr-2" />
+            Select Credit Package
+          </label>
 
-        <Input
-          type="number"
-          placeholder="Enter credit amount"
-          value={creditAmount}
-          onChange={(e) => setCreditAmount(e.target.value)}
-        />
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {credits?.data?.map((credit) => (
+              <div
+                key={credit._id}
+                onClick={() => setSelectedCredit(credit._id)}
+                className={`
+            relative cursor-pointer p-4 rounded-xl border-2 transition-all duration-200
+            ${
+              selectedCredit === credit._id
+                ? "border-indigo-500 bg-indigo-50 shadow-md scale-105"
+                : "border-gray-200 bg-white hover:border-indigo-300 hover:shadow-sm"
+            }
+          `}
+              >
+                {selectedCredit === credit._id && (
+                  <CheckCircleOutlined className="absolute top-2 right-2 text-indigo-500 text-lg" />
+                )}
+
+                <div className="text-center">
+                  <div
+                    className={`text-2xl font-bold ${
+                      selectedCredit === credit._id
+                        ? "text-indigo-600"
+                        : "text-gray-800"
+                    }`}
+                  >
+                    {credit.credit}
+                  </div>
+                  <div className="text-xs text-gray-500 mb-2">credits</div>
+                  <div className="flex items-center justify-center gap-1 text-green-600 font-semibold">
+                    <DollarOutlined />
+                    {credit.price}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </Modal>
     </div>
   );
