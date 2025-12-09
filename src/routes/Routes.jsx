@@ -25,6 +25,7 @@ import Instructors from "../pages/settings/instructors/Instructors";
 import Banner from "../pages/settings/banner/Banner";
 import CreditsBuyers from "../pages/credits-buyers/CreditsBuyers";
 import DriversDetails from "../pages/settings/drivers/driversDetails/DriversDetails";
+import CouponCode from "../pages/settings/coupon-code/CouponCode";
 
 export const router = createBrowserRouter([
   {
@@ -131,6 +132,10 @@ export const router = createBrowserRouter([
       {
         path: "/instructors",
         element: <Instructors />,
+      },
+      {
+        path: "/coupon-code",
+        element: <CouponCode />,
       },
       {
         path: "/banner",

@@ -25,6 +25,7 @@ import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import { useAdminProfile } from "../api/api";
 import driverIcon from "../assets/icons/driverIcon.png";
 import { GiVerticalBanner } from "react-icons/gi";
+import { RiCoupon2Fill } from "react-icons/ri";
 
 const Sidebar = ({ onClick }) => {
   const location = useLocation();
@@ -58,7 +59,7 @@ const Sidebar = ({ onClick }) => {
       return ["drivers", "settings"];
     }
 
-    // if (path === `/drivers/${driverId}`) return ["drivers", "settings"];
+    if (path === "/coupon-code") return ["coupon-code", "settings"];
     if (path === "/instructors") return ["instructors", "settings"];
     if (path === "/banner") return ["banner", "settings"];
     if (path === "/terms-and-conditions")
@@ -205,6 +206,11 @@ const Sidebar = ({ onClick }) => {
           key: "instructors",
           icon: <FaChalkboardTeacher />,
           label: <Link to="/instructors">Instructors</Link>,
+        },
+        {
+          key: "coupon-code",
+          icon: <RiCoupon2Fill />,
+          label: <Link to="/coupon-code">Coupon Code</Link>,
         },
         {
           key: "banner",

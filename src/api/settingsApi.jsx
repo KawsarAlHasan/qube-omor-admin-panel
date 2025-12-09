@@ -106,3 +106,23 @@ export const useBannerData = (type) => {
 
   return { bannerData, isLoading, isError, error, refetch };
 };
+
+export const useAllCoupon = () => {
+  const getData = async () => {
+    const response = await API.get("/coupon/all");
+    return response?.data?.data;
+  };
+
+  const {
+    data: couponData = [],
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["couponData"],
+    queryFn: getData,
+  });
+
+  return { couponData, isLoading, isError, error, refetch };
+};
