@@ -140,10 +140,10 @@ const FoodOrderDetails = ({ record, refetch }) => {
                 ></Avatar>
                 <div>
                   <h3 className="text-lg font-semibold text-gray-800">
-                    {record.user?.name}
+                    {record?.user?.name}
                   </h3>
-                  <p className="text-gray-600">{record.user?.email}</p>
-                  <p className="text-gray-500 text-sm">{record.user?.phone}</p>
+                  <p className="text-gray-600">{record?.user?.email}</p>
+                  <p className="text-gray-500 text-sm">{record?.user?.phone}</p>
                 </div>
               </div>
 
@@ -155,7 +155,7 @@ const FoodOrderDetails = ({ record, refetch }) => {
                     Delivery Address
                   </h4>
                   <p className="text-gray-600 bg-gray-50 p-2 rounded">
-                    {record.delivery_address}
+                    {record?.delivery_address}
                   </p>
                 </div>
                 <div>
@@ -170,7 +170,7 @@ const FoodOrderDetails = ({ record, refetch }) => {
             {/* Order Items */}
             <Card title="Order Items" size="small" className="shadow-sm">
               <div className="space-y-4">
-                {record.food?.map((item) => (
+                {record?.food?.map((item) => (
                   <div
                     key={item._id}
                     className="flex items-start space-x-4 p-3 bg-gray-50 rounded-lg"
@@ -273,34 +273,42 @@ const FoodOrderDetails = ({ record, refetch }) => {
                 <Col span={12}>
                   <div className="flex justify-between py-2 border-b">
                     <span>Sub Total:</span>
-                    <span className="font-medium">${record.sub_total}</span>
+                    <span className="font-medium">${record?.sub_total}</span>
                   </div>
                 </Col>
                 <Col span={12}>
                   <div className="flex justify-between py-2 border-b">
                     <span>Total Quantity:</span>
                     <span className="font-medium">
-                      {record.total_quantity} items
+                      {record?.total_quantity} items
                     </span>
                   </div>
                 </Col>
                 <Col span={12}>
                   <div className="flex justify-between py-2 border-b">
                     <span>Delivery Fee:</span>
-                    <span className="font-medium">${record.delivery_fee}</span>
+                    <span className="font-medium">${record?.delivery_fee}</span>
+                  </div>
+                </Col>
+                <Col span={12}>
+                  <div className="flex justify-between py-2 border-b">
+                    <span>Coupon Discount:</span>
+                    <span className="font-medium">
+                      ${record?.coupon_discount}
+                    </span>
                   </div>
                 </Col>
                 <Col span={12}>
                   <div className="flex justify-between py-2 border-b">
                     <span>Food Cost:</span>
-                    <span className="font-medium">${record.food_cost}</span>
+                    <span className="font-medium">${record?.food_cost}</span>
                   </div>
                 </Col>
                 <Col span={12}>
                   <div className="flex justify-between py-2 border-b">
                     <span>Order Status:</span>
                     <Tag color={getStatusColor(record.status)}>
-                      {record.status}
+                      {record?.status}
                     </Tag>
                   </div>
                 </Col>
@@ -308,14 +316,14 @@ const FoodOrderDetails = ({ record, refetch }) => {
                   <div className="flex justify-between py-2 border-b">
                     <span>Payment Status:</span>
                     <Tag color={getPaidStatusColor(record.paid_status)}>
-                      {record.paid_status}
+                      {record?.paid_status}
                     </Tag>
                   </div>
                 </Col>
                 <Col span={12}>
                   <div className="flex justify-between py-2 border-b">
                     <span>Order Type:</span>
-                    <Tag color="purple">{record.order_type}</Tag>
+                    <Tag color="purple">{record?.order_type}</Tag>
                   </div>
                 </Col>
 
@@ -323,7 +331,7 @@ const FoodOrderDetails = ({ record, refetch }) => {
                   <div className="flex justify-between py-2 bg-blue-50 px-3 rounded mt-2">
                     <span className="font-semibold text-lg">Total Amount:</span>
                     <span className="font-bold text-lg text-blue-600">
-                      ${record.total_price}
+                      ${record?.total_price}
                     </span>
                   </div>
                 </Col>

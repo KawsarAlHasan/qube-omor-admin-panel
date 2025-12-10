@@ -70,6 +70,50 @@ function CouponCode() {
     },
 
     {
+      title: "Where will it be used?",
+      key: "categories",
+      width: 310,
+      render: (_, record) => {
+        const categories = [];
+
+        if (record.isRestaurant) {
+          categories.push(
+            <Tag color="blue" key="restaurant">
+              Restaurant
+            </Tag>
+          );
+        }
+        if (record.isSpa) {
+          categories.push(
+            <Tag color="purple" key="spa">
+              Spa
+            </Tag>
+          );
+        }
+        if (record.isPhysio) {
+          categories.push(
+            <Tag color="green" key="physio">
+              Physio
+            </Tag>
+          );
+        }
+        if (record.isClasses) {
+          categories.push(
+            <Tag color="orange" key="classes">
+              Classes
+            </Tag>
+          );
+        }
+
+        return categories.length > 0 ? (
+          <Space wrap>{categories}</Space>
+        ) : (
+          <Tag color="default">No Category</Tag>
+        );
+      },
+    },
+
+    {
       title: "Type",
       dataIndex: "isAmount",
       key: "isAmount",

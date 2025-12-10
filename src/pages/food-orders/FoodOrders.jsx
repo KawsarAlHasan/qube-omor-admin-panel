@@ -189,14 +189,6 @@ function FoodOrders() {
 
   const columns = [
     {
-      title: <span>Sl no.</span>,
-      dataIndex: "serial_number",
-      key: "serial_number",
-      render: (_, record, index) => (
-        <span>#{index + 1 + (filter.page - 1) * filter.limit}</span>
-      ),
-    },
-    {
       title: <span>User</span>,
       dataIndex: "user",
       key: "user",
@@ -311,36 +303,36 @@ function FoodOrders() {
         </div>
       ),
     },
-    // {
-    //   title: <span>Paid Status</span>,
-    //   dataIndex: "paid_status",
-    //   key: "paid_status",
-    //   render: (paid_status, record) => (
-    //     <div className="flex flex-items-center gap-2">
-    //       {paid_status == "COD" ? (
-    //         <div className="flex flex-items-center gap-2">
-    //           <Tag className="p-0.5 px-3" color="blue">
-    //             {paid_status}
-    //           </Tag>
-    //           {/* <Button
-    //             className="-ml-3"
-    //             title="Change Paid Status"
-    //             size="small"
-    //             icon={<EditOutlined />}
-    //             onClick={() => openPaidStatusModal(record)}
-    //           /> */}
-    //         </div>
-    //       ) : (
-    //         <Tag
-    //           className="p-0.5 px-3"
-    //           color={paid_status === "Paid" ? "green" : "orange"}
-    //         >
-    //           {paid_status}
-    //         </Tag>
-    //       )}
-    //     </div>
-    //   ),
-    // },
+    {
+      title: <span>Paid Status</span>,
+      dataIndex: "paid_status",
+      key: "paid_status",
+      render: (paid_status, record) => (
+        <div className="flex flex-items-center gap-2">
+          {paid_status == "COD" ? (
+            <div className="flex flex-items-center gap-2">
+              <Tag className="p-0.5 px-3" color="blue">
+                {paid_status}
+              </Tag>
+              <Button
+                className="-ml-3"
+                title="Change Paid Status"
+                size="small"
+                icon={<EditOutlined />}
+                onClick={() => openPaidStatusModal(record)}
+              />
+            </div>
+          ) : (
+            <Tag
+              className="p-0.5 px-3"
+              color={paid_status === "Paid" ? "green" : "orange"}
+            >
+              {paid_status}
+            </Tag>
+          )}
+        </div>
+      ),
+    },
     {
       title: <span>Status</span>,
       dataIndex: "status",
@@ -396,7 +388,7 @@ function FoodOrders() {
   }
 
   return (
-    <div className="p-4">
+    <div>
       <div className="flex justify-between">
         <div className="flex gap-2 mb-4">
           {[
@@ -445,6 +437,7 @@ function FoodOrders() {
         columns={columns}
         dataSource={allFoodOrders?.data || []}
         rowKey="_id"
+        bordered
         pagination={{
           current: filter.page,
           pageSize: filter.limit,

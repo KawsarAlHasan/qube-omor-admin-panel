@@ -9,6 +9,7 @@ import {
   InputNumber,
   message,
   Button,
+  Checkbox,
 } from "antd";
 import {
   PlusOutlined,
@@ -16,7 +17,11 @@ import {
   PercentageOutlined,
   DollarOutlined,
   CalendarOutlined,
+  CoffeeOutlined,
+  TrophyOutlined,
 } from "@ant-design/icons";
+
+import { FaSpa, FaHeartbeat } from "react-icons/fa";
 import { API } from "../../../api/api";
 
 const { RangePicker } = DatePicker;
@@ -28,6 +33,12 @@ function AddCoupon({ refetch }) {
 
   const [dateType, setDateType] = useState("Unlimited");
   const [isAmount, setIsAmount] = useState(false);
+  const [categories, setCategories] = useState({
+    isRestaurant: false,
+    isSpa: false,
+    isPhysio: false,
+    isClasses: false,
+  });
 
   /** Open Modal */
   const openModal = () => setIsModalOpen(true);
@@ -38,10 +49,31 @@ function AddCoupon({ refetch }) {
     form.resetFields();
     setDateType("Unlimited");
     setIsAmount(false);
+    setCategories({
+      isRestaurant: false,
+      isSpa: false,
+      isPhysio: false,
+      isClasses: false,
+    });
+  };
+
+  /** Handle Category Change */
+  const handleCategoryChange = (category) => {
+    setCategories((prev) => ({
+      ...prev,
+      [category]: !prev[category],
+    }));
   };
 
   /** Submit Handler */
   const onFinish = async (values) => {
+    // Check if at least one category is selected
+    const hasCategory = Object.values(categories).some((val) => val === true);
+    if (!hasCategory) {
+      message.error("Please select at least one category");
+      return;
+    }
+
     setLoading(true);
     try {
       const payload = {
@@ -53,6 +85,7 @@ function AddCoupon({ refetch }) {
         startDate: null,
         endDate: null,
         singleDate: null,
+        ...categories,
       };
 
       if (values.dateType === "Single" && values.singleDate) {
@@ -109,7 +142,7 @@ function AddCoupon({ refetch }) {
         open={isModalOpen}
         onCancel={closeModal}
         footer={null}
-        width={650}
+        width={700}
         centered
         className="coupon-modal"
       >
@@ -138,6 +171,154 @@ function AddCoupon({ refetch }) {
               size="large"
             />
           </Form.Item>
+
+          {/* Category Selection */}
+          <div className="mb-6">
+            <label className="font-semibold text-gray-700 block mb-3">
+              Select Categories
+            </label>
+            <div className="grid grid-cols-2 gap-3">
+              {/* Restaurant */}
+              <div
+                onClick={() => handleCategoryChange("isRestaurant")}
+                className={`p-4 border-2 rounded-lg cursor-pointer transition-all duration-300 ${
+                  categories.isRestaurant
+                    ? "border-blue-500 bg-blue-50"
+                    : "border-gray-200 hover:border-gray-300 bg-white"
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <div
+                    className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                      categories.isRestaurant
+                        ? "bg-blue-500 text-white"
+                        : "bg-gray-100 text-gray-500"
+                    }`}
+                  >
+                    <CoffeeOutlined className="text-xl" />
+                  </div>
+                  <div className="flex-1">
+                    <p
+                      className={`font-semibold m-0 ${
+                        categories.isRestaurant
+                          ? "text-blue-700"
+                          : "text-gray-700"
+                      }`}
+                    >
+                      Restaurant
+                    </p>
+                    <p className="text-xs text-gray-500 m-0">
+                      Food & Beverages
+                    </p>
+                  </div>
+                  <Checkbox checked={categories.isRestaurant} />
+                </div>
+              </div>
+
+              {/* Spa */}
+              <div
+                onClick={() => handleCategoryChange("isSpa")}
+                className={`p-4 border-2 rounded-lg cursor-pointer transition-all duration-300 ${
+                  categories.isSpa
+                    ? "border-purple-500 bg-purple-50"
+                    : "border-gray-200 hover:border-gray-300 bg-white"
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <div
+                    className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                      categories.isSpa
+                        ? "bg-purple-500 text-white"
+                        : "bg-gray-100 text-gray-500"
+                    }`}
+                  >
+                    <FaSpa className="text-xl" />
+                  </div>
+                  <div className="flex-1">
+                    <p
+                      className={`font-semibold m-0 ${
+                        categories.isSpa ? "text-purple-700" : "text-gray-700"
+                      }`}
+                    >
+                      Spa
+                    </p>
+                    <p className="text-xs text-gray-500 m-0">Spa Services</p>
+                  </div>
+                  <Checkbox checked={categories.isSpa} />
+                </div>
+              </div>
+
+              {/* Physio */}
+              <div
+                onClick={() => handleCategoryChange("isPhysio")}
+                className={`p-4 border-2 rounded-lg cursor-pointer transition-all duration-300 ${
+                  categories.isPhysio
+                    ? "border-green-500 bg-green-50"
+                    : "border-gray-200 hover:border-gray-300 bg-white"
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <div
+                    className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                      categories.isPhysio
+                        ? "bg-green-500 text-white"
+                        : "bg-gray-100 text-gray-500"
+                    }`}
+                  >
+                    <FaHeartbeat className="text-xl" />
+                  </div>
+                  <div className="flex-1">
+                    <p
+                      className={`font-semibold m-0 ${
+                        categories.isPhysio ? "text-green-700" : "text-gray-700"
+                      }`}
+                    >
+                      Physio
+                    </p>
+                    <p className="text-xs text-gray-500 m-0">Physio Services</p>
+                  </div>
+                  <Checkbox checked={categories.isPhysio} />
+                </div>
+              </div>
+
+              {/* Classes */}
+              <div
+                onClick={() => handleCategoryChange("isClasses")}
+                className={`p-4 border-2 rounded-lg cursor-pointer transition-all duration-300 ${
+                  categories.isClasses
+                    ? "border-orange-500 bg-orange-50"
+                    : "border-gray-200 hover:border-gray-300 bg-white"
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <div
+                    className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                      categories.isClasses
+                        ? "bg-orange-500 text-white"
+                        : "bg-gray-100 text-gray-500"
+                    }`}
+                  >
+                    <TrophyOutlined className="text-xl" />
+                  </div>
+                  <div className="flex-1">
+                    <p
+                      className={`font-semibold m-0 ${
+                        categories.isClasses
+                          ? "text-orange-700"
+                          : "text-gray-700"
+                      }`}
+                    >
+                      Classes
+                    </p>
+                    <p className="text-xs text-gray-500 m-0">
+                      Fitness & Training
+                    </p>
+                  </div>
+                  <Checkbox checked={categories.isClasses} />
+                </div>
+              </div>
+            </div>
+          </div>
 
           {/* Discount Type Switch */}
           <div className="mb-6 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border border-blue-100">
@@ -303,15 +484,17 @@ function AddCoupon({ refetch }) {
           border-bottom: none;
         }
         .coupon-modal .ant-radio-button-wrapper-checked {
-        //   background: linear-gradient(to right, #2563eb, #9333ea) !important;
           border-color: #2563eb !important;
-        //   color: white !important;
         }
         .coupon-modal .ant-radio-button-wrapper {
           border: 2px solid #e5e7eb;
         }
         .coupon-modal .ant-switch-checked {
           background: linear-gradient(to right, #2563eb, #9333ea) !important;
+        }
+        .coupon-modal .ant-checkbox-checked .ant-checkbox-inner {
+          background-color: transparent;
+          border-color: currentColor;
         }
       `}</style>
     </>
