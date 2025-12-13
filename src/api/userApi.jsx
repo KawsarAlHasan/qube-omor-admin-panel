@@ -100,10 +100,15 @@ export const useUserConversations = ({ page = 1, limit = 50, userId }) => {
 };
 
 // drivers assign food orders
-export const useAssignFoodOrders = ({ userID }, options = {}) => {
+export const useAssignFoodOrders = (
+  { userID, startDate, endDate },
+  options = {}
+) => {
   const getData = async ({ queryKey }) => {
     const [_key, userID] = queryKey;
-    const response = await API.get(`/food-order/driver-assign/${userID}`);
+    const response = await API.get(`/food-order/driver-assign2/${userID}`, {
+      params: { startDate, endDate },
+    });
     return response.data;
   };
 
@@ -114,10 +119,10 @@ export const useAssignFoodOrders = ({ userID }, options = {}) => {
     error,
     refetch,
   } = useQuery({
-    queryKey: ["assignOrder", userID],
+    queryKey: ["assignOrder", userID, startDate, endDate],
     queryFn: getData,
     enabled: !!userID && (options.enabled ?? true),
-  }); 
+  });
 
   return { assignOrder, isLoading, isError, error, refetch };
 };

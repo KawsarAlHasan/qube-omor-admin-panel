@@ -25,7 +25,7 @@ function AddCredit({ refetch }) {
   const handleSubmit = async (values) => {
     setLoading(true);
     try {
-      await API.post("/credit/create", values);
+      await API.post("/credit-package/create", values);
 
       message.success("Credit added successfully");
       setIsModalOpen(false);

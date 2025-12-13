@@ -77,8 +77,10 @@ function Drivers() {
     setIsStatusChangeLoading(true);
 
     try {
-      const res = await API.put(`/user/today-paid-us/${selectedDriver._id}`, {
-        toDayPaidUs: Number(newPaidAmount),
+      const res = await API.put(`/user/today-paid-us`, {
+        driver: selectedDriver._id,
+        amount: Number(newPaidAmount),
+        date: new Date().toISOString().split("T")[0],
       });
 
       message.success("Paid amount updated successfully!");
@@ -212,25 +214,25 @@ function Drivers() {
         </span>
       ),
     },
-    {
-      title: <span>Today Paid US</span>,
-      dataIndex: "stats",
-      key: "stats",
-      render: (stats, record) => (
-        <div>
-          <Tag color="blue">
-            ${record?.toDayPaidUs?.toFixed(2) || 0} / $
-            {stats?.todayDeliveryEarnings?.toFixed(2) || 0}
-          </Tag>
-          <Button
-            title="Update Paid Amount"
-            size="small"
-            icon={<EditOutlined />}
-            onClick={() => openPaidModal(record)}
-          />
-        </div>
-      ),
-    },
+    // {
+    //   title: <span>Today Paid US</span>,
+    //   dataIndex: "stats",
+    //   key: "stats",
+    //   render: (stats, record) => (
+    //     <div>
+    //       <Tag color="blue">
+    //         ${record?.toDayPaidUs?.toFixed(2) || 0} / $
+    //         {stats?.todayDeliveryEarnings?.toFixed(2) || 0}
+    //       </Tag>
+    //       <Button
+    //         title="Update Paid Amount"
+    //         size="small"
+    //         icon={<EditOutlined />}
+    //         onClick={() => openPaidModal(record)}
+    //       />
+    //     </div>
+    //   ),
+    // },
 
     {
       title: <span>View Details</span>,
@@ -242,8 +244,8 @@ function Drivers() {
             title="Change Status"
             size="small"
             icon={<EyeOutlined />}
-            onClick={() => openOrderModal(record)}
-            // onClick={() => navitete(`/drivers/${record?._id}`)}
+            // onClick={() => openOrderModal(record)}
+            onClick={() => navitete(`/drivers/${record?._id}`)}
           >
             Details
           </Button>

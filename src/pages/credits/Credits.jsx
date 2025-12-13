@@ -45,7 +45,7 @@ function Credits() {
       const newStatus =
         selectedCredit.status === "Active" ? "Deactive" : "Active";
 
-      await API.put(`/credit/status-change/${selectedCredit._id}`, {
+      await API.put(`/credit-package/status-change/${selectedCredit._id}`, {
         status: newStatus,
       });
 
@@ -72,7 +72,7 @@ function Credits() {
   // Handle edit
   const handleEdit = async (values) => {
     try {
-      await API.put(`/credit/update/${selectedCredit._id}`, values);
+      await API.put(`/credit-package/update/${selectedCredit._id}`, values);
 
       message.success("Credit updated successfully");
       setIsEditModalOpen(false);
@@ -95,7 +95,7 @@ function Credits() {
       cancelText: "Cancel",
       onOk: async () => {
         try {
-          await API.delete(`/credit/delete/${record?._id}`);
+          await API.delete(`/credit-package/delete/${record?._id}`);
           message.success("Credit deleted successfully");
           refetch();
         } catch (err) {

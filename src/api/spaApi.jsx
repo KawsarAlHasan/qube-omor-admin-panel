@@ -50,7 +50,7 @@ export const useSingleSpaData = ({ id }, options = {}) => {
 // get Credits
 export const useCredits = () => {
   const getData = async () => {
-    const response = await API.get("/credit/all", {
+    const response = await API.get("/credit-package/all", {
       params: { status: "all" },
     });
     return response.data;
@@ -70,10 +70,10 @@ export const useCredits = () => {
   return { credits, isLoading, isError, error, refetch };
 };
 
-// /credit/all-buy-credits
+// /credit-package/all-buy-credits
 export const useCreditsBuyers = ({ page = 1, limit = 20 }) => {
   const getData = async () => {
-    const response = await API.get("/credit/all-buy-credits", {
+    const response = await API.get("/credit/buyers", {
       params: { page, limit },
     });
     return response.data;
@@ -91,4 +91,27 @@ export const useCreditsBuyers = ({ page = 1, limit = 20 }) => {
   });
 
   return { creditBuyers, isLoading, isError, error, refetch };
+};
+
+// single spa data
+export const useSingleUserCreditsDetails = ({ id }, options = {}) => {
+  const getData = async ({ queryKey }) => {
+    const [_key, id] = queryKey;
+    const response = await API.get(`/credit/buyers/${id}`);
+    return response.data;
+  };
+
+  const {
+    data: singleCreditsData = [],
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["singleCreditsData", id],
+    queryFn: getData,
+    enabled: !!id && (options.enabled ?? true),
+  });
+
+  return { singleCreditsData, isLoading, isError, error, refetch };
 };

@@ -214,20 +214,20 @@ function FoodOrders() {
       key: "user",
       render: (user) => <span>{user?.phone}</span>,
     },
-    {
-      title: <span>Delivery Address</span>,
-      dataIndex: "delivery_address",
-      key: "delivery_address",
-      render: (delivery_address, record) => (
-        <>
-          {record?.order_type === "Delivery" ? (
-            delivery_address
-          ) : (
-            <span>N/A ({record?.order_type})</span>
-          )}
-        </>
-      ),
-    },
+    // {
+    //   title: <span>Delivery Address</span>,
+    //   dataIndex: "delivery_address",
+    //   key: "delivery_address",
+    //   render: (delivery_address, record) => (
+    //     <>
+    //       {record?.order_type === "Delivery" ? (
+    //         delivery_address
+    //       ) : (
+    //         <span>N/A ({record?.order_type})</span>
+    //       )}
+    //     </>
+    //   ),
+    // },
     {
       title: <span>Quantity</span>,
       dataIndex: "total_quantity",

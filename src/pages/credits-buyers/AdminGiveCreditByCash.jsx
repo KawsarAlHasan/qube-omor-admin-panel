@@ -23,7 +23,7 @@ import { useUsersList } from "../../api/userApi";
 import { useCredits } from "../../api/spaApi";
 import { API } from "../../api/api";
 
-function AdminGiveCreditByCash() {
+function AdminGiveCreditByCash({refetch: cRefetch}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [selectedCredit, setSelectedCredit] = useState(null);
@@ -88,6 +88,7 @@ function AdminGiveCreditByCash() {
       });
       message.success("Credit given successfully!");
       handleCancel();
+      cRefetch?.();
       refetch();
       creditRefetch();
     } catch (err) {

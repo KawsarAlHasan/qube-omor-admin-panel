@@ -19,12 +19,14 @@ import {
   GiftOutlined,
   CreditCardOutlined,
   CheckCircleOutlined,
+  EyeOutlined,
 } from "@ant-design/icons";
 import ViewUser from "./ViewUser";
 import { useUsersList } from "../../api/userApi";
 import userIcon from "../../assets/icons/userIcon.png";
 import { API } from "../../api/api";
 import { useCredits } from "../../api/spaApi";
+import CreditsDetails from "./CreditsDetails";
 
 const { Search } = Input;
 
@@ -42,10 +44,11 @@ function UserManagement() {
 
   // Credit modal
   const [selectedCredit, setSelectedCredit] = useState(null);
-
   const [isCreditModalOpen, setIsCreditModalOpen] = useState(false);
-  const [creditAmount, setCreditAmount] = useState("");
   const [isCreditLoading, setIsCreditLoading] = useState(false);
+
+  // Credit view modal
+  const [isCreditViewModalOpen, setIsCreditViewModalOpen] = useState(null);
 
   // Filter state
   const [filter, setFilter] = useState({
@@ -69,6 +72,11 @@ function UserManagement() {
     setIsViewModalOpen(true);
   };
 
+  const handleCreditsDetails = (userData) => {
+    setSelectedUser(userData);
+    setIsCreditViewModalOpen(true);
+  };
+
   // Open status modal
   const openStatusModal = (user) => {
     setSelectedUser(user);
@@ -79,7 +87,6 @@ function UserManagement() {
   // Open Credit modal
   const openCreditModal = (user) => {
     setSelectedUser(user);
-    setCreditAmount("");
     setIsCreditModalOpen(true);
   };
 
@@ -137,6 +144,11 @@ function UserManagement() {
     setIsViewModalOpen(false);
   };
 
+  const handleCreditsModalClose = () => {
+    setSelectedUser(null);
+    setIsCreditViewModalOpen(false);
+  };
+
   const handleTableChange = (pagination) => {
     setFilter((prev) => ({
       ...prev,
@@ -181,6 +193,19 @@ function UserManagement() {
             onClick={() => openCreditModal(record)}
           />
         </div>
+      ),
+    },
+    {
+      title: "View Credits",
+      dataIndex: "credit",
+      render: (_, record) => (
+        <Button
+          size="small"
+          icon={<EyeOutlined />}
+          onClick={() => handleCreditsDetails(record)}
+        >
+          View Credits
+        </Button>
       ),
     },
     {
@@ -255,6 +280,13 @@ function UserManagement() {
         refetch={refetch}
       />
 
+      <CreditsDetails
+        userData={selectedUser}
+        isOpen={isCreditViewModalOpen}
+        onClose={handleCreditsModalClose}
+        refetch={refetch}
+      />
+
       {/* Status Modal */}
       <Modal
         title="Change User Status"
@@ -276,7 +308,6 @@ function UserManagement() {
         </Select>
       </Modal>
 
-      {/* Credit Give Modal */}
       {/* Credit Give Modal */}
       <Modal
         title={
