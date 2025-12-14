@@ -84,7 +84,7 @@ function DriversDetails() {
 
     try {
       const values = await form.validateFields();
-      const { amount, date, notes } = values;
+      const { amount, date } = values;
 
       if (!amount || amount < 0) {
         return message.error("Please enter a valid amount.");
@@ -96,7 +96,6 @@ function DriversDetails() {
         driver: driverId,
         amount: Number(amount),
         date: date.format("YYYY-MM-DD"),
-        notes: notes || "",
       });
 
       message.success("Payment recorded successfully!");
@@ -128,8 +127,14 @@ function DriversDetails() {
   if (isLoading) return <IsLoading />;
   if (isError) return <IsError error={error} refetch={refetch} />;
 
-  const { driverData, reportPeriod, summary, breakdown, payments, ordersByDay } =
-    data || {};
+  const {
+    driverData,
+    reportPeriod,
+    summary,
+    breakdown,
+    payments,
+    ordersByDay,
+  } = data || {};
 
   // Calculate total amount for percentage calculation
   const totalBreakdownAmount =
@@ -227,9 +232,7 @@ function DriversDetails() {
       width: 100,
       align: "right",
       render: (price) => (
-        <Text className="font-bold text-emerald-600">
-          ${price?.toFixed(2)}
-        </Text>
+        <Text className="font-bold text-emerald-600">${price?.toFixed(2)}</Text>
       ),
     },
   ];
@@ -244,7 +247,9 @@ function DriversDetails() {
             {dayjs(day.date).format("DD")}
           </div>
           <div>
-            <Text strong>{day.formattedDate || dayjs(day.date).format("MMM D, YYYY")}</Text>
+            <Text strong>
+              {day.formattedDate || dayjs(day.date).format("MMM D, YYYY")}
+            </Text>
             <Text type="secondary" className="block text-xs">
               {day.orderCount} order{day.orderCount > 1 ? "s" : ""}
             </Text>
@@ -323,16 +328,24 @@ function DriversDetails() {
                 <CheckCircleOutlined className="text-white text-sm" />
               </div>
             </div>
-            
+
             <div className="flex-1 text-center sm:text-left">
               <Title level={3} className="!mb-1 !text-gray-800">
                 {driverData.name || "Driver"}
               </Title>
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 mt-2">
-                <Tag icon={<MailOutlined />} color="blue" className="rounded-full px-3 py-1">
+                <Tag
+                  icon={<MailOutlined />}
+                  color="blue"
+                  className="rounded-full px-3 py-1"
+                >
                   {driverData.email}
                 </Tag>
-                <Tag icon={<PhoneOutlined />} color="green" className="rounded-full px-3 py-1">
+                <Tag
+                  icon={<PhoneOutlined />}
+                  color="green"
+                  className="rounded-full px-3 py-1"
+                >
                   {driverData.phone}
                 </Tag>
               </div>
@@ -340,7 +353,8 @@ function DriversDetails() {
                 <div className="mt-3 flex items-center justify-center sm:justify-start gap-2 text-gray-500">
                   <EnvironmentOutlined className="text-rose-500" />
                   <Text type="secondary" className="text-sm">
-                    {driverData.latitude?.toFixed(4)}, {driverData.longitude?.toFixed(4)}
+                    {driverData.latitude?.toFixed(4)},{" "}
+                    {driverData.longitude?.toFixed(4)}
                   </Text>
                   <Button
                     type="link"
@@ -361,7 +375,10 @@ function DriversDetails() {
 
             <div className="hidden lg:block">
               <div className="text-center p-4 bg-white rounded-2xl shadow-sm">
-                <Text type="secondary" className="text-xs uppercase tracking-wider">
+                <Text
+                  type="secondary"
+                  className="text-xs uppercase tracking-wider"
+                >
                   Driver ID
                 </Text>
                 <Text code className="block mt-1 text-sm">
@@ -383,7 +400,9 @@ function DriversDetails() {
             <div>
               <Text strong className="text-gray-800 block">
                 {dateRange
-                  ? `${dateRange[0].format("MMM D, YYYY")} - ${dateRange[1].format("MMM D, YYYY")}`
+                  ? `${dateRange[0].format(
+                      "MMM D, YYYY"
+                    )} - ${dateRange[1].format("MMM D, YYYY")}`
                   : "Report Period"}
               </Text>
               <Text type="secondary" className="text-xs">
@@ -446,7 +465,9 @@ function DriversDetails() {
               </Text>
               <div className="flex items-baseline gap-2 mt-2 justify-center lg:justify-start">
                 <span
-                  className={`text-5xl md:text-6xl font-bold ${adminOwesDriver ? "text-emerald-400" : "text-rose-400"}`}
+                  className={`text-5xl md:text-6xl font-bold ${
+                    adminOwesDriver ? "text-emerald-400" : "text-rose-400"
+                  }`}
                 >
                   ${absoluteReceivable.toFixed(2)}
                 </span>
@@ -458,7 +479,11 @@ function DriversDetails() {
               </div>
               <div className="mt-4 flex items-center gap-2 justify-center lg:justify-start">
                 <Tag
-                  className={`${adminOwesDriver ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/30" : "bg-rose-500/20 text-rose-400 border-rose-500/30"} rounded-full px-3 py-1`}
+                  className={`${
+                    adminOwesDriver
+                      ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/30"
+                      : "bg-rose-500/20 text-rose-400 border-rose-500/30"
+                  } rounded-full px-3 py-1`}
                 >
                   <BankOutlined className="mr-1" />
                   {adminOwesDriver ? "Credit Balance" : "Outstanding Balance"}
@@ -485,7 +510,9 @@ function DriversDetails() {
                   <Text className="text-3xl font-bold text-white block">
                     {summary?.paidDeliveredOrders || 0}
                   </Text>
-                  <Text className="text-slate-400 text-xs">Paid & Delivered</Text>
+                  <Text className="text-slate-400 text-xs">
+                    Paid & Delivered
+                  </Text>
                 </div>
               </Col>
               <Col xs={12} sm={8}>
@@ -508,7 +535,9 @@ function DriversDetails() {
               </Col>
               <Col xs={24} sm={16}>
                 <div
-                  className={`${adminOwesDriver ? "bg-emerald-500/20" : "bg-rose-500/20"} backdrop-blur rounded-2xl p-4`}
+                  className={`${
+                    adminOwesDriver ? "bg-emerald-500/20" : "bg-rose-500/20"
+                  } backdrop-blur rounded-2xl p-4`}
                 >
                   <div className="flex items-center justify-between">
                     <div>
@@ -516,7 +545,9 @@ function DriversDetails() {
                         Settlement Status
                       </Text>
                       <Text
-                        className={`text-2xl font-bold ${adminOwesDriver ? "text-emerald-400" : "text-rose-400"}`}
+                        className={`text-2xl font-bold ${
+                          adminOwesDriver ? "text-emerald-400" : "text-rose-400"
+                        }`}
                       >
                         {adminOwesDriver
                           ? `Admin owes $${absoluteReceivable.toFixed(2)}`
@@ -524,7 +555,9 @@ function DriversDetails() {
                       </Text>
                     </div>
                     <div
-                      className={`w-16 h-16 rounded-full flex items-center justify-center ${adminOwesDriver ? "bg-emerald-500/30" : "bg-rose-500/30"}`}
+                      className={`w-16 h-16 rounded-full flex items-center justify-center ${
+                        adminOwesDriver ? "bg-emerald-500/30" : "bg-rose-500/30"
+                      }`}
                     >
                       {adminOwesDriver ? (
                         <ArrowDownOutlined className="text-3xl text-emerald-400" />
@@ -763,14 +796,18 @@ function DriversDetails() {
               </Col>
               <Col span={24}>
                 <div
-                  className={`${adminOwesDriver ? "bg-emerald-50" : "bg-rose-50"} rounded-xl p-3 shadow-sm`}
+                  className={`${
+                    adminOwesDriver ? "bg-emerald-50" : "bg-rose-50"
+                  } rounded-xl p-3 shadow-sm`}
                 >
                   <Text type="secondary" className="text-xs block">
                     {adminOwesDriver ? "Admin Owes Driver" : "Balance Due"}
                   </Text>
                   <Text
                     strong
-                    className={`text-xl ${adminOwesDriver ? "text-emerald-600" : "text-rose-600"}`}
+                    className={`text-xl ${
+                      adminOwesDriver ? "text-emerald-600" : "text-rose-600"
+                    }`}
                   >
                     ${absoluteReceivable.toFixed(2)}
                   </Text>
@@ -812,14 +849,6 @@ function DriversDetails() {
               min={0.01}
               step={0.01}
               precision={2}
-            />
-          </Form.Item>
-
-          <Form.Item name="notes" label={<Text strong>Notes (Optional)</Text>}>
-            <Input.TextArea
-              placeholder="Add any notes about this payment..."
-              rows={3}
-              className="rounded-xl"
             />
           </Form.Item>
         </Form>

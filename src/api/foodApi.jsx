@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { API } from "./api";
 
+// get all foods
 export const useFoods = ({
   page = 1,
   limit = 10,
@@ -26,6 +27,28 @@ export const useFoods = ({
   });
 
   return { allFoods, isLoading, isError, error, refetch };
+};
+
+// all active food
+export const useAllActiveFoods = (options = {}) => {
+  const getData = async () => {
+    const response = await API.get("/food/all-active");
+    return response.data.data;
+  };
+
+  const {
+    data: allActiveFoods = [],
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["allActiveFoods"],
+    queryFn: getData,
+    enabled: options.enabled ?? true,
+  });
+
+  return { allActiveFoods, isLoading, isError, error, refetch };
 };
 
 // category

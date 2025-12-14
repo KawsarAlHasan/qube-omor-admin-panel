@@ -126,3 +126,24 @@ export const useAllCoupon = () => {
 
   return { couponData, isLoading, isError, error, refetch };
 };
+
+export const useCheckCoupon = ({ couponCode }, options = {}) => {
+  const getData = async () => {
+    const response = await API.get(`/coupon/check/${couponCode}`);
+    return response?.data?.data;
+  };
+
+  const {
+    data: couponCheck = [],
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["couponCheck", couponCode],
+    queryFn: getData,
+    enabled: !!couponCode && (options.enabled ?? true),
+  });
+
+  return { couponCheck, isLoading, isError, error, refetch };
+};

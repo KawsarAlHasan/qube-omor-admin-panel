@@ -10,6 +10,7 @@ import { useAllFoodOrders } from "../../api/foodApi";
 import { useUsersList } from "../../api/userApi";
 import driverIcon from "../../assets/icons/driverIcon.png";
 import userIcon from "../../assets/icons/userIcon.png";
+import EditFoodOrder from "./EditFoodOrder";
 
 const { Search } = Input;
 
@@ -371,10 +372,13 @@ function FoodOrders() {
       ),
     },
     {
-      title: <span>Details</span>,
-      key: "Details",
+      title: <span>Action</span>,
+      key: "Action",
       render: (_, record) => (
-        <FoodOrderDetails record={record} refetch={refetch} />
+        <div className="flex gap-2">
+          <FoodOrderDetails record={record} refetch={refetch} />
+          <EditFoodOrder record={record} refetch={refetch} />
+        </div>
       ),
     },
   ];
