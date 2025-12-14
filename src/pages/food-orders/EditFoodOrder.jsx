@@ -15,7 +15,6 @@ import {
   Row,
   Col,
   Typography,
-  DatePicker,
   Spin,
   Empty,
   Popconfirm,
@@ -125,6 +124,7 @@ function EditFoodOrder({ record, refetch: parentRefetch }) {
                   _id: ing._id,
                   name: ing.ingredient_name,
                   price: ing.price,
+                  cost_on_me: ing.cost_on_me || 0, // Store cost_on_me
                   instanceIndex: i,
                   isRemoved: isRemoved,
                 });
@@ -136,11 +136,17 @@ function EditFoodOrder({ record, refetch: parentRefetch }) {
           let extraIngredientInstances = [];
           if (item.extra_Ingredients && item.extra_Ingredients.length > 0) {
             item.extra_Ingredients.forEach((ext, extIdx) => {
+              // Find the ingredient in food's extra_ingredients to get cost_on_me
+              const extraIngData = foodData?.extra_ingredients?.find(
+                (ei) => ei._id === ext._id
+              );
+
               extraIngredientInstances.push({
                 uniqueKey: `extra-${ext._id}-${extIdx}-${index}-${Date.now()}`,
                 _id: ext._id,
                 name: ext.name,
                 price: ext.price,
+                cost_on_me: extraIngData?.cost_on_me || 0, // Store cost_on_me
               });
             });
           }
@@ -150,6 +156,7 @@ function EditFoodOrder({ record, refetch: parentRefetch }) {
             food_id: item.food_id,
             food_name: item.food_name,
             food_price: item.food_price,
+            food_cost_on_me: foodData?.cost_on_me || 0, // Store food's cost_on_me
             food_quantity: item.food_quantity,
             ingredientInstances: ingredientInstances,
             extraIngredientInstances: extraIngredientInstances,
@@ -174,20 +181,48 @@ function EditFoodOrder({ record, refetch: parentRefetch }) {
     return 0;
   };
 
-  // Calculate totals
+  // Calculate totals including food_cost
   const calculations = useMemo(() => {
     let subTotal = 0;
     let totalQuantity = 0;
+    let foodCostTotal = 0;
 
     foodItems.forEach((item) => {
+      const quantity = item.food_quantity || 1;
+
+      // Calculate extra ingredients total price
       const extraTotal = (item.extraIngredientInstances || []).reduce(
         (sum, ing) => sum + (Number(ing.price) || 0),
         0
       );
+
+      // Calculate item amount (selling price)
       const itemAmount =
-        item.food_quantity * item.food_price + item.food_quantity * extraTotal;
+        quantity * item.food_price + quantity * extraTotal;
       subTotal += itemAmount;
-      totalQuantity += item.food_quantity;
+      totalQuantity += quantity;
+
+      // Calculate food_cost using cost_on_me (like createFoodOrder)
+      // 1. Food base cost
+      const foodBaseCost = item.food_cost_on_me || 0;
+
+      // 2. Base ingredients cost (only non-removed ones)
+      let baseIngredientsCost = 0;
+      (item.ingredientInstances || []).forEach((inst) => {
+        if (!inst.isRemoved) {
+          baseIngredientsCost += inst.cost_on_me || 0;
+        }
+      });
+
+      // 3. Extra ingredients cost
+      let extraIngredientsCost = 0;
+      (item.extraIngredientInstances || []).forEach((ext) => {
+        extraIngredientsCost += ext.cost_on_me || 0;
+      });
+
+      // Total cost for this item
+      const itemCost = (foodBaseCost + baseIngredientsCost + extraIngredientsCost) * quantity;
+      foodCostTotal += itemCost;
     });
 
     const deliveryFee =
@@ -203,6 +238,7 @@ function EditFoodOrder({ record, refetch: parentRefetch }) {
       deliveryFee,
       couponDiscount: Number(couponDiscount.toFixed(2)),
       totalPrice: Number(totalPrice.toFixed(2)),
+      foodCost: Number(foodCostTotal.toFixed(2)),
     };
   }, [foodItems, form, appliedCoupon]);
 
@@ -220,6 +256,7 @@ function EditFoodOrder({ record, refetch: parentRefetch }) {
         food_id: null,
         food_name: null,
         food_price: 0,
+        food_cost_on_me: 0,
         food_quantity: 1,
         ingredientInstances: [],
         extraIngredientInstances: [],
@@ -251,6 +288,7 @@ function EditFoodOrder({ record, refetch: parentRefetch }) {
             _id: ing._id,
             name: ing.ingredient_name,
             price: ing.price,
+            cost_on_me: ing.cost_on_me || 0,
             instanceIndex: i,
             isRemoved: false, // All selected by default
           });
@@ -266,6 +304,7 @@ function EditFoodOrder({ record, refetch: parentRefetch }) {
             food_id: foodId,
             food_name: selectedFood.food_name,
             food_price: selectedFood.food_price,
+            food_cost_on_me: selectedFood.cost_on_me || 0,
             ingredientInstances: ingredientInstances,
             extraIngredientInstances: [],
           };
@@ -328,6 +367,7 @@ function EditFoodOrder({ record, refetch: parentRefetch }) {
             _id: ingredientData._id,
             name: ingredientData.ingredient_name,
             price: ingredientData.price,
+            cost_on_me: ingredientData.cost_on_me || 0,
           };
           return {
             ...item,
@@ -455,7 +495,6 @@ function EditFoodOrder({ record, refetch: parentRefetch }) {
         order_type: values.order_type,
         status: values.status,
         paid_status: values.paid_status,
-        // date: values.date ? values.date.toISOString() : null,
         coupon: couponCode || null,
         food: foodPayload,
         delivery_fee: calculations.deliveryFee,
@@ -464,7 +503,7 @@ function EditFoodOrder({ record, refetch: parentRefetch }) {
         coupon_discount: calculations.couponDiscount,
         coupon_code: couponCode || null,
         total_quantity: calculations.totalQuantity,
-        food_cost: calculations.subTotal,
+        food_cost: calculations.foodCost, // Using calculated food_cost
       };
 
       await API.put(`/food-order/update/${record?._id}`, payload);
@@ -646,11 +685,6 @@ function EditFoodOrder({ record, refetch: parentRefetch }) {
                     <Input.TextArea rows={2} />
                   </Form.Item>
                 </Col>
-                {/* <Col span={6}>
-                  <Form.Item name="date" label="Order Date">
-                    <DatePicker className="w-full" />
-                  </Form.Item>
-                </Col> */}
               </Row>
             </Card>
 
@@ -865,27 +899,6 @@ function EditFoodOrder({ record, refetch: parentRefetch }) {
                                   </div>
                                 </div>
                               )}
-
-                            {/* Show removed ingredients summary */}
-                            {/* {item.ingredientInstances &&
-                              item.ingredientInstances.filter(
-                                (i) => i.isRemoved
-                              ).length > 0 && (
-                                <div className="mt-2">
-                                  <Text type="secondary" className="block mb-1">
-                                    Removed Ingredients:
-                                  </Text>
-                                  <div className="flex flex-wrap gap-1">
-                                    {item.ingredientInstances
-                                      .filter((i) => i.isRemoved)
-                                      .map((rem) => (
-                                        <Tag key={rem.uniqueKey} color="red">
-                                          {rem.name} (Removed)
-                                        </Tag>
-                                      ))}
-                                  </div>
-                                </div>
-                              )} */}
                           </>
                         )}
                       </Card>
@@ -912,7 +925,7 @@ function EditFoodOrder({ record, refetch: parentRefetch }) {
                     </div>
                   </div>
                 </Col>
-                <Col span={5}>
+                <Col span={4}>
                   <div className="text-center">
                     <Text type="secondary">Subtotal</Text>
                     <div>
@@ -922,7 +935,7 @@ function EditFoodOrder({ record, refetch: parentRefetch }) {
                     </div>
                   </div>
                 </Col>
-                <Col span={5}>
+                <Col span={4}>
                   <div className="text-center">
                     <Text type="secondary">Delivery Fee</Text>
                     <div>
@@ -932,9 +945,9 @@ function EditFoodOrder({ record, refetch: parentRefetch }) {
                     </div>
                   </div>
                 </Col>
-                <Col span={5}>
+                <Col span={4}>
                   <div className="text-center">
-                    <Text type="secondary">Coupon Discount</Text>
+                    <Text type="secondary">Discount</Text>
                     <div>
                       <Text strong className="text-xl text-red-500">
                         -${calculations.couponDiscount}
@@ -942,7 +955,17 @@ function EditFoodOrder({ record, refetch: parentRefetch }) {
                     </div>
                   </div>
                 </Col>
-                <Col span={5}>
+                <Col span={4}>
+                  <div className="text-center">
+                    <Text type="secondary">Food Cost</Text>
+                    <div>
+                      <Text strong className="text-xl text-orange-500">
+                        ${calculations.foodCost}
+                      </Text>
+                    </div>
+                  </div>
+                </Col>
+                <Col span={4}>
                   <div className="text-center">
                     <Text type="secondary">Total Price</Text>
                     <div>
