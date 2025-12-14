@@ -21,6 +21,7 @@ import {
 import AddInstructor from "./AddInstructor";
 import { API } from "../../../api/api";
 import userIcon from "../../../assets/icons/userIcon.png";
+import EditInstructor from "./EditInstructor";
 
 const { Search } = Input;
 const { confirm } = Modal;
@@ -146,6 +147,14 @@ function Instructors() {
             onClick={() => openStatusModal(record)}
           />
         </div>
+      ),
+    },
+    {
+      title: <span>Edit</span>,
+      dataIndex: "edit",
+      key: "edit",
+      render: (_, record) => (
+        <EditInstructor record={record} refetch={refetch} />
       ),
     },
     {

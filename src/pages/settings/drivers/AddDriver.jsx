@@ -1,10 +1,20 @@
 import React, { useState } from "react";
-import { Modal, Form, Input, DatePicker, Select, Button, message } from "antd";
+import {
+  Modal,
+  Form,
+  Input,
+  DatePicker,
+  Select,
+  Button,
+  message,
+  Upload,
+} from "antd";
 import {
   UserAddOutlined,
   MailOutlined,
   PhoneOutlined,
   LockOutlined,
+  UploadOutlined,
 } from "@ant-design/icons";
 import { API } from "../../../api/api";
 
@@ -13,6 +23,7 @@ const { Option } = Select;
 function AddDriver({ refetch }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [fileList, setFileList] = useState([]);
   const [form] = Form.useForm();
 
   const showModal = () => {
@@ -22,22 +33,44 @@ function AddDriver({ refetch }) {
   const handleCancel = () => {
     setIsModalOpen(false);
     form.resetFields();
+    setFileList([]);
   };
 
   const handleSubmit = async (values) => {
     setLoading(true);
     try {
-      const payload = {
-        name: values.name,
-        email: values.email,
-        password: values.password,
-        phone: values.phone,
-        gender: values.gender,
-      };
+      const formData = new FormData();
 
-      await API.post("/auth/driver-create", payload);
+      // Required fields
+      formData.append("name", values.name);
+      formData.append("email", values.email);
+      formData.append("password", values.password);
+      formData.append("phone", values.phone);
+      formData.append("gender", values.gender);
+      formData.append("role", "Driver");
+
+      // Optional fields
+      if (values.date_of_birth) {
+        formData.append("date_of_birth", values.date_of_birth.toISOString());
+      }
+      if (values.address) {
+        formData.append("address", values.address);
+      }
+
+      // Image file
+      if (fileList.length > 0 && fileList[0].originFileObj) {
+        formData.append("profile_image", fileList[0].originFileObj);
+      }
+
+      await API.post("/auth/user-create", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
       message.success("Driver added successfully!");
       form.resetFields();
+      setFileList([]);
       setIsModalOpen(false);
       refetch();
     } catch (error) {
@@ -46,6 +79,24 @@ function AddDriver({ refetch }) {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleUploadChange = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
+  };
+
+  const beforeUpload = (file) => {
+    const isImage = file.type.startsWith("image/");
+    if (!isImage) {
+      message.error("You can only upload image files!");
+      return Upload.LIST_IGNORE;
+    }
+    const isLt5M = file.size / 1024 / 1024 < 5;
+    if (!isLt5M) {
+      message.error("Image must be smaller than 5MB!");
+      return Upload.LIST_IGNORE;
+    }
+    return false; // Prevent auto upload
   };
 
   return (
@@ -143,20 +194,14 @@ function AddDriver({ refetch }) {
           </Form.Item>
 
           <div className="grid grid-cols-2 gap-4">
-            {/* <Form.Item
-              label="Date of Birth"
-              name="date_of_birth"
-              rules={[
-                { required: true, message: "Please select date of birth" },
-              ]}
-            >
+            <Form.Item label="Date of Birth" name="date_of_birth">
               <DatePicker
                 className="w-full"
                 size="large"
                 format="YYYY-MM-DD"
                 placeholder="Select date"
               />
-            </Form.Item> */}
+            </Form.Item>
 
             <Form.Item
               label="Gender"
@@ -164,12 +209,34 @@ function AddDriver({ refetch }) {
               rules={[{ required: true, message: "Please select gender" }]}
             >
               <Select placeholder="Select gender" size="large">
-                <Option value="male">Male</Option>
-                <Option value="female">Female</Option>
-                <Option value="other">Other</Option>
+                <Option value="Male">Male</Option>
+                <Option value="Female">Female</Option>
+                <Option value="Other">Other</Option>
               </Select>
             </Form.Item>
           </div>
+
+          <Form.Item label="Address" name="address">
+            <Input.TextArea rows={3} placeholder="Enter address" size="large" />
+          </Form.Item>
+
+          <Form.Item label="Profile Image">
+            <Upload
+              listType="picture-card"
+              fileList={fileList}
+              onChange={handleUploadChange}
+              beforeUpload={beforeUpload}
+              maxCount={1}
+              accept="image/*"
+            >
+              {fileList.length === 0 && (
+                <div>
+                  <UploadOutlined />
+                  <div className="mt-2">Upload</div>
+                </div>
+              )}
+            </Upload>
+          </Form.Item>
 
           <Form.Item className="mb-0 mt-6">
             <div className="flex gap-3 justify-end">

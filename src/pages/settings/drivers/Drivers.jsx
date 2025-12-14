@@ -24,6 +24,7 @@ import { API } from "../../../api/api";
 import userIcon from "../../../assets/icons/userIcon.png";
 import ViewDriverOrders from "./ViewDriverOrders";
 import { useNavigate } from "react-router-dom";
+import EditDriver from "./EditDriver";
 
 const { Search } = Input;
 const { confirm } = Modal;
@@ -252,7 +253,6 @@ function Drivers() {
         </div>
       ),
     },
-
     {
       title: <span>Status</span>,
       dataIndex: "status",
@@ -272,6 +272,12 @@ function Drivers() {
           />
         </div>
       ),
+    },
+    {
+      title: <span>Edit</span>,
+      dataIndex: "edit",
+      key: "edit",
+      render: (_, record) => <EditDriver record={record} refetch={refetch} />,
     },
     {
       title: <span>Delete</span>,
