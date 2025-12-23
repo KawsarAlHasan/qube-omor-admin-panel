@@ -27,6 +27,7 @@ import userIcon from "../../assets/icons/userIcon.png";
 import { API } from "../../api/api";
 import { useCredits } from "../../api/spaApi";
 import CreditsDetails from "./CreditsDetails";
+import CreateNewUser from "./CreateNewUser";
 
 const { Search } = Input;
 
@@ -256,6 +257,8 @@ function UserManagement() {
           size="large"
           allowClear
         />
+
+        <CreateNewUser refetch={refetch} />
       </div>
 
       <Table

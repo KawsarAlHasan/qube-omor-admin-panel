@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAssignFoodOrders } from "../../../../api/userApi";
 import IsLoading from "../../../../components/IsLoading";
@@ -8,47 +8,35 @@ import {
   Card,
   DatePicker,
   Button,
-  Table,
   Tag,
   Row,
   Col,
   Space,
   Typography,
-  Badge,
-  Empty,
   Modal,
-  Input,
   InputNumber,
   Form,
   message,
-  Progress,
-  Timeline,
-  Collapse,
-  Statistic,
-  Alert,
 } from "antd";
 import {
   CalendarOutlined,
   FilterOutlined,
-  DollarOutlined,
   CheckCircleOutlined,
-  ClockCircleOutlined,
-  CloseCircleOutlined,
   ReloadOutlined,
-  ShoppingCartOutlined,
   PayCircleOutlined,
-  WalletOutlined,
-  HistoryOutlined,
   TruckOutlined,
-  BankOutlined,
-  ArrowUpOutlined,
-  ArrowDownOutlined,
-  InfoCircleOutlined,
   MailOutlined,
   PhoneOutlined,
   EnvironmentOutlined,
+  DollarOutlined,
 } from "@ant-design/icons";
 import dayjs from "dayjs";
+import OrdersbyDay from "./OrdersbyDay";
+import PaymentHistory from "./PaymentHistory";
+import OrderBreakdown from "./OrderBreakdown";
+import FinancialSummary from "./FinancialSummary";
+import AdminReturnMoney from "./AdminReturnMoney";
+import DriverPayMoney from "./DriverPayMoney";
 
 const { RangePicker } = DatePicker;
 const { Title, Text } = Typography;
@@ -86,9 +74,9 @@ function DriversDetails() {
       const values = await form.validateFields();
       const { amount, date } = values;
 
-      if (!amount || amount < 0) {
-        return message.error("Please enter a valid amount.");
-      }
+      // if (!amount || amount < 0) {
+      //   return message.error("Please enter a valid amount.");
+      // }
 
       setIsStatusChangeLoading(true);
 
@@ -136,142 +124,6 @@ function DriversDetails() {
     ordersByDay,
   } = data || {};
 
-  // Calculate total amount for percentage calculation
-  const totalBreakdownAmount =
-    breakdown?.reduce((sum, item) => sum + (item.totalAmount || 0), 0) || 0;
-
-  // Get breakdown percentage
-  const getBreakdownPercentage = (amount) => {
-    if (totalBreakdownAmount === 0) return 0;
-    return ((amount / totalBreakdownAmount) * 100).toFixed(1);
-  };
-
-  const getBreakdownColor = (category) => {
-    const colors = {
-      paidDelivered: "#10b981",
-      delivered: "#3b82f6",
-      codDelivered: "#f59e0b",
-      ongoing: "#8b5cf6",
-      cancelled: "#ef4444",
-    };
-    return colors[category] || "#6b7280";
-  };
-
-  const getCategoryLabel = (category) => {
-    const labels = {
-      paidDelivered: "Online Paid & Delivered",
-      delivered: "Delivered (Unpaid)",
-      codDelivered: "COD Delivered",
-      ongoing: "Ongoing",
-      cancelled: "Cancelled",
-    };
-    return labels[category] || category;
-  };
-
-  const getCategoryIcon = (category) => {
-    const icons = {
-      paidDelivered: <CheckCircleOutlined />,
-      delivered: <TruckOutlined />,
-      codDelivered: <WalletOutlined />,
-      ongoing: <ClockCircleOutlined />,
-      cancelled: <CloseCircleOutlined />,
-    };
-    return icons[category] || <ShoppingCartOutlined />;
-  };
-
-  // Order columns for daily breakdown - Updated to match new JSON
-  const orderColumns = [
-    {
-      title: "Order ID",
-      dataIndex: "orderId",
-      key: "orderId",
-      width: 140,
-      render: (id) => (
-        <Text code className="text-xs">
-          #{id?.slice(-8).toUpperCase()}
-        </Text>
-      ),
-    },
-    {
-      title: "Payment Status",
-      dataIndex: "paidStatus",
-      key: "paidStatus",
-      width: 120,
-      render: (status) => (
-        <Tag
-          color={
-            status === "Paid" ? "green" : status === "COD" ? "gold" : "red"
-          }
-          className="rounded-full"
-        >
-          {status}
-        </Tag>
-      ),
-    },
-    {
-      title: "Order Status",
-      dataIndex: "status",
-      key: "status",
-      width: 120,
-      render: (status) => {
-        const colors = {
-          Delivered: "success",
-          Pending: "processing",
-          Processing: "processing",
-          "On Going": "warning",
-          Ready: "cyan",
-          Cancelled: "error",
-        };
-        return <Badge status={colors[status] || "default"} text={status} />;
-      },
-    },
-    {
-      title: "Amount",
-      dataIndex: "totalPrice",
-      key: "totalPrice",
-      width: 100,
-      align: "right",
-      render: (price) => (
-        <Text className="font-bold text-emerald-600">${price?.toFixed(2)}</Text>
-      ),
-    },
-  ];
-
-  // Generate daily orders collapse items
-  const dailyOrderItems = ordersByDay?.map((day, index) => ({
-    key: index.toString(),
-    label: (
-      <div className="flex justify-between items-center w-full pr-4">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold">
-            {dayjs(day.date).format("DD")}
-          </div>
-          <div>
-            <Text strong>
-              {day.formattedDate || dayjs(day.date).format("MMM D, YYYY")}
-            </Text>
-            <Text type="secondary" className="block text-xs">
-              {day.orderCount} order{day.orderCount > 1 ? "s" : ""}
-            </Text>
-          </div>
-        </div>
-        <Tag color="green" className="text-base font-semibold">
-          ${day.totalAmount?.toFixed(2)}
-        </Tag>
-      </div>
-    ),
-    children: (
-      <Table
-        columns={orderColumns}
-        dataSource={day.orders}
-        rowKey="orderId"
-        pagination={false}
-        size="small"
-        className="nested-table"
-      />
-    ),
-  }));
-
   // Check if admin owes driver (negative adminReceivable)
   const adminOwesDriver = (summary?.adminReceivable || 0) < 0;
   const absoluteReceivable = Math.abs(summary?.adminReceivable || 0);
@@ -295,10 +147,14 @@ function DriversDetails() {
             </div>
           </div>
         </div>
+        {/* <div className="flex gap-4">
+          <AdminReturnMoney />
+          <DriverPayMoney />
+        </div> */}
         <Button
           type="primary"
           size="large"
-          icon={<PayCircleOutlined />}
+          icon={<DollarOutlined />}
           onClick={openPaidModal}
           className="bg-gradient-to-r from-emerald-500 to-teal-600 border-0 shadow-lg shadow-emerald-200 hover:shadow-xl hover:shadow-emerald-300 transition-all rounded-xl h-12 px-6"
         >
@@ -442,297 +298,23 @@ function DriversDetails() {
         </div>
       </Card>
 
-      {/* Info Note */}
-      {summary?.note && (
-        <Alert
-          message="Payment Model"
-          description={summary.note}
-          type="info"
-          showIcon
-          icon={<InfoCircleOutlined />}
-          className="mb-6 rounded-2xl border-0 shadow-sm"
-        />
-      )}
-
       {/* Main Financial Summary - Hero Card */}
-      <Card className="mb-6 border-0 shadow-xl rounded-3xl overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-900">
-        <Row gutter={[24, 24]}>
-          {/* Admin Receivable - Main Highlight */}
-          <Col xs={24} lg={10}>
-            <div className="text-center lg:text-left p-4">
-              <Text className="text-slate-400 uppercase tracking-wider text-sm font-medium">
-                {adminOwesDriver ? "Admin Owes Driver" : "Driver Owes Admin"}
-              </Text>
-              <div className="flex items-baseline gap-2 mt-2 justify-center lg:justify-start">
-                <span
-                  className={`text-5xl md:text-6xl font-bold ${
-                    adminOwesDriver ? "text-emerald-400" : "text-rose-400"
-                  }`}
-                >
-                  ${absoluteReceivable.toFixed(2)}
-                </span>
-                {adminOwesDriver ? (
-                  <ArrowDownOutlined className="text-3xl text-emerald-400" />
-                ) : (
-                  <ArrowUpOutlined className="text-3xl text-rose-400" />
-                )}
-              </div>
-              <div className="mt-4 flex items-center gap-2 justify-center lg:justify-start">
-                <Tag
-                  className={`${
-                    adminOwesDriver
-                      ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/30"
-                      : "bg-rose-500/20 text-rose-400 border-rose-500/30"
-                  } rounded-full px-3 py-1`}
-                >
-                  <BankOutlined className="mr-1" />
-                  {adminOwesDriver ? "Credit Balance" : "Outstanding Balance"}
-                </Tag>
-              </div>
-            </div>
-          </Col>
-
-          {/* Summary Stats */}
-          <Col xs={24} lg={14}>
-            <Row gutter={[16, 16]}>
-              <Col xs={12} sm={8}>
-                <div className="bg-white/10 backdrop-blur rounded-2xl p-4 text-center">
-                  <ShoppingCartOutlined className="text-2xl text-blue-400 mb-2" />
-                  <Text className="text-3xl font-bold text-white block">
-                    {summary?.totalOrders || 0}
-                  </Text>
-                  <Text className="text-slate-400 text-xs">Total Orders</Text>
-                </div>
-              </Col>
-              <Col xs={12} sm={8}>
-                <div className="bg-white/10 backdrop-blur rounded-2xl p-4 text-center">
-                  <CheckCircleOutlined className="text-2xl text-emerald-400 mb-2" />
-                  <Text className="text-3xl font-bold text-white block">
-                    {summary?.paidDeliveredOrders || 0}
-                  </Text>
-                  <Text className="text-slate-400 text-xs">
-                    Paid & Delivered
-                  </Text>
-                </div>
-              </Col>
-              <Col xs={12} sm={8}>
-                <div className="bg-white/10 backdrop-blur rounded-2xl p-4 text-center">
-                  <DollarOutlined className="text-2xl text-amber-400 mb-2" />
-                  <Text className="text-3xl font-bold text-white block">
-                    ${summary?.totalPaidDeliveredEarnings?.toFixed(2) || "0.00"}
-                  </Text>
-                  <Text className="text-slate-400 text-xs">Total Earnings</Text>
-                </div>
-              </Col>
-              <Col xs={12} sm={8}>
-                <div className="bg-white/10 backdrop-blur rounded-2xl p-4 text-center">
-                  <WalletOutlined className="text-2xl text-purple-400 mb-2" />
-                  <Text className="text-3xl font-bold text-white block">
-                    ${summary?.totalPaidByDriver?.toFixed(2) || "0.00"}
-                  </Text>
-                  <Text className="text-slate-400 text-xs">Paid by Driver</Text>
-                </div>
-              </Col>
-              <Col xs={24} sm={16}>
-                <div
-                  className={`${
-                    adminOwesDriver ? "bg-emerald-500/20" : "bg-rose-500/20"
-                  } backdrop-blur rounded-2xl p-4`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Text className="text-slate-300 text-sm block mb-1">
-                        Settlement Status
-                      </Text>
-                      <Text
-                        className={`text-2xl font-bold ${
-                          adminOwesDriver ? "text-emerald-400" : "text-rose-400"
-                        }`}
-                      >
-                        {adminOwesDriver
-                          ? `Admin owes $${absoluteReceivable.toFixed(2)}`
-                          : `Driver owes $${absoluteReceivable.toFixed(2)}`}
-                      </Text>
-                    </div>
-                    <div
-                      className={`w-16 h-16 rounded-full flex items-center justify-center ${
-                        adminOwesDriver ? "bg-emerald-500/30" : "bg-rose-500/30"
-                      }`}
-                    >
-                      {adminOwesDriver ? (
-                        <ArrowDownOutlined className="text-3xl text-emerald-400" />
-                      ) : (
-                        <ArrowUpOutlined className="text-3xl text-rose-400" />
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-      </Card>
+      <FinancialSummary summary={summary} />
 
       {/* Order Breakdown & Payment History */}
       <Row gutter={[20, 20]} className="mb-6">
         <Col xs={24} lg={14}>
-          <Card
-            className="h-full border-0 shadow-sm rounded-2xl"
-            title={
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center">
-                  <ShoppingCartOutlined className="text-indigo-600" />
-                </div>
-                <span className="font-semibold">Order Breakdown</span>
-              </div>
-            }
-          >
-            {breakdown && breakdown.some((item) => item.orderCount > 0) ? (
-              <div className="space-y-4">
-                {breakdown?.map((item) => {
-                  const percentage = getBreakdownPercentage(item.totalAmount);
-                  return (
-                    <div key={item.category} className="group">
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center gap-3">
-                          <div
-                            className="w-10 h-10 rounded-xl flex items-center justify-center text-white"
-                            style={{
-                              backgroundColor: getBreakdownColor(item.category),
-                            }}
-                          >
-                            {getCategoryIcon(item.category)}
-                          </div>
-                          <div>
-                            <Text strong className="block">
-                              {getCategoryLabel(item.category)}
-                            </Text>
-                            <Text type="secondary" className="text-xs">
-                              {item.orderCount} order
-                              {item.orderCount !== 1 ? "s" : ""}
-                            </Text>
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <Text strong className="text-lg block">
-                            ${item.totalAmount?.toFixed(2)}
-                          </Text>
-                          <Text type="secondary" className="text-xs">
-                            {percentage}%
-                          </Text>
-                        </div>
-                      </div>
-                      <Progress
-                        percent={parseFloat(percentage)}
-                        showInfo={false}
-                        strokeColor={getBreakdownColor(item.category)}
-                        trailColor="#f1f5f9"
-                        strokeWidth={8}
-                        className="group-hover:scale-[1.02] transition-transform"
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-            ) : (
-              <Empty
-                description="No orders in this period"
-                image={Empty.PRESENTED_IMAGE_SIMPLE}
-              />
-            )}
-          </Card>
+          <OrderBreakdown breakdown={breakdown} />
         </Col>
 
         {/* Payment History */}
         <Col xs={24} lg={10}>
-          <Card
-            className="h-full border-0 shadow-sm rounded-2xl"
-            title={
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center">
-                  <HistoryOutlined className="text-emerald-600" />
-                </div>
-                <span className="font-semibold">Payment History</span>
-              </div>
-            }
-            extra={
-              <Tag color="blue" className="rounded-full">
-                {payments?.length || 0} payments
-              </Tag>
-            }
-          >
-            {payments && payments.length > 0 ? (
-              <Timeline
-                items={payments.map((payment) => ({
-                  color: "green",
-                  dot: (
-                    <div className="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center">
-                      <DollarOutlined className="text-white text-sm" />
-                    </div>
-                  ),
-                  children: (
-                    <div className="ml-2 pb-4">
-                      <div className="flex items-center justify-between">
-                        <Text strong className="text-lg text-emerald-600">
-                          ${payment.amount?.toFixed(2)}
-                        </Text>
-                        <Text code className="text-xs">
-                          #{payment.transactionId?.slice(-6).toUpperCase()}
-                        </Text>
-                      </div>
-                      <Text type="secondary" className="text-sm block">
-                        {dayjs(payment.date).format("MMMM D, YYYY")}
-                      </Text>
-                      {payment.note && (
-                        <Text type="secondary" className="text-xs italic">
-                          {payment.note}
-                        </Text>
-                      )}
-                    </div>
-                  ),
-                }))}
-              />
-            ) : (
-              <Empty
-                description="No payments recorded yet"
-                image={Empty.PRESENTED_IMAGE_SIMPLE}
-              />
-            )}
-          </Card>
+          <PaymentHistory payments={payments} />
         </Col>
       </Row>
 
       {/* Daily Orders Breakdown */}
-      <Card
-        className="border-0 shadow-sm rounded-2xl"
-        title={
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-              <CalendarOutlined className="text-purple-600" />
-            </div>
-            <span className="font-semibold">Orders by Day</span>
-          </div>
-        }
-        extra={
-          <Tag color="purple" className="rounded-full">
-            {ordersByDay?.length || 0} days
-          </Tag>
-        }
-      >
-        {ordersByDay && ordersByDay.length > 0 ? (
-          <Collapse
-            items={dailyOrderItems}
-            bordered={false}
-            className="bg-transparent"
-            expandIconPosition="end"
-          />
-        ) : (
-          <Empty
-            description="No orders found for this period"
-            image={Empty.PRESENTED_IMAGE_SIMPLE}
-          />
-        )}
-      </Card>
+      <OrdersbyDay ordersByDay={ordersByDay} />
 
       {/* Pay Driver Modal */}
       <Modal
@@ -835,19 +417,19 @@ function DriversDetails() {
             label={<Text strong>Payment Amount</Text>}
             rules={[
               { required: true, message: "Please enter payment amount" },
-              {
-                type: "number",
-                min: 0.01,
-                message: "Amount must be greater than 0",
-              },
+              // {
+              //   type: "number",
+              //   min: 0.01,
+              //   message: "Amount must be greater than 0",
+              // },
             ]}
           >
             <InputNumber
               className="w-full rounded-xl h-11"
               placeholder="Enter payment amount"
               prefix="$"
-              min={0.01}
-              step={0.01}
+              // min={0.01}
+              // step={0.01}
               precision={2}
             />
           </Form.Item>
