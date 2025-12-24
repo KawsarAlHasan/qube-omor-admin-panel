@@ -97,7 +97,13 @@ function CreditsBuyers() {
       dataIndex: "credit",
       key: "credit",
       render: (credit) => (
-        <span className="font-semibold text-blue-600">{credit} Credits</span>
+        <span
+          className={`font-semibold ${
+            credit > 0 ? "text-blue-600" : "text-red-600"
+          }`}
+        >
+          {credit} Credits
+        </span>
       ),
     },
     {
@@ -105,7 +111,13 @@ function CreditsBuyers() {
       dataIndex: "price",
       key: "price",
       render: (price) => (
-        <span className="font-semibold text-green-600">${price}</span>
+        <span
+          className={`font-semibold ${
+            price > 0 ? "text-green-600" : "text-red-600"
+          }`}
+        >
+          ${price}
+        </span>
       ),
     },
     {

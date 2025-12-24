@@ -106,7 +106,7 @@ export const useAssignFoodOrders = (
 ) => {
   const getData = async ({ queryKey }) => {
     const [_key, userID] = queryKey;
-    const response = await API.get(`/food-order/driver-assign2/${userID}`, {
+    const response = await API.get(`/food-order/driver-assign/${userID}`, {
       params: { startDate, endDate },
     });
     return response.data;

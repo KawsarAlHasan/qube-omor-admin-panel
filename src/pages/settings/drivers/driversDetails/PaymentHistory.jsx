@@ -24,36 +24,46 @@ function PaymentHistory({ payments }) {
         }
       >
         {payments && payments.length > 0 ? (
-          <Timeline
-            items={payments.map((payment) => ({
-              color: "green",
-              dot: (
-                <div className="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center">
-                  <DollarOutlined className="text-white text-sm" />
-                </div>
-              ),
-              children: (
-                <div className="ml-2 pb-4">
-                  <div className="flex items-center justify-between">
-                    <Text strong className="text-lg text-emerald-600">
-                      ${payment.amount?.toFixed(2)}
-                    </Text>
-                    <Text code className="text-xs">
-                      #{payment.transactionId?.slice(-6).toUpperCase()}
-                    </Text>
+          <div className="max-h-[460px] overflow-y-auto p-4">
+            <Timeline
+              items={[...payments].reverse().map((payment) => ({
+                dot: (
+                  <div
+                    className={`w-8 h-8 ${
+                      payment.amount < 0 ? "bg-red-600" : "bg-emerald-600"
+                    } rounded-full flex items-center justify-center`}
+                  >
+                    <DollarOutlined className="text-white text-sm" />
                   </div>
-                  <Text type="secondary" className="text-sm block">
-                    {dayjs(payment.date).format("MMMM D, YYYY")}
-                  </Text>
-                  {payment.note && (
-                    <Text type="secondary" className="text-xs italic">
-                      {payment.note}
+                ),
+                children: (
+                  <div className="ml-2 pb-4">
+                    <div className="flex items-center justify-between">
+                      <Text
+                        strong
+                        className={`text-lg ${
+                          payment.amount < 0 ? "text-red-600" : "text-emerald-600"
+                        }`}
+                      >
+                        ${payment.amount?.toFixed(2)}
+                      </Text>
+                      <Text code className="text-xs">
+                        #{payment.transactionId?.slice(-6).toUpperCase()}
+                      </Text>
+                    </div>
+                    <Text type="secondary" className="text-sm block">
+                      {dayjs(payment.date).format("MMMM D, YYYY")}
                     </Text>
-                  )}
-                </div>
-              ),
-            }))}
-          />
+                    {payment.note && (
+                      <Text type="secondary" className="text-xs italic block">
+                        {payment.note}
+                      </Text>
+                    )}
+                  </div>
+                ),
+              }))}
+            />
+          </div>
         ) : (
           <Empty
             description="No payments recorded yet"

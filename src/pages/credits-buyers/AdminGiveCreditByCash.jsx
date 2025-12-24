@@ -10,6 +10,7 @@ import {
   Spin,
   Empty,
   Divider,
+  Radio,
 } from "antd";
 import {
   UserOutlined,
@@ -23,11 +24,12 @@ import { useUsersList } from "../../api/userApi";
 import { useCredits } from "../../api/spaApi";
 import { API } from "../../api/api";
 
-function AdminGiveCreditByCash({refetch: cRefetch}) {
+function AdminGiveCreditByCash({ refetch: cRefetch }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [selectedCredit, setSelectedCredit] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [paymentStatus, setPaymentStatus] = useState("Paid");
 
   const { usersList, isLoading, refetch } = useUsersList({
     role: "User",
@@ -72,6 +74,7 @@ function AdminGiveCreditByCash({refetch: cRefetch}) {
     setIsModalOpen(false);
     setSelectedUser(null);
     setSelectedCredit(null);
+    setPaymentStatus("Paid");
   };
 
   const handleSubmit = async () => {
@@ -85,6 +88,7 @@ function AdminGiveCreditByCash({refetch: cRefetch}) {
       await API.put(`/credit/admin-give-credit`, {
         userId: selectedUser,
         creditId: selectedCredit,
+        paidStatus: paymentStatus,
       });
       message.success("Credit given successfully!");
       handleCancel();
@@ -146,6 +150,46 @@ function AdminGiveCreditByCash({refetch: cRefetch}) {
       >
         <Spin spinning={isLoading || creditIsLoading}>
           <div className="py-4 space-y-6">
+            {/* Payment Status Radio Group */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Payment Status
+              </label>
+              <Radio.Group
+                value={paymentStatus}
+                onChange={(e) => setPaymentStatus(e.target.value)}
+                className="w-full"
+              >
+                <Radio.Button
+                  value="Paid"
+                  className="w-1/2 text-center"
+                  style={{
+                    backgroundColor:
+                      paymentStatus === "Paid" ? "#10b981" : "white",
+                    color: paymentStatus === "Paid" ? "white" : "inherit",
+                    borderColor: paymentStatus === "Paid" ? "#10b981" : "#d9d9d9",
+                  }}
+                >
+                  <CheckCircleOutlined className="mr-2" />
+                  Paid
+                </Radio.Button>
+                <Radio.Button
+                  value="Unpaid"
+                  className="w-1/2 text-center"
+                  style={{
+                    backgroundColor:
+                      paymentStatus === "Unpaid" ? "#ef4444" : "white",
+                    color: paymentStatus === "Unpaid" ? "white" : "inherit",
+                    borderColor:
+                      paymentStatus === "Unpaid" ? "#ef4444" : "#d9d9d9",
+                  }}
+                >
+                  <DollarOutlined className="mr-2" />
+                  Unpaid
+                </Radio.Button>
+              </Radio.Group>
+            </div>
+
             {/* User Selection */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -276,20 +320,46 @@ function AdminGiveCreditByCash({refetch: cRefetch}) {
 
             {/* Summary */}
             {selectedUserData && selectedCreditData && (
-              <Card className="bg-green-50 border-green-200" size="small">
+              <Card
+                className={`${
+                  paymentStatus === "Paid"
+                    ? "bg-green-50 border-green-200"
+                    : "bg-red-50 border-red-200"
+                }`}
+                size="small"
+              >
                 <div className="flex items-center justify-between">
                   <div>
                     <div className="text-sm text-gray-600">After adding:</div>
-                    <div className="text-lg font-bold text-green-600">
+                    <div
+                      className={`text-lg font-bold ${
+                        paymentStatus === "Paid"
+                          ? "text-green-600"
+                          : "text-orange-600"
+                      }`}
+                    >
                       {selectedUserData.credit + selectedCreditData.credit}{" "}
                       credits
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="text-sm text-gray-600">Cash received:</div>
-                    <div className="text-lg font-bold text-green-600">
-                      ${selectedCreditData.price}
-                    </div>
+                    {paymentStatus === "Paid" ? (
+                      <>
+                        <div className="text-sm text-gray-600">
+                          Cash received:
+                        </div>
+                        <div className="text-lg font-bold text-green-600">
+                          ${selectedCreditData.price}
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="text-sm text-gray-600">Amount due:</div>
+                        <div className="text-lg font-bold text-red-600">
+                          ${selectedCreditData.price}
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
               </Card>
@@ -314,7 +384,7 @@ function AdminGiveCreditByCash({refetch: cRefetch}) {
                 className="flex-1 my-main-button"
                 icon={<GiftOutlined />}
               >
-                Give Credit
+                {paymentStatus === "Paid" ? "Give Credit (Paid)" : "Give Credit (Unpaid)"}
               </Button>
             </div>
           </div>

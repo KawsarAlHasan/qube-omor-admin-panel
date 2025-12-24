@@ -100,7 +100,7 @@ function AddDriver({ refetch }) {
   };
 
   return (
-    <div className="p-6">
+    <div className="">
       <Button
         type="primary"
         icon={<UserAddOutlined />}

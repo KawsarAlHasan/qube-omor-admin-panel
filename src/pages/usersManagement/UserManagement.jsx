@@ -9,6 +9,9 @@ import {
   message,
   Input,
   Form,
+  Radio,
+  Card,
+  Divider,
 } from "antd";
 import IsError from "../../components/IsError";
 import IsLoading from "../../components/IsLoading";
@@ -34,6 +37,7 @@ const { Search } = Input;
 function UserManagement() {
   const [searchText, setSearchText] = useState("");
   const [userDetailsData, setUserDetailsData] = useState(null);
+  const [paymentStatus, setPaymentStatus] = useState("Paid");
 
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
 
@@ -88,6 +92,8 @@ function UserManagement() {
   // Open Credit modal
   const openCreditModal = (user) => {
     setSelectedUser(user);
+    setPaymentStatus("Paid");
+    setSelectedCredit(null);
     setIsCreditModalOpen(true);
   };
 
@@ -125,12 +131,14 @@ function UserManagement() {
       await API.put(`/credit/admin-give-credit`, {
         userId: selectedUser._id,
         creditId: selectedCredit,
+        paidStatus: paymentStatus,
       });
 
       message.success("Credit added successfully!");
       setIsCreditModalOpen(false);
       setSelectedCredit(null);
       setSelectedUser(null);
+      setPaymentStatus("Paid");
       refetch();
       creditRefetch();
     } catch (err) {
@@ -157,6 +165,11 @@ function UserManagement() {
       limit: pagination.pageSize,
     }));
   };
+
+  // Get selected credit data
+  const selectedCreditData = credits?.data?.find(
+    (c) => c._id === selectedCredit
+  );
 
   const columns = [
     {
@@ -287,7 +300,7 @@ function UserManagement() {
         userData={selectedUser}
         isOpen={isCreditViewModalOpen}
         onClose={handleCreditsModalClose}
-        refetch={refetch}
+        mainRefetch={refetch}
       />
 
       {/* Status Modal */}
@@ -332,55 +345,206 @@ function UserManagement() {
         onCancel={() => {
           setIsCreditModalOpen(false);
           setSelectedCredit(null);
+          setPaymentStatus("Paid");
         }}
-        onOk={handleGiveCredit}
-        okText="Give Credit by Cash"
-        confirmLoading={isCreditLoading}
-        width={500}
+        footer={null}
+        width={600}
       >
-        {/* Credit Package Selection */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-3">
-            <CreditCardOutlined className="mr-2" />
-            Select Credit Package
-          </label>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            {credits?.data?.map((credit) => (
-              <div
-                key={credit._id}
-                onClick={() => setSelectedCredit(credit._id)}
-                className={`
-            relative cursor-pointer p-4 rounded-xl border-2 transition-all duration-200
-            ${
-              selectedCredit === credit._id
-                ? "border-indigo-500 bg-indigo-50 shadow-md scale-105"
-                : "border-gray-200 bg-white hover:border-indigo-300 hover:shadow-sm"
-            }
-          `}
+        <div className="py-4 space-y-6">
+          {/* Payment Status Radio Group */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Payment Status
+            </label>
+            <Radio.Group
+              value={paymentStatus}
+              onChange={(e) => setPaymentStatus(e.target.value)}
+              className="w-full"
+            >
+              <Radio.Button
+                value="Paid"
+                className="w-1/2 text-center"
+                style={{
+                  backgroundColor: paymentStatus === "Paid" ? "#10b981" : "white",
+                  color: paymentStatus === "Paid" ? "white" : "inherit",
+                  borderColor: paymentStatus === "Paid" ? "#10b981" : "#d9d9d9",
+                }}
               >
-                {selectedCredit === credit._id && (
-                  <CheckCircleOutlined className="absolute top-2 right-2 text-indigo-500 text-lg" />
-                )}
+                <CheckCircleOutlined className="mr-2" />
+                Paid
+              </Radio.Button>
+              <Radio.Button
+                value="Unpaid"
+                className="w-1/2 text-center"
+                style={{
+                  backgroundColor:
+                    paymentStatus === "Unpaid" ? "#ef4444" : "white",
+                  color: paymentStatus === "Unpaid" ? "white" : "inherit",
+                  borderColor:
+                    paymentStatus === "Unpaid" ? "#ef4444" : "#d9d9d9",
+                }}
+              >
+                <DollarOutlined className="mr-2" />
+                Unpaid
+              </Radio.Button>
+            </Radio.Group>
+          </div>
 
-                <div className="text-center">
-                  <div
-                    className={`text-2xl font-bold ${
-                      selectedCredit === credit._id
-                        ? "text-indigo-600"
-                        : "text-gray-800"
-                    }`}
-                  >
-                    {credit.credit}
-                  </div>
-                  <div className="text-xs text-gray-500 mb-2">credits</div>
-                  <div className="flex items-center justify-center gap-1 text-green-600 font-semibold">
-                    <DollarOutlined />
-                    {credit.price}
+          {/* User Info Card */}
+          {selectedUser && (
+            <Card
+              className="bg-gradient-to-r from-indigo-50 to-purple-50 border-indigo-200"
+              size="small"
+            >
+              <div className="flex items-center gap-4">
+                <img
+                  className="w-14 h-14 rounded-full"
+                  src={selectedUser?.profile_image || userIcon}
+                  alt={selectedUser?.name}
+                />
+                <div className="flex-1">
+                  <h4 className="font-semibold text-gray-800 m-0">
+                    {selectedUser?.name}
+                  </h4>
+                  <p className="text-sm text-gray-500 m-0">
+                    {selectedUser?.email}
+                  </p>
+                  <p className="text-xs text-gray-400 m-0">
+                    {selectedUser?.phone}
+                  </p>
+                </div>
+                <div className="text-right">
+                  <div className="text-xs text-gray-500">Current Balance</div>
+                  <div className="text-xl font-bold text-indigo-600">
+                    {selectedUser?.credit}
+                    <span className="text-sm font-normal ml-1">credits</span>
                   </div>
                 </div>
               </div>
-            ))}
+            </Card>
+          )}
+
+          <Divider className="my-4" />
+
+          {/* Credit Package Selection */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-3">
+              <CreditCardOutlined className="mr-2" />
+              Select Credit Package
+            </label>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {credits?.data?.map((credit) => (
+                <div
+                  key={credit._id}
+                  onClick={() => setSelectedCredit(credit._id)}
+                  className={`
+                    relative cursor-pointer p-4 rounded-xl border-2 transition-all duration-200
+                    ${
+                      selectedCredit === credit._id
+                        ? "border-indigo-500 bg-indigo-50 shadow-md scale-105"
+                        : "border-gray-200 bg-white hover:border-indigo-300 hover:shadow-sm"
+                    }
+                  `}
+                >
+                  {selectedCredit === credit._id && (
+                    <CheckCircleOutlined className="absolute top-2 right-2 text-indigo-500 text-lg" />
+                  )}
+
+                  <div className="text-center">
+                    <div
+                      className={`text-2xl font-bold ${
+                        selectedCredit === credit._id
+                          ? "text-indigo-600"
+                          : "text-gray-800"
+                      }`}
+                    >
+                      {credit.credit}
+                    </div>
+                    <div className="text-xs text-gray-500 mb-2">credits</div>
+                    <div className="flex items-center justify-center gap-1 text-green-600 font-semibold">
+                      <DollarOutlined />
+                      {credit.price}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Summary */}
+          {selectedUser && selectedCreditData && (
+            <Card
+              className={`${
+                paymentStatus === "Paid"
+                  ? "bg-green-50 border-green-200"
+                  : "bg-red-50 border-red-200"
+              }`}
+              size="small"
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-sm text-gray-600">After adding:</div>
+                  <div
+                    className={`text-lg font-bold ${
+                      paymentStatus === "Paid"
+                        ? "text-green-600"
+                        : "text-orange-600"
+                    }`}
+                  >
+                    {selectedUser.credit + selectedCreditData.credit} credits
+                  </div>
+                </div>
+                <div className="text-right">
+                  {paymentStatus === "Paid" ? (
+                    <>
+                      <div className="text-sm text-gray-600">
+                        Cash received:
+                      </div>
+                      <div className="text-lg font-bold text-green-600">
+                        ${selectedCreditData.price}
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="text-sm text-gray-600">Amount due:</div>
+                      <div className="text-lg font-bold text-red-600">
+                        ${selectedCreditData.price}
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+            </Card>
+          )}
+
+          {/* Action Buttons */}
+          <div className="flex gap-3 pt-2">
+            <Button
+              size="large"
+              onClick={() => {
+                setIsCreditModalOpen(false);
+                setSelectedCredit(null);
+                setPaymentStatus("Paid");
+              }}
+              className="flex-1"
+              disabled={isCreditLoading}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="primary"
+              size="large"
+              onClick={handleGiveCredit}
+              loading={isCreditLoading}
+              disabled={!selectedCredit}
+              className="flex-1 my-main-button"
+              icon={<GiftOutlined />}
+            >
+              {paymentStatus === "Paid"
+                ? "Give Credit (Paid)"
+                : "Give Credit (Unpaid)"}
+            </Button>
           </div>
         </div>
       </Modal>
