@@ -7,8 +7,10 @@ import { useIngredients } from "../../api/foodApi";
 import AddNewIngredient from "./AddNewIngredient";
 import EditIngredient from "./EditIngredient";
 import { API } from "../../api/api";
+import { usePermission } from "../../hooks/usePermission";
 
 function Ingredients() {
+  const { canCreate, canEdit, canDelete, canChangeStatus } = usePermission();
   const [selectedIngredient, setSelectedIngredient] = useState(null);
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -160,57 +162,67 @@ function Ingredients() {
             {ingredient_status}
           </Tag>
 
-          <Button
-            className="-ml-2"
-            size="small"
-            icon={<EditOutlined />}
-            onClick={() => openStatusModal(record)}
-          />
+          {canChangeStatus("ingredients") && (
+            <Button
+              className="-ml-2"
+              size="small"
+              icon={<EditOutlined />}
+              onClick={() => openStatusModal(record)}
+            />
+          )}
         </div>
       ),
     },
-    {
-      title: "Edit",
-      key: "edit",
-      render: (_, record) => (
-        <Button
-          type="primary"
-          size="small"
-          icon={<EditOutlined />}
-          onClick={() => handleEdit(record)}
-        >
-          Edit
-        </Button>
-      ),
-    },
-    {
-      title: "Delete",
-      key: "Delete",
-      render: (_, record) => (
-        <Space size="middle">
-          <Button
-            type="primary"
-            danger
-            size="small"
-            icon={<DeleteOutlined />}
-            onClick={() => openDeleteModal(record)}
-          >
-            Delete
-          </Button>
-        </Space>
-      ),
-    },
+
+    ...(canEdit("ingredients")
+      ? [
+          {
+            title: "Edit",
+            key: "edit",
+            render: (_, record) => (
+              <Button
+                type="primary"
+                size="small"
+                icon={<EditOutlined />}
+                onClick={() => handleEdit(record)}
+              >
+                Edit
+              </Button>
+            ),
+          },
+        ]
+      : []),
+
+    ...(canDelete("ingredients")
+      ? [
+          {
+            title: "Delete",
+            key: "Delete",
+            render: (_, record) => (
+              <Space size="middle">
+                <Button
+                  type="primary"
+                  danger
+                  size="small"
+                  icon={<DeleteOutlined />}
+                  onClick={() => openDeleteModal(record)}
+                >
+                  Delete
+                </Button>
+              </Space>
+            ),
+          },
+        ]
+      : []),
   ];
 
   if (isLoading) return <IsLoading />;
   if (isError) return <IsError error={error} refetch={refetch} />;
 
-  console.log("ingredients", ingredients);
-
   return (
-    <div className="p-4">
+    <div>
       <div className="mb-4">
-        <AddNewIngredient refetch={refetch} />
+        {canCreate("ingredients") && <AddNewIngredient refetch={refetch} />}
       </div>
 
       <Table

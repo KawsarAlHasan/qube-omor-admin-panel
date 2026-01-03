@@ -16,10 +16,12 @@ import { useBannerData } from "../../../api/settingsApi";
 import IsLoading from "../../../components/IsLoading";
 import IsError from "../../../components/IsError";
 import { API } from "../../../api/api";
+import { usePermission } from "../../../hooks/usePermission";
 
 const { Title } = Typography;
 
 function Banner() {
+  const { canEdit } = usePermission();
   const { control, handleSubmit, reset, setValue, watch } = useForm();
   const { bannerData, isLoading, isError, error, refetch } = useBannerData();
 
@@ -154,14 +156,17 @@ function Banner() {
 
                 {/* Action Buttons */}
                 <div className="flex flex-wrap gap-3">
-                  <Button
-                    type="primary"
-                    icon={<EditOutlined />}
-                    onClick={() => handleEdit(banner)}
-                    className="flex-1 my-main-button"
-                  >
-                    Update
-                  </Button>
+                  {canEdit("legal-and-banner") && (
+                    <Button
+                      type="primary"
+                      icon={<EditOutlined />}
+                      onClick={() => handleEdit(banner)}
+                      className="flex-1 my-main-button"
+                    >
+                      Update
+                    </Button>
+                  )}
+
                   <Button
                     icon={<EyeOutlined />}
                     onClick={() => handlePreview(banner)}

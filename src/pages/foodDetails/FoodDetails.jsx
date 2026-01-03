@@ -8,14 +8,9 @@ import {
   Image,
   message,
   Input,
-  Spin,
-  List,
-  Row,
-  Col,
-  Card,
   Select,
 } from "antd";
-import { EditOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useFoods } from "../../api/foodApi";
 import IsLoading from "../../components/IsLoading";
 import IsError from "../../components/IsError";
@@ -23,10 +18,12 @@ import AddFoodDetail from "./AddFoodDetail";
 import ViewFoodDetail from "./ViewFoodDetail";
 import EditFoodDetail from "./EditFoodDetail";
 import { API } from "../../api/api";
+import { usePermission } from "../../hooks/usePermission";
 
 const { Search } = Input;
 
 function FoodDetails() {
+  const { canCreate, canEdit, canDelete, canChangeStatus } = usePermission();
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
   const [newStatus, setNewStatus] = useState("");
@@ -191,12 +188,14 @@ function FoodDetails() {
             {food_status}
           </Tag>
 
-          <Button
-            className="-ml-2"
-            size="small"
-            icon={<EditOutlined />}
-            onClick={() => openStatusModal(record)}
-          />
+          {canChangeStatus("food-details") && (
+            <Button
+              className="-ml-2"
+              size="small"
+              icon={<EditOutlined />}
+              onClick={() => openStatusModal(record)}
+            />
+          )}
         </div>
       ),
     },
@@ -209,12 +208,16 @@ function FoodDetails() {
         <Space size="middle">
           <ViewFoodDetail record={record} />
 
-          <EditFoodDetail record={record} refetch={refetch} />
+          {canEdit("food-details") && (
+            <EditFoodDetail record={record} refetch={refetch} />
+          )}
 
-          <DeleteOutlined
-            className="text-xl text-red-500 hover:text-red-700 cursor-pointer transition-colors"
-            onClick={() => openDeleteModal(record)}
-          />
+          {canDelete("food-details") && (
+            <DeleteOutlined
+              className="text-xl text-red-500 hover:text-red-700 cursor-pointer transition-colors"
+              onClick={() => openDeleteModal(record)}
+            />
+          )}
         </Space>
       ),
     },
@@ -244,7 +247,7 @@ function FoodDetails() {
           style={{ width: 300 }}
         />
 
-        <AddFoodDetail refetch={refetch} />
+        {canCreate("food-details") && <AddFoodDetail refetch={refetch} />}
       </div>
 
       <Table

@@ -8,8 +8,10 @@ import { API } from "../../../api/api";
 import EditCoupon from "./EditCoupon";
 import dayjs from "dayjs";
 import AddCoupon from "./AddCoupon";
+import { usePermission } from "../../../hooks/usePermission";
 
 function CouponCode() {
+  const { canCreate, canEdit, canDelete, canChangeStatus } = usePermission();
   const [selectedCoupon, setSelectedCoupon] = useState(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
@@ -163,40 +165,52 @@ function CouponCode() {
           ) : (
             <Tag color="red">Deactive</Tag>
           )}
-          <Button
-            size="small"
-            title="Change Status"
-            icon={<EditOutlined />}
-            onClick={() => openStatusModal(record)}
-          />
+
+          {canChangeStatus("coupon-code") && (
+            <Button
+              size="small"
+              title="Change Status"
+              icon={<EditOutlined />}
+              onClick={() => openStatusModal(record)}
+            />
+          )}
         </Space>
       ),
     },
 
-    {
-      title: "Action",
-      key: "action",
-      render: (_, record) => (
-        <Space>
-          <EditCoupon record={record} refetch={refetch} />
-          <Button
-            type="primary"
-            danger
-            size="small"
-            icon={<DeleteOutlined />}
-            onClick={() => openDeleteModal(record)}
-          >
-            Delete
-          </Button>
-        </Space>
-      ),
-    },
+    ...(canEdit("coupon-code") || canDelete("coupon-code")
+      ? [
+          {
+            title: <span>Actions</span>,
+            key: "actions",
+            render: (_, record) => (
+              <Space>
+                {canEdit("coupon-code") && (
+                  <EditCoupon record={record} refetch={refetch} />
+                )}
+
+                {canDelete("coupon-code") && (
+                  <Button
+                    type="primary"
+                    danger
+                    size="small"
+                    icon={<DeleteOutlined />}
+                    onClick={() => openDeleteModal(record)}
+                  >
+                    Delete
+                  </Button>
+                )}
+              </Space>
+            ),
+          },
+        ]
+      : []),
   ];
 
   return (
     <div>
       <div className="mb-4">
-        <AddCoupon refetch={refetch} />
+        {canCreate("coupon-code") && <AddCoupon refetch={refetch} />}
       </div>
 
       <Table

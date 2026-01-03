@@ -18,6 +18,8 @@ API.interceptors.request.use((config) => {
 // sign out
 export const signOutAdmin = () => {
   localStorage.removeItem("token");
+  localStorage.removeItem("adminProfile");
+  localStorage.removeItem("profileTimestamp");
   window.location.href = "/login";
 };
 

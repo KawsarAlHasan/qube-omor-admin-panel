@@ -7,8 +7,10 @@ import IsError from "../../components/IsError";
 import AddNewCategory from "./AddNewCategory";
 import EditCategory from "./EditCategory";
 import { API } from "../../api/api";
+import { usePermission } from "../../hooks/usePermission";
 
 function FoodCategory() {
+  const { canCreate, canEdit, canDelete, canChangeStatus } = usePermission();
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -124,55 +126,65 @@ function FoodCategory() {
             {category_status}
           </Tag>
 
-          <Button
-            className="-ml-2"
-            size="small"
-            icon={<EditOutlined />}
-            onClick={() => openStatusModal(record)}
-          />
+          {canChangeStatus("food-category") && (
+            <Button
+              className="-ml-2"
+              size="small"
+              icon={<EditOutlined />}
+              onClick={() => openStatusModal(record)}
+            />
+          )}
         </div>
       ),
     },
-    {
-      title: "Edit",
-      key: "edit",
-      render: (_, record) => (
-        <Button
-          type="primary"
-          size="small"
-          icon={<EditOutlined />}
-          onClick={() => handleEdit(record)}
-        >
-          Edit
-        </Button>
-      ),
-    },
-    {
-      title: "Delete",
-      key: "Delete",
-      render: (_, record) => (
-        <Space size="middle">
-          <Button
-            type="primary"
-            danger
-            size="small"
-            icon={<DeleteOutlined />}
-            onClick={() => openDeleteModal(record)}
-          >
-            Delete
-          </Button>
-        </Space>
-      ),
-    },
+
+    ...(canEdit("food-category")
+      ? [
+          {
+            title: "Edit",
+            key: "edit",
+            render: (_, record) => (
+              <Button
+                type="primary"
+                size="small"
+                icon={<EditOutlined />}
+                onClick={() => handleEdit(record)}
+              >
+                Edit
+              </Button>
+            ),
+          },
+        ]
+      : []),
+
+    ...(canDelete("food-category")
+      ? [
+          {
+            title: "Delete",
+            key: "Delete",
+            render: (_, record) => (
+              <Button
+                type="primary"
+                danger
+                size="small"
+                icon={<DeleteOutlined />}
+                onClick={() => openDeleteModal(record)}
+              >
+                Delete
+              </Button>
+            ),
+          },
+        ]
+      : []),
   ];
 
   if (isLoading) return <IsLoading />;
   if (isError) return <IsError error={error} refetch={refetch} />;
 
   return (
-    <div className="p-4">
+    <div className="">
       <div className="mb-4">
-        <AddNewCategory refetch={refetch} />
+        {canCreate("food-category") && <AddNewCategory refetch={refetch} />}
       </div>
 
       <Table

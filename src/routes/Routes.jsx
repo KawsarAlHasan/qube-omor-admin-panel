@@ -6,6 +6,7 @@ import PasswordUpdateLogin from "../pages/login/PasswordUpdateLogin";
 import MainLayout from "../layout/MainLayout";
 import Dashboard from "../pages/dashboard/Dashboard";
 import NotFound from "../components/NotFound";
+import Unauthorized from "../components/Unauthorized";
 import UserManagement from "../pages/usersManagement/UserManagement";
 import CheckCode from "../pages/login/CheckCode";
 import Administrators from "../pages/administrators/Administrators";
@@ -27,6 +28,8 @@ import CreditsBuyers from "../pages/credits-buyers/CreditsBuyers";
 import DriversDetails from "../pages/settings/drivers/driversDetails/DriversDetails";
 import CouponCode from "../pages/settings/coupon-code/CouponCode";
 import Roles from "../pages/administrators/roles/Roles";
+import PermissionProtectedRoute from "./PermissionProtectedRoute";
+import DashboardOrRedirect from "./DashboardOrRedirect";
 
 export const router = createBrowserRouter([
   {
@@ -50,6 +53,10 @@ export const router = createBrowserRouter([
     element: <PasswordUpdateLogin />,
   },
   {
+    path: "/unauthorized",
+    element: <Unauthorized />,
+  },
+  {
     path: "/",
     element: (
       <PrivateRoute>
@@ -59,104 +66,194 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Dashboard />,
+        element: <DashboardOrRedirect />,
       },
-
       {
         path: "/user-management",
-        element: <UserManagement />,
+        element: (
+          <PermissionProtectedRoute requiredModule="user-management" requiredAction="view">
+            <UserManagement />
+          </PermissionProtectedRoute>
+        ),
       },
       {
         path: "/food-details",
-        element: <FoodDetails />,
+        element: (
+          <PermissionProtectedRoute requiredModule="food-details" requiredAction="view">
+            <FoodDetails />
+          </PermissionProtectedRoute>
+        ),
       },
       {
         path: "/food-orders",
-        element: <FoodOrders />,
+        element: (
+          <PermissionProtectedRoute requiredModule="food-orders" requiredAction="view">
+            <FoodOrders />
+          </PermissionProtectedRoute>
+        ),
       },
       {
         path: "/food-category",
-        element: <FoodCategory />,
+        element: (
+          <PermissionProtectedRoute requiredModule="food-category" requiredAction="view">
+            <FoodCategory />
+          </PermissionProtectedRoute>
+        ),
       },
       {
         path: "/ingredients",
-        element: <Ingredients />,
+        element: (
+          <PermissionProtectedRoute requiredModule="ingredients" requiredAction="view">
+            <Ingredients />
+          </PermissionProtectedRoute>
+        ),
       },
       {
         path: "/administrators",
-        element: <Administrators />,
+        element: (
+          <PermissionProtectedRoute requiredModule="administrators" requiredAction="view">
+            <Administrators />
+          </PermissionProtectedRoute>
+        ),
       },
       {
         path: "/administrators/roles",
-        element: <Roles />,
+        element: (
+          <PermissionProtectedRoute requiredModule="administrators" requiredAction="view">
+            <Roles />
+          </PermissionProtectedRoute>
+        ),
       },
       {
         path: "/user-massages",
-        element: <UserMassages />,
+        element: (
+          <PermissionProtectedRoute requiredModule="user-massages" requiredAction="view">
+            <UserMassages />
+          </PermissionProtectedRoute>
+        ),
       },
       {
         path: "/spa-classes",
-        element: <SpaPackages />,
+        element: (
+          <PermissionProtectedRoute requiredModule="spa-classes" requiredAction="view">
+            <SpaPackages />
+          </PermissionProtectedRoute>
+        ),
       },
       {
         path: "/spa-booking",
-        element: <SpaBooking />,
+        element: (
+          <PermissionProtectedRoute requiredModule="spa-booking" requiredAction="view">
+            <SpaBooking />
+          </PermissionProtectedRoute>
+        ),
       },
       {
         path: "/physio-classes",
-        element: <SpaPackages />,
+        element: (
+          <PermissionProtectedRoute requiredModule="physio-classes" requiredAction="view">
+            <SpaPackages />
+          </PermissionProtectedRoute>
+        ),
       },
       {
         path: "/physio-booking",
-        element: <SpaBooking />,
+        element: (
+          <PermissionProtectedRoute requiredModule="physio-booking" requiredAction="view">
+            <SpaBooking />
+          </PermissionProtectedRoute>
+        ),
       },
       {
         path: "/classes",
-        element: <SpaPackages />,
+        element: (
+          <PermissionProtectedRoute requiredModule="classes" requiredAction="view">
+            <SpaPackages />
+          </PermissionProtectedRoute>
+        ),
       },
       {
         path: "/classes-booking",
-        element: <SpaBooking />,
+        element: (
+          <PermissionProtectedRoute requiredModule="classes-booking" requiredAction="view">
+            <SpaBooking />
+          </PermissionProtectedRoute>
+        ),
       },
       {
         path: "/credits",
-        element: <Credits />,
+        element: (
+          <PermissionProtectedRoute requiredModule="credits" requiredAction="view">
+            <Credits />
+          </PermissionProtectedRoute>
+        ),
       },
       {
         path: "/credits-buyers",
-        element: <CreditsBuyers />,
+        element: (
+          <PermissionProtectedRoute requiredModule="credits-buyers" requiredAction="view">
+            <CreditsBuyers />
+          </PermissionProtectedRoute>
+        ),
       },
       {
         path: "/drivers",
-        element: <Drivers />,
+        element: (
+          <PermissionProtectedRoute requiredModule="drivers" requiredAction="view">
+            <Drivers />
+          </PermissionProtectedRoute>
+        ),
       },
       {
         path: "/drivers/:driverId",
-        element: <DriversDetails />,
+        element: (
+          <PermissionProtectedRoute requiredModule="drivers" requiredAction="veiwDetails">
+            <DriversDetails />
+          </PermissionProtectedRoute>
+        ),
       },
       {
         path: "/instructors",
-        element: <Instructors />,
+        element: (
+          <PermissionProtectedRoute requiredModule="instructors" requiredAction="view">
+            <Instructors />
+          </PermissionProtectedRoute>
+        ),
       },
       {
         path: "/coupon-code",
-        element: <CouponCode />,
+        element: (
+          <PermissionProtectedRoute requiredModule="coupon-code" requiredAction="view">
+            <CouponCode />
+          </PermissionProtectedRoute>
+        ),
       },
       {
         path: "/banner",
-        element: <Banner />,
+        element: (
+          <PermissionProtectedRoute requiredModule="legal-and-banner" requiredAction="view">
+            <Banner />
+          </PermissionProtectedRoute>
+        ),
       },
       {
         path: "/terms-and-conditions",
-        element: <TermsAndConditions />,
+        element: (
+          <PermissionProtectedRoute requiredModule="legal-and-banner" requiredAction="view">
+            <TermsAndConditions />
+          </PermissionProtectedRoute>
+        ),
       },
       {
         path: "/privacy-policy",
-        element: <PrivacyPolicy />,
+        element: (
+          <PermissionProtectedRoute requiredModule="legal-and-banner" requiredAction="view">
+            <PrivacyPolicy />
+          </PermissionProtectedRoute>
+        ),
       },
     ],
   },
-
   {
     path: "*",
     element: <NotFound />,

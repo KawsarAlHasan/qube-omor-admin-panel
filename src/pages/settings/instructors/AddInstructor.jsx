@@ -102,7 +102,7 @@ function AddInstructor({ refetch }) {
   };
 
   return (
-    <div className="p-6">
+    <div>
       <Button
         type="primary"
         icon={<UserAddOutlined />}

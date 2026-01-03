@@ -20,10 +20,12 @@ import { useCredits } from "../../api/spaApi";
 import IsLoading from "../../components/IsLoading";
 import IsError from "../../components/IsError";
 import { API } from "../../api/api";
+import { usePermission } from "../../hooks/usePermission";
 
 const { TextArea } = Input;
 
 function Credits() {
+  const { canCreate, canEdit, canDelete, canChangeStatus } = usePermission();
   const { credits, isLoading, isError, error, refetch } = useCredits();
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -148,38 +150,50 @@ function Credits() {
           ) : (
             <Tag color="red">{status}</Tag>
           )}
-          <Button
-            className="-ml-1"
-            title="Status Change"
-            size="small"
-            icon={<EditOutlined />}
-            onClick={() => openStatusModal(record)}
-          />
+
+          {canChangeStatus("credits") && (
+            <Button
+              className="-ml-1"
+              title="Status Change"
+              size="small"
+              icon={<EditOutlined />}
+              onClick={() => openStatusModal(record)}
+            />
+          )}
         </div>
       ),
     },
-    {
-      title: <span>Actions</span>,
-      key: "actions",
-      render: (_, record) => (
-        <Space size="middle">
-          <EditOutlined
-            className="text-[20px] text-blue-500 hover:text-blue-400 cursor-pointer"
-            onClick={() => openEditModal(record)}
-          />
-          <DeleteFilled
-            className="text-[23px] text-red-400 hover:text-red-300 cursor-pointer"
-            onClick={() => handleDelete(record)}
-          />
-        </Space>
-      ),
-    },
+    ...(canEdit("credits") || canDelete("credits")
+      ? [
+          {
+            title: <span>Actions</span>,
+            key: "actions",
+            render: (_, record) => (
+              <Space size="middle">
+                {canEdit("credits") && (
+                  <EditOutlined
+                    className="text-[20px] text-blue-500 hover:text-blue-400 cursor-pointer"
+                    onClick={() => openEditModal(record)}
+                  />
+                )}
+
+                {canDelete("credits") && (
+                  <DeleteFilled
+                    className="text-[23px] text-red-400 hover:text-red-300 cursor-pointer"
+                    onClick={() => handleDelete(record)}
+                  />
+                )}
+              </Space>
+            ),
+          },
+        ]
+      : []),
   ];
 
   return (
-    <div className="p-6 bg-gray-50">
+    <div>
       <div className="flex justify-between items-center mb-2">
-        <AddCredit refetch={refetch} />
+        {canCreate("credits") && <AddCredit refetch={refetch} />}
       </div>
 
       <Table

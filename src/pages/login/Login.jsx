@@ -8,7 +8,6 @@ const Login = () => {
   const [loading, setLoading] = useState(false); // Loading state for login button
   const navigate = useNavigate();
 
-
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -27,7 +26,6 @@ const Login = () => {
       // Show success message
       message.success("Admin Login successful!");
 
-      // Redirect to the admin dashboard (replace with your route)
       window.location.href = "/";
     } catch (error) {
       message.error(

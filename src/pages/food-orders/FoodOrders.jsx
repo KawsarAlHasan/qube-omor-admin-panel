@@ -11,12 +11,13 @@ import { useUsersList } from "../../api/userApi";
 import driverIcon from "../../assets/icons/driverIcon.png";
 import userIcon from "../../assets/icons/userIcon.png";
 import EditFoodOrder from "./EditFoodOrder";
-import { useAdmin } from "../../context/AdminContext";
+import { usePermission } from "../../hooks/usePermission";
 
 const { Search } = Input;
 
 function FoodOrders() {
-  const { adminProfile } = useAdmin();
+  const { canAssignDriver, canChangePaidStatus, canEdit, canChangeStatus } =
+    usePermission();
 
   const [searchText, setSearchText] = useState("");
 
@@ -187,8 +188,6 @@ function FoodOrders() {
     }
   };
 
-  const isSuperAdmin = adminProfile?.role?.name === "Super Admin";
-
   const columns = [
     {
       title: <span>User</span>,
@@ -272,15 +271,18 @@ function FoodOrders() {
             </div>
           )}
 
-          {record?.order_type === "Delivery" && (
-            <Button
-              className={`-ml-0.5 ${record.driver == null ? "" : "mt-2.5"}`}
-              title={record.driver == null ? "Assign Driver" : "Change Driver"}
-              size="small"
-              icon={<EditOutlined />}
-              onClick={() => openDriverAssignModal(record)}
-            />
-          )}
+          {canAssignDriver("food-orders") &&
+            record?.order_type === "Delivery" && (
+              <Button
+                className={`-ml-0.5 ${record.driver == null ? "" : "mt-2.5"}`}
+                title={
+                  record.driver == null ? "Assign Driver" : "Change Driver"
+                }
+                size="small"
+                icon={<EditOutlined />}
+                onClick={() => openDriverAssignModal(record)}
+              />
+            )}
         </div>
       ),
     },
@@ -316,13 +318,15 @@ function FoodOrders() {
               <Tag className="p-0.5 px-3" color="blue">
                 {paid_status}
               </Tag>
-              <Button
-                className="-ml-3"
-                title="Change Paid Status"
-                size="small"
-                icon={<EditOutlined />}
-                onClick={() => openPaidStatusModal(record)}
-              />
+              {canChangePaidStatus("food-orders") && (
+                <Button
+                  className="-ml-3"
+                  title="Change Paid Status"
+                  size="small"
+                  icon={<EditOutlined />}
+                  onClick={() => openPaidStatusModal(record)}
+                />
+              )}
             </div>
           ) : (
             <Tag
@@ -358,7 +362,7 @@ function FoodOrders() {
             ""
           ) : (
             <>
-              {isSuperAdmin && (
+              {canChangeStatus("food-orders") && (
                 <Button
                   className="-ml-1"
                   title="Status Change"
@@ -378,7 +382,9 @@ function FoodOrders() {
       render: (_, record) => (
         <div className="flex gap-2">
           <FoodOrderDetails record={record} refetch={refetch} />
-          <EditFoodOrder record={record} refetch={refetch} />
+          {canEdit("food-orders") && (
+            <EditFoodOrder record={record} refetch={refetch} />
+          )}
         </div>
       ),
     },

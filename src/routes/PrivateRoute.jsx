@@ -16,11 +16,10 @@ const PrivateRoute = ({ children }) => {
 
   // If there's an error, no profile, or no token, redirect to login
   if (isError || error || !adminProfile || !token) {
-    // console.log("Redirecting to login due to authentication failure.", adminProfile, token);
-    // localStorage.removeItem("token");
-    // localStorage.removeItem("adminProfile");
-    // localStorage.removeItem("profileTimestamp");
-    // return <Navigate to="/login" state={{ from: location }} replace />;
+    localStorage.removeItem("token");
+    localStorage.removeItem("adminProfile");
+    localStorage.removeItem("profileTimestamp");
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
   // User is authenticated, render the protected route

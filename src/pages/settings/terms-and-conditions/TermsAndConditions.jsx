@@ -7,8 +7,10 @@ import IsLoading from "../../../components/IsLoading";
 import IsError from "../../../components/IsError";
 import { API } from "../../../api/api";
 import { MdModeEditOutline } from "react-icons/md";
+import { usePermission } from "../../../hooks/usePermission";
 
 function TermsAndConditions() {
+  const { canEdit } = usePermission();
   const filter = "terms";
   const { termsPrivacy, isLoading, isError, error, refetch } =
     useTermsPrivacy(filter);
@@ -47,13 +49,15 @@ function TermsAndConditions() {
         <h2 className="text-2xl font-semibold text-gray-800">
           {termsPrivacy?.data?.name || "Terms & Conditions"}
         </h2>
-        <Button
-          icon={<MdModeEditOutline />}
-          type="primary"
-          onClick={handleEdit}
-        >
-          Edit
-        </Button>
+        {canEdit("legal-and-banner") && (
+          <Button
+            icon={<MdModeEditOutline />}
+            type="primary"
+            onClick={handleEdit}
+          >
+            Edit
+          </Button>
+        )}
       </div>
 
       <div
