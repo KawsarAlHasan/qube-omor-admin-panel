@@ -4,12 +4,9 @@ import logoImage from "../assets/logo.png";
 import { MenuOutlined, UserOutlined, LogoutOutlined } from "@ant-design/icons";
 import ChangePassword from "./ChangePassword";
 import AccountSetting from "./AccountSetting";
-import { signOutAdmin, useAdminProfile } from "../api/api";
+import { signOutAdmin } from "../api/api";
 
-const Navbar = ({ showDrawer }) => {
-  const { adminProfile, isLoading, isError, error, refetch } =
-    useAdminProfile();
-
+const Navbar = ({ adminProfile, refetch, showDrawer }) => {
   const navigate = useNavigate();
 
   const handleSignOut = () => {
@@ -33,7 +30,7 @@ const Navbar = ({ showDrawer }) => {
                 {adminProfile?.name}
               </h1>
               <Tag color="blue" className="m-0">
-                {adminProfile?.role}
+                {adminProfile?.role?.name}
               </Tag>
             </div>
           </div>
@@ -105,7 +102,7 @@ const Navbar = ({ showDrawer }) => {
                     {adminProfile?.name}
                   </div>
                   <div className="text-[12px] text-gray-500 leading-tight">
-                    {adminProfile?.role}
+                    {adminProfile?.role?.name}
                   </div>
                 </div>
                 <div className="hidden md:block">

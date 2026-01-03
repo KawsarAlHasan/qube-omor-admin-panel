@@ -28,7 +28,9 @@ const CheckCode = () => {
 
       message.success("OTP verified successfully!");
 
-      navigate("/set-new-password");
+      setTimeout(() => {
+        navigate("/set-new-password");
+      }, 500);
 
       // console.log("response", response);
     } catch (error) {

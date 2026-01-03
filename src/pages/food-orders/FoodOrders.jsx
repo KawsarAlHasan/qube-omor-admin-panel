@@ -3,7 +3,7 @@ import { Table, Tag, Button, Modal, Select, message, Input } from "antd";
 import IsError from "../../components/IsError";
 import IsLoading from "../../components/IsLoading";
 import { EditOutlined } from "@ant-design/icons";
-import { API, useAdminProfile } from "../../api/api";
+import { API } from "../../api/api";
 import FoodOrderDetails from "./FoodOrderDetails";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAllFoodOrders } from "../../api/foodApi";
@@ -11,11 +11,12 @@ import { useUsersList } from "../../api/userApi";
 import driverIcon from "../../assets/icons/driverIcon.png";
 import userIcon from "../../assets/icons/userIcon.png";
 import EditFoodOrder from "./EditFoodOrder";
+import { useAdmin } from "../../context/AdminContext";
 
 const { Search } = Input;
 
 function FoodOrders() {
-  const { adminProfile } = useAdminProfile();
+  const { adminProfile } = useAdmin();
 
   const [searchText, setSearchText] = useState("");
 
@@ -186,7 +187,7 @@ function FoodOrders() {
     }
   };
 
-  const isSuperAdmin = adminProfile?.role === "Super Admin";
+  const isSuperAdmin = adminProfile?.role?.name === "Super Admin";
 
   const columns = [
     {

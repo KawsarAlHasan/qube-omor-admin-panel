@@ -41,7 +41,6 @@ function CreditsDetails({ userData, isOpen, onClose, mainRefetch }) {
       }
     );
 
-  // userData change হলে local state আপডেট করুন
   useEffect(() => {
     if (userData?.credit !== undefined) {
       setLocalTotalCredits(userData.credit);

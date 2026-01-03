@@ -4,13 +4,18 @@ import IsLoading from "../../components/IsLoading";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import AddAdmin from "./AddAmin";
 import AdminEdit from "./AdminEdit";
-import { API, useAdminList } from "../../api/api";
+import { API, useAdminList, useRolesList } from "../../api/api";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { MdManageAccounts } from "react-icons/md";
 
 function Administrators() {
   const { adminList, isLoading, isError, error, refetch } = useAdminList();
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
   const [selectedAdmin, setSelectedAdmin] = useState(null);
+
+  const { rolesList } = useRolesList();
+  const roles = rolesList?.data || [];
 
   // Open status change modal
   const openStatusModal = (record) => {
@@ -87,7 +92,7 @@ function Administrators() {
       title: <span>Has Access To</span>,
       dataIndex: "role",
       key: "role",
-      render: (role) => <span className="">{role}</span>,
+      render: (role) => <span className="">{role?.name}</span>,
     },
     {
       title: <span>Status</span>,
@@ -118,7 +123,7 @@ function Administrators() {
 
         return (
           <Space size="middle">
-            <AdminEdit adminProfile={record} refetch={refetch} />
+            <AdminEdit adminProfile={record} refetch={refetch} roles={roles} />
 
             <DeleteOutlined
               className={`text-[23px] bg-[#E30000] p-1 rounded-sm text-white ${
@@ -146,7 +151,19 @@ function Administrators() {
 
   return (
     <div className="p-4">
-      <AddAdmin refetch={refetch} />
+      <div className="flex justify-between items-center mb-4">
+        <AddAdmin refetch={refetch} roles={roles} />
+        <Link to="/administrators/roles">
+          <Button
+            size="large"
+            icon={<MdManageAccounts size={25} />}
+            type="primary"
+            className="my-main-button"
+          >
+            Roles Management
+          </Button>
+        </Link>
+      </div>
 
       <Table
         columns={columns}

@@ -3,8 +3,8 @@ import { EditOutlined } from "@ant-design/icons";
 import { Button, Modal, Form, Input, message, Select } from "antd";
 import { API } from "../../api/api";
 
-const AdminEdit = ({ adminProfile, refetch }) => {
-  const isSuperAdmin = adminProfile.role === "Super Admin";
+const AdminEdit = ({ adminProfile, refetch, roles }) => {
+  const isSuperAdmin = false;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -53,7 +53,7 @@ const AdminEdit = ({ adminProfile, refetch }) => {
             name: adminProfile?.name,
             email: adminProfile?.email,
             phone: adminProfile?.phone,
-            role: adminProfile?.role,
+            role: adminProfile?.role?.name,
           }}
         >
           <Form.Item
@@ -87,8 +87,11 @@ const AdminEdit = ({ adminProfile, refetch }) => {
 
           <Form.Item label="Role" name="role">
             <Select placeholder="Select role">
-              <Option value="superadmin">Super Admin</Option>
-              <Option value="admin">Admin</Option>
+              {roles.map((role) => (
+                <Option key={role?._id} value={role?._id}>
+                  {role?.name}
+                </Option>
+              ))}
             </Select>
           </Form.Item>
 

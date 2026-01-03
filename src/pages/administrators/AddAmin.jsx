@@ -5,7 +5,7 @@ import { API } from "../../api/api";
 
 const { Option } = Select;
 
-const AddAdmin = ({ refetch }) => {
+const AddAdmin = ({ refetch, roles }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -21,6 +21,7 @@ const AddAdmin = ({ refetch }) => {
       refetch?.();
       setIsModalOpen(false);
     } catch (err) {
+      console.log(err, "err");
       message.error(err.response?.data?.message || "Failed to create admin");
     } finally {
       setLoading(false);
@@ -31,6 +32,7 @@ const AddAdmin = ({ refetch }) => {
     <>
       <Button
         type="primary"
+        size="large"
         className="mb-2 my-main-button"
         onClick={showModal}
       >
@@ -86,8 +88,11 @@ const AddAdmin = ({ refetch }) => {
             rules={[{ required: true, message: "Please select role" }]}
           >
             <Select placeholder="Select role">
-              <Option value="Super Admin">Super Admin</Option>
-              <Option value="Admin">Admin</Option>
+              {roles?.map((role) => (
+                <Option key={role?._id} value={role?._id}>
+                  {role?.name}
+                </Option>
+              ))}
             </Select>
           </Form.Item>
 

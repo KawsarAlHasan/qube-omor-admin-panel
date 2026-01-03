@@ -26,6 +26,7 @@ import Banner from "../pages/settings/banner/Banner";
 import CreditsBuyers from "../pages/credits-buyers/CreditsBuyers";
 import DriversDetails from "../pages/settings/drivers/driversDetails/DriversDetails";
 import CouponCode from "../pages/settings/coupon-code/CouponCode";
+import Roles from "../pages/administrators/roles/Roles";
 
 export const router = createBrowserRouter([
   {
@@ -84,6 +85,10 @@ export const router = createBrowserRouter([
       {
         path: "/administrators",
         element: <Administrators />,
+      },
+      {
+        path: "/administrators/roles",
+        element: <Roles />,
       },
       {
         path: "/user-massages",

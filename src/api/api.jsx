@@ -15,27 +15,6 @@ API.interceptors.request.use((config) => {
   return config;
 });
 
-// get admin dashboard
-export const useAdminProfile = () => {
-  const getData = async () => {
-    const response = await API.get("/admin/profile");
-    return response.data.data;
-  };
-
-  const {
-    data: adminProfile = null,
-    isLoading,
-    isError,
-    error,
-    refetch,
-  } = useQuery({
-    queryKey: ["adminProfile"],
-    queryFn: getData,
-  });
-
-  return { adminProfile, isLoading, isError, error, refetch };
-};
-
 // sign out
 export const signOutAdmin = () => {
   localStorage.removeItem("token");
@@ -63,3 +42,23 @@ export const useAdminList = () => {
   return { adminList, isLoading, isError, error, refetch };
 };
 
+// all roles list
+export const useRolesList = () => {
+  const getData = async () => {
+    const response = await API.get("/role/all");
+    return response.data;
+  };
+
+  const {
+    data: rolesList = [],
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["rolesList"],
+    queryFn: getData,
+  });
+
+  return { rolesList, isLoading, isError, error, refetch };
+};

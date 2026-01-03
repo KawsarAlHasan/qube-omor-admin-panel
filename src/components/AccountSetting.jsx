@@ -149,7 +149,7 @@ const AccountSetting = ({ adminProfile, refetch }) => {
             name: adminProfile?.name,
             email: adminProfile?.email,
             phone: adminProfile?.phone,
-            role: adminProfile?.role,
+            role: adminProfile?.role?.name,
           }}
         >
           <Form.Item

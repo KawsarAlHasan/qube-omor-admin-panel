@@ -33,11 +33,17 @@ const SetNewPassword = () => {
       // If successful, save the token in localStorage
       localStorage.setItem("token", response.data.token);
 
+      // Clear reset-related data
+      localStorage.removeItem("email");
+      localStorage.removeItem("otp");
+
       // Show success message
       message.success("Password updated successfully!");
 
-      // Redirect to the admin dashboard (replace with your route)
-      navigate("/");
+      // Redirect to the admin dashboard
+      setTimeout(() => {
+        navigate("/");
+      }, 500);
     } catch (error) {
       // Show error message
       message.error(

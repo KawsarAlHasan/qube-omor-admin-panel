@@ -18,13 +18,15 @@ const ForgotPassword = () => {
         }
       );
 
-      // If successful, save the token in localStorage
+      // If successful, save the email in localStorage
       localStorage.setItem("email", values.email);
 
       // Show success message
       message.success("Send code on your email successful!");
 
-      navigate("/check-code");
+      setTimeout(() => {
+        navigate("/check-code");
+      }, 500);
     } catch (error) {
       // Show error message
       message.error(

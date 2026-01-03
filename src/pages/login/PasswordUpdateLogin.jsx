@@ -11,17 +11,16 @@ const PasswordUpdateLogin = () => {
   const onFinish = async (values) => {
     setLoading(true); // Start loading when submitting form
     try {
-      // const response = await API.post("/admin/login", {
-      //   email: values.email,
-      // });
-
-      // // If successful, save the token in localStorage
-      // localStorage.setItem("token", response.data.data.token);
+      // Clear password reset related data
+      localStorage.removeItem("email");
+      localStorage.removeItem("otp");
 
       // Show success message
-      message.success("Send code on your email successful!");
+      message.success("Redirecting to dashboard!");
 
-      navigate("/");
+      setTimeout(() => {
+        navigate("/");
+      }, 500);
     } catch (error) {
       // Show error message
       message.error(
