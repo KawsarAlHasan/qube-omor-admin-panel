@@ -171,7 +171,7 @@ function SidebarForMessages({ isMobile, onUserSelect }) {
                 <List.Item.Meta
                   avatar={
                     <div className="relative">
-                      <Badge
+                      {/* <Badge
                         dot
                         color={user?.is_active ? "#52c41a" : "#f5222d"}
                         offset={isMobile ? [-5, 40] : [-5, 35]}
@@ -183,7 +183,14 @@ function SidebarForMessages({ isMobile, onUserSelect }) {
                           alt={user?.name}
                           className="object-cover"
                         />
-                      </Badge>
+                      </Badge> */}
+
+                       <Avatar
+                          size={isMobile ? 56 : 50}
+                          src={user?.profile_image || userIcon}
+                          alt={user?.name}
+                          className="object-cover"
+                        />
                     </div>
                   }
                   title={

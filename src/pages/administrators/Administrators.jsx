@@ -8,13 +8,19 @@ import { API, useAdminList, useRolesList } from "../../api/api";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { MdManageAccounts } from "react-icons/md";
+import { usePermission } from "../../hooks/usePermission";
 
 function Administrators() {
+  const { canCreate, canEdit, canDelete, canChangeStatus } = usePermission();
   const { adminList, isLoading, isError, error, refetch } = useAdminList();
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
   const [selectedAdmin, setSelectedAdmin] = useState(null);
 
-  const { rolesList } = useRolesList();
+  const {
+    rolesList,
+    isLoading: isLoadingRoles,
+    refetch: refetchRoles,
+  } = useRolesList();
   const roles = rolesList?.data || [];
 
   // Open status change modal
@@ -105,40 +111,57 @@ function Administrators() {
           ) : (
             <Tag color="red">{status}</Tag>
           )}
-          <Button
-            className="-ml-1"
-            title="Status Change"
-            size="small"
-            icon={<EditOutlined />}
-            onClick={() => openStatusModal(record)}
-          />
+          {canChangeStatus("administrators") && (
+            <Button
+              className="-ml-1"
+              title="Status Change"
+              size="small"
+              icon={<EditOutlined />}
+              onClick={() => openStatusModal(record)}
+            />
+          )}
         </div>
       ),
     },
-    {
-      title: <span>Action</span>,
-      key: "action",
-      render: (_, record) => {
-        const isSuperAdmin = record.role === "Super Admin";
 
-        return (
-          <Space size="middle">
-            <AdminEdit adminProfile={record} refetch={refetch} roles={roles} />
+    ...(canEdit("administrators") || canDelete("administrators")
+      ? [
+          {
+            title: <span>Action</span>,
+            key: "action",
+            render: (_, record) => {
+              const isSuperAdmin = record?.role?.name === "Super Admin";
 
-            <DeleteOutlined
-              className={`text-[23px] bg-[#E30000] p-1 rounded-sm text-white ${
-                isSuperAdmin
-                  ? "cursor-not-allowed opacity-50"
-                  : "hover:text-red-300 cursor-pointer"
-              }`}
-              onClick={
-                isSuperAdmin ? undefined : () => showDeleteConfirm(record?._id)
-              }
-            />
-          </Space>
-        );
-      },
-    },
+              return (
+                <Space size="middle">
+                  {canEdit("administrators") && (
+                    <AdminEdit
+                      adminProfile={record}
+                      refetch={refetch}
+                      roles={roles}
+                    />
+                  )}
+
+                  {canDelete("administrators") && (
+                    <DeleteOutlined
+                      className={`text-[23px] bg-[#E30000] p-1 rounded-sm text-white ${
+                        isSuperAdmin
+                          ? "cursor-not-allowed opacity-50"
+                          : "hover:text-red-300 cursor-pointer"
+                      }`}
+                      onClick={
+                        isSuperAdmin
+                          ? undefined
+                          : () => showDeleteConfirm(record?._id)
+                      }
+                    />
+                  )}
+                </Space>
+              );
+            },
+          },
+        ]
+      : []),
   ];
 
   if (isLoading) {
@@ -152,17 +175,27 @@ function Administrators() {
   return (
     <div className="p-4">
       <div className="flex justify-between items-center mb-4">
-        <AddAdmin refetch={refetch} roles={roles} />
-        <Link to="/administrators/roles">
-          <Button
-            size="large"
-            icon={<MdManageAccounts size={25} />}
-            type="primary"
-            className="my-main-button"
-          >
-            Roles Management
-          </Button>
-        </Link>
+        {canCreate("administrators") && (
+          <AddAdmin
+            refetch={refetch}
+            roles={roles}
+            isLoadingRoles={isLoadingRoles}
+            refetchRoles={refetchRoles}
+          />
+        )}
+
+        {canCreate("administrators") && canEdit("administrators") && (
+          <Link to="/administrators/roles">
+            <Button
+              size="large"
+              icon={<MdManageAccounts size={25} />}
+              type="primary"
+              className="my-main-button"
+            >
+              Roles Management
+            </Button>
+          </Link>
+        )}
       </div>
 
       <Table

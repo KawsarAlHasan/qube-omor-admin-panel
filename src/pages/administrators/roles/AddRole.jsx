@@ -76,7 +76,7 @@ const modulePermissions = {
   "legal-and-banner": ["view", "edit"],
 };
 
-const AddRole = ({ refetch }) => {
+const AddRole = ({ refetch, color }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [permissions, setPermissions] = useState({});
@@ -211,7 +211,7 @@ const AddRole = ({ refetch }) => {
       <Button
         type="primary"
         size="large"
-        className="mb-2 my-main-button"
+        className={color ? `bg-${color}` : "mb-2 my-main-button"}
         onClick={showModal}
       >
         <FaPlus className="mr-2" />
@@ -255,7 +255,7 @@ const AddRole = ({ refetch }) => {
               <label className="block text-base font-semibold text-gray-700">
                 Permissions <span className="text-red-500">*</span>
               </label>
-              
+
               {/* Global Select/Deselect All Button */}
               <Button
                 type="primary"
@@ -263,7 +263,9 @@ const AddRole = ({ refetch }) => {
                 onClick={handleGlobalSelectAll}
                 className="bg-green-600 hover:bg-green-700 border-green-600 hover:border-green-700"
               >
-                {isAllSelected() ? "Deselect All Modules" : "Select All Modules"}
+                {isAllSelected()
+                  ? "Deselect All Modules"
+                  : "Select All Modules"}
               </Button>
             </div>
 

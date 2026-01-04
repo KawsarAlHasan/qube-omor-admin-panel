@@ -31,10 +31,13 @@ import { API } from "../../api/api";
 import { useCredits } from "../../api/spaApi";
 import CreditsDetails from "./CreditsDetails";
 import CreateNewUser from "./CreateNewUser";
+import { usePermission } from "../../hooks/usePermission";
 
 const { Search } = Input;
 
 function UserManagement() {
+  const { canCreate, canChangeUserCredit, canDelete, canChangeStatus } =
+    usePermission();
   const [searchText, setSearchText] = useState("");
   const [userDetailsData, setUserDetailsData] = useState(null);
   const [paymentStatus, setPaymentStatus] = useState("Paid");
@@ -201,11 +204,14 @@ function UserManagement() {
       render: (_, record) => (
         <div className="flex gap-2 items-center">
           <span>{record?.credit} Credits</span>
-          <Button
-            size="small"
-            icon={<EditOutlined />}
-            onClick={() => openCreditModal(record)}
-          />
+
+          {canChangeUserCredit("user-management") && (
+            <Button
+              size="small"
+              icon={<EditOutlined />}
+              onClick={() => openCreditModal(record)}
+            />
+          )}
         </div>
       ),
     },
@@ -230,27 +236,34 @@ function UserManagement() {
           <Tag color={record.status === "Active" ? "green" : "red"}>
             {record.status}
           </Tag>
-          <Button
-            size="small"
-            icon={<EditOutlined />}
-            onClick={() => openStatusModal(record)}
-          />
+
+          {canChangeStatus("user-management") && (
+            <Button
+              size="small"
+              icon={<EditOutlined />}
+              onClick={() => openStatusModal(record)}
+            />
+          )}
         </div>
       ),
     },
 
-    {
-      title: "Delete",
-      key: "delete",
-      render: (_, record) => (
-        <Space size="middle">
-          <DeleteFilled
-            className="text-[23px] text-red-400 hover:text-red-300 cursor-pointer"
-            onClick={() => handleUserDetails(record)}
-          />
-        </Space>
-      ),
-    },
+    ...(canDelete("user-management")
+      ? [
+          {
+            title: "Delete",
+            key: "delete",
+            render: (_, record) => (
+              <Space size="middle">
+                <DeleteFilled
+                  className="text-[23px] text-red-400 hover:text-red-300 cursor-pointer"
+                  onClick={() => handleUserDetails(record)}
+                />
+              </Space>
+            ),
+          },
+        ]
+      : []),
   ];
 
   if (isLoading) return <IsLoading />;
@@ -271,7 +284,7 @@ function UserManagement() {
           allowClear
         />
 
-        <CreateNewUser refetch={refetch} />
+        {canCreate("user-management") && <CreateNewUser refetch={refetch} />}
       </div>
 
       <Table
@@ -365,7 +378,8 @@ function UserManagement() {
                 value="Paid"
                 className="w-1/2 text-center"
                 style={{
-                  backgroundColor: paymentStatus === "Paid" ? "#10b981" : "white",
+                  backgroundColor:
+                    paymentStatus === "Paid" ? "#10b981" : "white",
                   color: paymentStatus === "Paid" ? "white" : "inherit",
                   borderColor: paymentStatus === "Paid" ? "#10b981" : "#d9d9d9",
                 }}

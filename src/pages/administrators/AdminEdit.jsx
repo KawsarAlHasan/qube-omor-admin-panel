@@ -4,7 +4,7 @@ import { Button, Modal, Form, Input, message, Select } from "antd";
 import { API } from "../../api/api";
 
 const AdminEdit = ({ adminProfile, refetch, roles }) => {
-  const isSuperAdmin = false;
+  const isSuperAdmin = adminProfile?.role?.name === "Super Admin";
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 

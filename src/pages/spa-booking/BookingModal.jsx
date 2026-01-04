@@ -25,8 +25,15 @@ import {
 import { useSingleSpaData } from "../../api/spaApi";
 import IsError from "../../components/IsError";
 import { API } from "../../api/api";
+import { useLocation } from "react-router-dom";
+import { usePermission } from "../../hooks/usePermission";
 
 function BookingModal({ date, singleData, isVisible, onClose }) {
+  const { canChangeAttendance } = usePermission();
+  const location = useLocation();
+  const pathnames = location.pathname.split("/").filter((x) => x);
+  const mainpathname = pathnames[0];
+
   const { singleSpaData, isLoading, isError, error, refetch } =
     useSingleSpaData(
       { id: singleData?._id },
@@ -301,27 +308,30 @@ function BookingModal({ date, singleData, isVisible, onClose }) {
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Button
-                        type="default"
-                        onClick={() =>
-                          handleChangeAttendess(booking?._id, "classEnd")
-                        }
-                        className="bg-red-500 border-0 text-white hover:bg-red-600"
-                      >
-                        End Class
-                      </Button>
 
-                      <Button
-                        type="default"
-                        onClick={() =>
-                          handleChangeAttendess(booking?._id, "waiting")
-                        }
-                        className="bg-yellow-500 border-0 text-black hover:bg-yellow-600"
-                      >
-                        Back to Waiting
-                      </Button>
-                    </div>
+                    {canChangeAttendance(mainpathname) && (
+                      <div className="flex items-center gap-2">
+                        <Button
+                          type="default"
+                          onClick={() =>
+                            handleChangeAttendess(booking?._id, "classEnd")
+                          }
+                          className="bg-red-500 border-0 text-white hover:bg-red-600"
+                        >
+                          End Class
+                        </Button>
+
+                        <Button
+                          type="default"
+                          onClick={() =>
+                            handleChangeAttendess(booking?._id, "waiting")
+                          }
+                          className="bg-yellow-500 border-0 text-black hover:bg-yellow-600"
+                        >
+                          Back to Waiting
+                        </Button>
+                      </div>
+                    )}
                   </div>
                 ))
               ) : (
@@ -378,27 +388,29 @@ function BookingModal({ date, singleData, isVisible, onClose }) {
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Button
-                        type="default"
-                        onClick={() =>
-                          handleChangeAttendess(booking?._id, "inClass")
-                        }
-                        className="bg-green-500 border-0 text-white hover:bg-green-600"
-                      >
-                        Add to Class
-                      </Button>
+                    {canChangeAttendance(mainpathname) && (
+                      <div className="flex items-center gap-2">
+                        <Button
+                          type="default"
+                          onClick={() =>
+                            handleChangeAttendess(booking?._id, "inClass")
+                          }
+                          className="bg-green-500 border-0 text-white hover:bg-green-600"
+                        >
+                          Add to Class
+                        </Button>
 
-                      <Button
-                        type="default"
-                        onClick={() =>
-                          handleChangeAttendess(booking?._id, "classEnd")
-                        }
-                        className="bg-red-500 border-0 text-white hover:bg-red-600"
-                      >
-                        End Class
-                      </Button>
-                    </div>
+                        <Button
+                          type="default"
+                          onClick={() =>
+                            handleChangeAttendess(booking?._id, "classEnd")
+                          }
+                          className="bg-red-500 border-0 text-white hover:bg-red-600"
+                        >
+                          End Class
+                        </Button>
+                      </div>
+                    )}
                   </div>
                 ))
               ) : (

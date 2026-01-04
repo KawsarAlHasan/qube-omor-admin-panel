@@ -8,14 +8,18 @@ import AddSpa from "./AddSpa";
 import EditSpa from "./EditSpa";
 import { useAllSpas } from "../../api/spaApi";
 import { API } from "../../api/api";
+import { usePermission } from "../../hooks/usePermission";
 
 function SpaPackages() {
+  const { canCreate, canEdit, canDelete } = usePermission();
   const [selectedFood, setSelectedFood] = useState(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
 
   const location = useLocation();
   const pathnames = location.pathname.split("/").filter((x) => x);
+
+  const mainpathname = pathnames[0];
 
   const beforeHyphen = pathnames[0]?.split("-")[0];
   const capitalized = beforeHyphen
@@ -146,30 +150,41 @@ function SpaPackages() {
     //     );
     //   },
     // },
-    {
-      title: "Actions",
-      key: "actions",
-      render: (_, record) => (
-        <Space size="middle">
-          <EditSpa
-            capitalized={capitalized}
-            record={record}
-            refetch={refetch}
-          />
 
-          <DeleteOutlined
-            className="text-xl text-red-500 hover:text-red-700 cursor-pointer transition-colors"
-            onClick={() => openDeleteModal(record)}
-          />
-        </Space>
-      ),
-    },
+    ...(canEdit(mainpathname) || canDelete(mainpathname)
+      ? [
+          {
+            title: "Actions",
+            key: "actions",
+            render: (_, record) => (
+              <Space size="middle">
+                {canEdit(mainpathname) && (
+                  <EditSpa
+                    capitalized={capitalized}
+                    record={record}
+                    refetch={refetch}
+                  />
+                )}
+
+                {canDelete(mainpathname) && (
+                  <DeleteOutlined
+                    className="text-xl text-red-500 hover:text-red-700 cursor-pointer transition-colors"
+                    onClick={() => openDeleteModal(record)}
+                  />
+                )}
+              </Space>
+            ),
+          },
+        ]
+      : []),
   ];
 
   return (
     <div>
       <div className="flex justify-between mb-4">
-        <AddSpa capitalized={capitalized} refetch={refetch} />
+        {canCreate(mainpathname) && (
+          <AddSpa capitalized={capitalized} refetch={refetch} />
+        )}
       </div>
 
       <Table

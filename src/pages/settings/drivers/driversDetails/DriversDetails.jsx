@@ -29,11 +29,13 @@ import OrderBreakdown from "./OrderBreakdown";
 import FinancialSummary from "./FinancialSummary";
 import AdminReturnMoney from "./AdminReturnMoney";
 import DriverPayMoney from "./DriverPayMoney";
+import { usePermission } from "../../../../hooks/usePermission";
 
 const { RangePicker } = DatePicker;
 const { Title, Text } = Typography;
 
 function DriversDetails() {
+  const { canCreate, canEdit, canViewDetails } = usePermission();
   const { driverId } = useParams();
   const [dateRange, setDateRange] = useState(null);
   const [showDateFilter, setShowDateFilter] = useState(false);
@@ -68,6 +70,9 @@ function DriversDetails() {
     ordersByDay,
   } = data || {};
 
+  const driverPaidStatusChange =
+    canCreate("drivers") && canEdit("drivers") && canViewDetails("drivers");
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 p-6">
       {/* Header Section */}
@@ -87,18 +92,20 @@ function DriversDetails() {
             </div>
           </div>
         </div>
-        <div className="flex gap-4">
-          <AdminReturnMoney
-            summary={summary}
-            driverId={driverId}
-            refetch={refetch}
-          />
-          <DriverPayMoney
-            summary={summary}
-            driverId={driverId}
-            refetch={refetch}
-          />
-        </div>
+        {driverPaidStatusChange && (
+          <div className="flex gap-4">
+            <AdminReturnMoney
+              summary={summary}
+              driverId={driverId}
+              refetch={refetch}
+            />
+            <DriverPayMoney
+              summary={summary}
+              driverId={driverId}
+              refetch={refetch}
+            />
+          </div>
+        )}
       </div>
 
       {/* Driver Info Card */}
@@ -168,7 +175,7 @@ function DriversDetails() {
               )}
             </div>
 
-            <div className="hidden lg:block">
+            {/* <div className="hidden lg:block">
               <div className="text-center p-4 bg-white rounded-2xl shadow-sm">
                 <Text
                   type="secondary"
@@ -180,7 +187,7 @@ function DriversDetails() {
                   #{driverData._id?.slice(-8).toUpperCase()}
                 </Text>
               </div>
-            </div>
+            </div> */}
           </div>
         </Card>
       )}

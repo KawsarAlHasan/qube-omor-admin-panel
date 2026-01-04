@@ -23,8 +23,10 @@ import {
 import { useSingleUserCreditsDetails } from "../../api/spaApi";
 import { useState, useEffect } from "react";
 import { API } from "../../api/api";
+import { usePermission } from "../../hooks/usePermission";
 
 function CreditsDetails({ userData, isOpen, onClose, mainRefetch }) {
+  const { canChangeUserCredit } = usePermission();
   const [loadingAction, setLoadingAction] = useState(null);
   const [removeModalOpen, setRemoveModalOpen] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState("Paid");
@@ -265,7 +267,7 @@ function CreditsDetails({ userData, isOpen, onClose, mainRefetch }) {
       render: (status, record) => (
         <Space direction="vertical" size="small">
           {getBorrowStatusTag(status)}
-          {status === "Unpaid" && (
+          {status === "Unpaid" && canChangeUserCredit("user-management") && (
             <Button
               type="link"
               size="small"
@@ -279,66 +281,71 @@ function CreditsDetails({ userData, isOpen, onClose, mainRefetch }) {
         </Space>
       ),
     },
-    {
-      title: "Action",
-      key: "action",
-      width: 180,
-      render: (_, record) => {
-        if (
-          record.status === "Borrow" &&
-          record.borrow_paid_status === "Unpaid"
-        ) {
-          return (
-            <Space size="small">
-              <Button
-                type="primary"
-                size="small"
-                icon={<CheckCircleOutlined />}
-                loading={loadingAction === record._id}
-                onClick={() => handleAction(record, "accepted")}
-              >
-                Accept
-              </Button>
-              <Button
-                danger
-                size="small"
-                icon={<CloseCircleOutlined />}
-                loading={loadingAction === record._id}
-                onClick={() => handleAction(record, "rejected")}
-              >
-                Reject
-              </Button>
-            </Space>
-          );
-        }
-        return (
-          <span className="text-gray-400">
-            {record.credit <= localTotalCredits &&
-            record.borrow_paid_status === "Unpaid" ? (
-              <Popconfirm
-                title="Delete Credit Record"
-                description="Are you sure you want to delete this credit record?"
-                onConfirm={() => handleDelete(record)}
-                okText="Yes"
-                cancelText="No"
-                okButtonProps={{ danger: true }}
-              >
-                <Button
-                  danger
-                  size="small"
-                  icon={<DeleteOutlined />}
-                  loading={loadingAction === record._id}
-                >
-                  Remove
-                </Button>
-              </Popconfirm>
-            ) : (
-              "-"
-            )}
-          </span>
-        );
-      },
-    },
+
+    ...(canChangeUserCredit("user-management")
+      ? [
+          {
+            title: "Action",
+            key: "action",
+            width: 180,
+            render: (_, record) => {
+              if (
+                record.status === "Borrow" &&
+                record.borrow_paid_status === "Unpaid"
+              ) {
+                return (
+                  <Space size="small">
+                    <Button
+                      type="primary"
+                      size="small"
+                      icon={<CheckCircleOutlined />}
+                      loading={loadingAction === record._id}
+                      onClick={() => handleAction(record, "accepted")}
+                    >
+                      Accept
+                    </Button>
+                    <Button
+                      danger
+                      size="small"
+                      icon={<CloseCircleOutlined />}
+                      loading={loadingAction === record._id}
+                      onClick={() => handleAction(record, "rejected")}
+                    >
+                      Reject
+                    </Button>
+                  </Space>
+                );
+              }
+              return (
+                <span className="text-gray-400">
+                  {record.credit <= localTotalCredits &&
+                  record.borrow_paid_status === "Unpaid" ? (
+                    <Popconfirm
+                      title="Delete Credit Record"
+                      description="Are you sure you want to delete this credit record?"
+                      onConfirm={() => handleDelete(record)}
+                      okText="Yes"
+                      cancelText="No"
+                      okButtonProps={{ danger: true }}
+                    >
+                      <Button
+                        danger
+                        size="small"
+                        icon={<DeleteOutlined />}
+                        loading={loadingAction === record._id}
+                      >
+                        Remove
+                      </Button>
+                    </Popconfirm>
+                  ) : (
+                    "-"
+                  )}
+                </span>
+              );
+            },
+          },
+        ]
+      : []),
   ];
 
   const renderContent = () => {
@@ -400,14 +407,16 @@ function CreditsDetails({ userData, isOpen, onClose, mainRefetch }) {
 
         {/* Remove Credit Button */}
         <div className="flex justify-end mb-4">
-          <Button
-            danger
-            type="default"
-            icon={<MinusCircleOutlined />}
-            onClick={openRemoveCreditModal}
-          >
-            Remove Credit
-          </Button>
+          {canChangeUserCredit("user-management") && (
+            <Button
+              danger
+              type="default"
+              icon={<MinusCircleOutlined />}
+              onClick={openRemoveCreditModal}
+            >
+              Remove Credit
+            </Button>
+          )}
         </div>
 
         {/* Table */}

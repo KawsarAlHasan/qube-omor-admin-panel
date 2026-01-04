@@ -7,8 +7,10 @@ import userIcon from "../../assets/icons/userIcon.png";
 import { EditOutlined, CheckCircleOutlined } from "@ant-design/icons";
 import { API } from "../../api/api";
 import AdminGiveCreditByCash from "./AdminGiveCreditByCash";
+import { usePermission } from "../../hooks/usePermission";
 
 function CreditsBuyers() {
+  const { canChangeUserCredit, canChangePaidStatus } = usePermission();
   const [filter, setFilter] = useState({ page: 1, limit: 10 });
   const [selectedBorrow, setSelectedBorrow] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -138,19 +140,19 @@ function CreditsBuyers() {
             {borrow_paid_status}
           </Tag>
 
-          {/* Mark as Paid button - শুধু Unpaid থাকলে দেখাবে */}
-          {borrow_paid_status === "Unpaid" && (
-            <Button
-              type="link"
-              size="small"
-              icon={<CheckCircleOutlined />}
-              className="p-0 h-auto text-green-600 hover:text-green-700"
-              loading={loadingPaidStatus === record._id}
-              onClick={() => paidStatusChange(record)}
-            >
-              Mark as Paid
-            </Button>
-          )}
+          {canChangePaidStatus("credits-buyers") &&
+            borrow_paid_status === "Unpaid" && (
+              <Button
+                type="link"
+                size="small"
+                icon={<CheckCircleOutlined />}
+                className="p-0 h-auto text-green-600 hover:text-green-700"
+                loading={loadingPaidStatus === record._id}
+                onClick={() => paidStatusChange(record)}
+              >
+                Mark as Paid
+              </Button>
+            )}
         </Space>
       ),
     },
@@ -200,7 +202,9 @@ function CreditsBuyers() {
   return (
     <div>
       <div className="mb-4">
-        <AdminGiveCreditByCash refetch={refetch} />
+        {canChangeUserCredit("credits-buyers") && (
+          <AdminGiveCreditByCash refetch={refetch} />
+        )}
       </div>
 
       <Table

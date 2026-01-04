@@ -25,11 +25,14 @@ import userIcon from "../../../assets/icons/userIcon.png";
 import ViewDriverOrders from "./ViewDriverOrders";
 import { useNavigate } from "react-router-dom";
 import EditDriver from "./EditDriver";
+import { usePermission } from "../../../hooks/usePermission";
 
 const { Search } = Input;
 const { confirm } = Modal;
 
 function Drivers() {
+  const { canCreate, canEdit, canDelete, canChangeStatus, canViewDetails } =
+    usePermission();
   const [searchText, setSearchText] = useState("");
   const [selectedDriver, setSelectedDriver] = useState(null);
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
@@ -170,23 +173,29 @@ function Drivers() {
         </span>
       ),
     },
-    {
-      title: <span>View Details</span>,
-      dataIndex: "details",
-      key: "details",
-      render: (_, record) => (
-        <div className="flex items-center gap-1">
-          <Button
-            title="Change Status"
-            size="small"
-            icon={<EyeOutlined />}
-            onClick={() => navitete(`/drivers/${record?._id}`)}
-          >
-            Details
-          </Button>
-        </div>
-      ),
-    },
+
+    ...(canViewDetails("drivers")
+      ? [
+          {
+            title: <span>View Details</span>,
+            dataIndex: "details",
+            key: "details",
+            render: (_, record) => (
+              <div className="flex items-center gap-1">
+                <Button
+                  title="Change Status"
+                  size="small"
+                  icon={<EyeOutlined />}
+                  onClick={() => navitete(`/drivers/${record?._id}`)}
+                >
+                  Details
+                </Button>
+              </div>
+            ),
+          },
+        ]
+      : []),
+
     {
       title: <span>Status</span>,
       dataIndex: "status",
@@ -198,33 +207,47 @@ function Drivers() {
           ) : (
             <Tag color="red">{status}</Tag>
           )}
-          <Button
-            title="Change Status"
-            size="small"
-            icon={<EditOutlined />}
-            onClick={() => openStatusModal(record)}
-          />
+
+          {canChangeStatus("drivers") && (
+            <Button
+              title="Change Status"
+              size="small"
+              icon={<EditOutlined />}
+              onClick={() => openStatusModal(record)}
+            />
+          )}
         </div>
       ),
     },
-    {
-      title: <span>Edit</span>,
-      dataIndex: "edit",
-      key: "edit",
-      render: (_, record) => <EditDriver record={record} refetch={refetch} />,
-    },
-    {
-      title: <span>Delete</span>,
-      key: "delete",
-      render: (_, record) => (
-        <Space size="middle">
-          <DeleteOutlined
-            className="text-[23px] text-red-400 hover:text-red-500 cursor-pointer transition-colors"
-            onClick={() => handleDeleteDriver(record)}
-          />
-        </Space>
-      ),
-    },
+
+    ...(canEdit("drivers")
+      ? [
+          {
+            title: <span>Edit</span>,
+            dataIndex: "edit",
+            key: "edit",
+            render: (_, record) => (
+              <EditDriver record={record} refetch={refetch} />
+            ),
+          },
+        ]
+      : []),
+    ...(canDelete("drivers")
+      ? [
+          {
+            title: <span>Delete</span>,
+            key: "delete",
+            render: (_, record) => (
+              <Space size="middle">
+                <DeleteOutlined
+                  className="text-[23px] text-red-400 hover:text-red-500 cursor-pointer transition-colors"
+                  onClick={() => handleDeleteDriver(record)}
+                />
+              </Space>
+            ),
+          },
+        ]
+      : []),
   ];
 
   if (isLoading) return <IsLoading />;
@@ -248,7 +271,7 @@ function Drivers() {
           size="large"
           allowClear
         />
-        <AddDriver refetch={refetch} />
+        {canCreate("drivers") && <AddDriver refetch={refetch} />}
       </div>
 
       <Table

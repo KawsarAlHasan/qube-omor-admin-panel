@@ -25,12 +25,15 @@ import { useUserConversations } from "../../api/userApi";
 import IsLoading from "../../components/IsLoading";
 import socket from "../../socket";
 import { API } from "../../api/api";
+import { usePermission } from "../../hooks/usePermission";
 
 const { Text } = Typography;
 const { TextArea } = Input;
 
 function MessageBox({ senderId }) {
   if (!senderId) return null;
+
+  const { canCreate } = usePermission();
 
   const [currentPage, setCurrentPage] = useState(1);
   const [allMessages, setAllMessages] = useState([]);
@@ -488,22 +491,25 @@ function MessageBox({ senderId }) {
               alt={userConversations?.user_name}
               className="object-cover"
             />
-            <span
+            {/* <span
               className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${
                 userConversations?.is_active ? "bg-green-500" : "bg-gray-400"
               }`}
-            ></span>
+            ></span> */}
           </div>
           <div className="ml-3">
             <Text strong className="text-lg block">
               {userConversations?.user_name}
             </Text>
             <Text type="secondary" className="text-xs flex items-center">
-              {userConversations?.is_active
+              {/* {userConversations?.is_active
                 ? "Online"
                 : `Last seen ${formatLastSeen(
                     userConversations?.last_time_active
-                  )}`}
+                  )}`} */}
+              {`Last seen ${formatLastSeen(
+                userConversations?.last_time_active
+              )}`}
             </Text>
           </div>
         </div>
@@ -713,57 +719,59 @@ function MessageBox({ senderId }) {
           </div>
         )}
 
-        <div className="flex items-end gap-2">
-          <div className="flex gap-2">
-            <input
-              type="file"
-              ref={fileInputRef}
-              onChange={handleFileSelect}
-              className="hidden"
-              accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.txt,.zip,.rar"
-            />
-            <button
-              onClick={() => fileInputRef.current?.click()}
-              className="text-gray-500 hover:text-gray-700 p-2 hover:bg-gray-100 rounded-full transition-colors"
-              disabled={isSending || isUploading}
-            >
-              <PaperClipOutlined className="text-xl" />
-            </button>
-          </div>
+        {canCreate("user-massages") && (
+          <div className="flex items-end gap-2">
+            <div className="flex gap-2">
+              <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleFileSelect}
+                className="hidden"
+                accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.txt,.zip,.rar"
+              />
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                className="text-gray-500 hover:text-gray-700 p-2 hover:bg-gray-100 rounded-full transition-colors"
+                disabled={isSending || isUploading}
+              >
+                <PaperClipOutlined className="text-xl" />
+              </button>
+            </div>
 
-          <div className="flex-1 flex gap-2">
-            <TextArea
-              placeholder="Type a message..."
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
-              onKeyPress={handleKeyPress}
-              autoSize={{ minRows: 1, maxRows: 4 }}
-              className="flex-1"
-              disabled={isSending || isUploading}
-            />
-            <button
-              onClick={sendMessage}
-              disabled={
-                isSending ||
-                isUploading ||
-                (!newMessage.trim() && !selectedFile)
-              }
-              className={`px-4 py-2 rounded-lg flex items-center justify-center transition-colors ${
-                isSending ||
-                isUploading ||
-                (!newMessage.trim() && !selectedFile)
-                  ? "bg-gray-300 cursor-not-allowed"
-                  : "bg-blue-500 hover:bg-blue-600 text-white"
-              }`}
-            >
-              {isSending || isUploading ? (
-                <LoadingOutlined className="text-white" />
-              ) : (
-                <SendOutlined className="text-white" />
-              )}
-            </button>
+            <div className="flex-1 flex gap-2">
+              <TextArea
+                placeholder="Type a message..."
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+                onKeyPress={handleKeyPress}
+                autoSize={{ minRows: 1, maxRows: 4 }}
+                className="flex-1"
+                disabled={isSending || isUploading}
+              />
+              <button
+                onClick={sendMessage}
+                disabled={
+                  isSending ||
+                  isUploading ||
+                  (!newMessage.trim() && !selectedFile)
+                }
+                className={`px-4 py-2 rounded-lg flex items-center justify-center transition-colors ${
+                  isSending ||
+                  isUploading ||
+                  (!newMessage.trim() && !selectedFile)
+                    ? "bg-gray-300 cursor-not-allowed"
+                    : "bg-blue-500 hover:bg-blue-600 text-white"
+                }`}
+              >
+                {isSending || isUploading ? (
+                  <LoadingOutlined className="text-white" />
+                ) : (
+                  <SendOutlined className="text-white" />
+                )}
+              </button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* Preview Modal */}
