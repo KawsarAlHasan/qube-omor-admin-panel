@@ -72,7 +72,7 @@ export const useAdminProfile = () => {
       return profileData;
     },
     enabled: !!token,
-    staleTime: 5 * 60 * 1000, // 5 minutes stale time
+    staleTime: 1 * 60 * 1000, // 1 minutes stale time
     gcTime: 30 * 60 * 1000,
     refetchOnWindowFocus: false,
     refetchOnMount: !cachedProfile, 
