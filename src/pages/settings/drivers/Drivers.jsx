@@ -64,11 +64,11 @@ function Drivers() {
     setIsStatusChangeLoading(true);
 
     try {
-      await API.put(`/user/today-paid-us/${selectedDriver._id}`, {
+      await API.put(`/user/status-change/${selectedDriver._id}`, {
         status: newStatus,
       });
 
-      message.success("Driver paid amount updated successfully!");
+      message.success("Driver Status updated successfully!");
       setIsStatusModalOpen(false);
       setSelectedDriver(null);
       setNewStatus("");
@@ -76,7 +76,7 @@ function Drivers() {
     } catch (err) {
       console.log(err.response);
       message.error(
-        err.response?.data?.message || "Failed to update driver paid amount"
+        err.response?.data?.message || "Failed to update driver status"
       );
     } finally {
       setIsStatusChangeLoading(false);

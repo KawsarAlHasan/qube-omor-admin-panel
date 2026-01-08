@@ -5,15 +5,11 @@ import { ArrowLeftOutlined } from "@ant-design/icons";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import { useAdmin } from "../context/AdminContext";
-// import { useAdminProfile } from "../api/api";
 
 const { Header, Content, Sider } = Layout;
 
 const MainLayout = () => {
-  // const { adminProfile, isLoading, isError, error, refetch } =
-  //   useAdminProfile();
-
-    const { adminProfile, refetch } = useAdmin();
+  const { adminProfile, refetch } = useAdmin();
 
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 1024);

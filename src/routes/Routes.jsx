@@ -2,9 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Login from "../pages/login/Login";
 import ForgotPassword from "../pages/login/ForgotPassword";
 import SetNewPassword from "../pages/login/SetNewPassword";
-import PasswordUpdateLogin from "../pages/login/PasswordUpdateLogin";
 import MainLayout from "../layout/MainLayout";
-import Dashboard from "../pages/dashboard/Dashboard";
 import NotFound from "../components/NotFound";
 import Unauthorized from "../components/Unauthorized";
 import UserManagement from "../pages/usersManagement/UserManagement";
@@ -30,6 +28,7 @@ import CouponCode from "../pages/settings/coupon-code/CouponCode";
 import Roles from "../pages/administrators/roles/Roles";
 import PermissionProtectedRoute from "./PermissionProtectedRoute";
 import DashboardOrRedirect from "./DashboardOrRedirect";
+import { AdminProvider } from "../context/AdminContext";
 
 export const router = createBrowserRouter([
   {
@@ -49,19 +48,17 @@ export const router = createBrowserRouter([
     element: <SetNewPassword />,
   },
   {
-    path: "/password-update-login",
-    element: <PasswordUpdateLogin />,
-  },
-  {
     path: "/unauthorized",
     element: <Unauthorized />,
   },
   {
     path: "/",
     element: (
-      <PrivateRoute>
-        <MainLayout />
-      </PrivateRoute>
+      <AdminProvider>
+        <PrivateRoute>
+          <MainLayout />
+        </PrivateRoute>
+      </AdminProvider>
     ),
     children: [
       {
@@ -71,7 +68,10 @@ export const router = createBrowserRouter([
       {
         path: "/user-management",
         element: (
-          <PermissionProtectedRoute requiredModule="user-management" requiredAction="view">
+          <PermissionProtectedRoute
+            requiredModule="user-management"
+            requiredAction="view"
+          >
             <UserManagement />
           </PermissionProtectedRoute>
         ),
@@ -79,7 +79,10 @@ export const router = createBrowserRouter([
       {
         path: "/food-details",
         element: (
-          <PermissionProtectedRoute requiredModule="food-details" requiredAction="view">
+          <PermissionProtectedRoute
+            requiredModule="food-details"
+            requiredAction="view"
+          >
             <FoodDetails />
           </PermissionProtectedRoute>
         ),
@@ -87,7 +90,10 @@ export const router = createBrowserRouter([
       {
         path: "/food-orders",
         element: (
-          <PermissionProtectedRoute requiredModule="food-orders" requiredAction="view">
+          <PermissionProtectedRoute
+            requiredModule="food-orders"
+            requiredAction="view"
+          >
             <FoodOrders />
           </PermissionProtectedRoute>
         ),
@@ -95,7 +101,10 @@ export const router = createBrowserRouter([
       {
         path: "/food-category",
         element: (
-          <PermissionProtectedRoute requiredModule="food-category" requiredAction="view">
+          <PermissionProtectedRoute
+            requiredModule="food-category"
+            requiredAction="view"
+          >
             <FoodCategory />
           </PermissionProtectedRoute>
         ),
@@ -103,7 +112,10 @@ export const router = createBrowserRouter([
       {
         path: "/ingredients",
         element: (
-          <PermissionProtectedRoute requiredModule="ingredients" requiredAction="view">
+          <PermissionProtectedRoute
+            requiredModule="ingredients"
+            requiredAction="view"
+          >
             <Ingredients />
           </PermissionProtectedRoute>
         ),
@@ -111,7 +123,10 @@ export const router = createBrowserRouter([
       {
         path: "/administrators",
         element: (
-          <PermissionProtectedRoute requiredModule="administrators" requiredAction="view">
+          <PermissionProtectedRoute
+            requiredModule="administrators"
+            requiredAction="view"
+          >
             <Administrators />
           </PermissionProtectedRoute>
         ),
@@ -119,7 +134,10 @@ export const router = createBrowserRouter([
       {
         path: "/administrators/roles",
         element: (
-          <PermissionProtectedRoute requiredModule="administrators" requiredAction="view">
+          <PermissionProtectedRoute
+            requiredModule="administrators"
+            requiredAction="view"
+          >
             <Roles />
           </PermissionProtectedRoute>
         ),
@@ -127,7 +145,10 @@ export const router = createBrowserRouter([
       {
         path: "/user-massages",
         element: (
-          <PermissionProtectedRoute requiredModule="user-massages" requiredAction="view">
+          <PermissionProtectedRoute
+            requiredModule="user-massages"
+            requiredAction="view"
+          >
             <UserMassages />
           </PermissionProtectedRoute>
         ),
@@ -135,7 +156,10 @@ export const router = createBrowserRouter([
       {
         path: "/spa-classes",
         element: (
-          <PermissionProtectedRoute requiredModule="spa-classes" requiredAction="view">
+          <PermissionProtectedRoute
+            requiredModule="spa-classes"
+            requiredAction="view"
+          >
             <SpaPackages />
           </PermissionProtectedRoute>
         ),
@@ -143,7 +167,10 @@ export const router = createBrowserRouter([
       {
         path: "/spa-booking",
         element: (
-          <PermissionProtectedRoute requiredModule="spa-booking" requiredAction="view">
+          <PermissionProtectedRoute
+            requiredModule="spa-booking"
+            requiredAction="view"
+          >
             <SpaBooking />
           </PermissionProtectedRoute>
         ),
@@ -151,7 +178,10 @@ export const router = createBrowserRouter([
       {
         path: "/physio-classes",
         element: (
-          <PermissionProtectedRoute requiredModule="physio-classes" requiredAction="view">
+          <PermissionProtectedRoute
+            requiredModule="physio-classes"
+            requiredAction="view"
+          >
             <SpaPackages />
           </PermissionProtectedRoute>
         ),
@@ -159,7 +189,10 @@ export const router = createBrowserRouter([
       {
         path: "/physio-booking",
         element: (
-          <PermissionProtectedRoute requiredModule="physio-booking" requiredAction="view">
+          <PermissionProtectedRoute
+            requiredModule="physio-booking"
+            requiredAction="view"
+          >
             <SpaBooking />
           </PermissionProtectedRoute>
         ),
@@ -167,7 +200,10 @@ export const router = createBrowserRouter([
       {
         path: "/classes",
         element: (
-          <PermissionProtectedRoute requiredModule="classes" requiredAction="view">
+          <PermissionProtectedRoute
+            requiredModule="classes"
+            requiredAction="view"
+          >
             <SpaPackages />
           </PermissionProtectedRoute>
         ),
@@ -175,7 +211,10 @@ export const router = createBrowserRouter([
       {
         path: "/classes-booking",
         element: (
-          <PermissionProtectedRoute requiredModule="classes-booking" requiredAction="view">
+          <PermissionProtectedRoute
+            requiredModule="classes-booking"
+            requiredAction="view"
+          >
             <SpaBooking />
           </PermissionProtectedRoute>
         ),
@@ -183,7 +222,10 @@ export const router = createBrowserRouter([
       {
         path: "/credits",
         element: (
-          <PermissionProtectedRoute requiredModule="credits" requiredAction="view">
+          <PermissionProtectedRoute
+            requiredModule="credits"
+            requiredAction="view"
+          >
             <Credits />
           </PermissionProtectedRoute>
         ),
@@ -191,7 +233,10 @@ export const router = createBrowserRouter([
       {
         path: "/credits-buyers",
         element: (
-          <PermissionProtectedRoute requiredModule="credits-buyers" requiredAction="view">
+          <PermissionProtectedRoute
+            requiredModule="credits-buyers"
+            requiredAction="view"
+          >
             <CreditsBuyers />
           </PermissionProtectedRoute>
         ),
@@ -199,7 +244,10 @@ export const router = createBrowserRouter([
       {
         path: "/drivers",
         element: (
-          <PermissionProtectedRoute requiredModule="drivers" requiredAction="view">
+          <PermissionProtectedRoute
+            requiredModule="drivers"
+            requiredAction="view"
+          >
             <Drivers />
           </PermissionProtectedRoute>
         ),
@@ -207,7 +255,10 @@ export const router = createBrowserRouter([
       {
         path: "/drivers/:driverId",
         element: (
-          <PermissionProtectedRoute requiredModule="drivers" requiredAction="veiwDetails">
+          <PermissionProtectedRoute
+            requiredModule="drivers"
+            requiredAction="veiwDetails"
+          >
             <DriversDetails />
           </PermissionProtectedRoute>
         ),
@@ -215,7 +266,10 @@ export const router = createBrowserRouter([
       {
         path: "/instructors",
         element: (
-          <PermissionProtectedRoute requiredModule="instructors" requiredAction="view">
+          <PermissionProtectedRoute
+            requiredModule="instructors"
+            requiredAction="view"
+          >
             <Instructors />
           </PermissionProtectedRoute>
         ),
@@ -223,7 +277,10 @@ export const router = createBrowserRouter([
       {
         path: "/coupon-code",
         element: (
-          <PermissionProtectedRoute requiredModule="coupon-code" requiredAction="view">
+          <PermissionProtectedRoute
+            requiredModule="coupon-code"
+            requiredAction="view"
+          >
             <CouponCode />
           </PermissionProtectedRoute>
         ),
@@ -231,7 +288,10 @@ export const router = createBrowserRouter([
       {
         path: "/banner",
         element: (
-          <PermissionProtectedRoute requiredModule="legal-and-banner" requiredAction="view">
+          <PermissionProtectedRoute
+            requiredModule="legal-and-banner"
+            requiredAction="view"
+          >
             <Banner />
           </PermissionProtectedRoute>
         ),
@@ -239,7 +299,10 @@ export const router = createBrowserRouter([
       {
         path: "/terms-and-conditions",
         element: (
-          <PermissionProtectedRoute requiredModule="legal-and-banner" requiredAction="view">
+          <PermissionProtectedRoute
+            requiredModule="legal-and-banner"
+            requiredAction="view"
+          >
             <TermsAndConditions />
           </PermissionProtectedRoute>
         ),
@@ -247,7 +310,10 @@ export const router = createBrowserRouter([
       {
         path: "/privacy-policy",
         element: (
-          <PermissionProtectedRoute requiredModule="legal-and-banner" requiredAction="view">
+          <PermissionProtectedRoute
+            requiredModule="legal-and-banner"
+            requiredAction="view"
+          >
             <PrivacyPolicy />
           </PermissionProtectedRoute>
         ),

@@ -6,13 +6,13 @@ const AdminContext = createContext();
 export const AdminProvider = ({ children }) => {
   const profileData = useAdminProfile();
 
-  React.useEffect(() => {
-    console.log("AdminProvider data:", {
-      profile: profileData.adminProfile,
-      isLoading: profileData.isLoading,
-      isFetching: profileData.isFetching,
-    });
-  }, [profileData]);
+  // React.useEffect(() => {
+  //   console.log("AdminProvider data:", {
+  //     profile: profileData.adminProfile,
+  //     isLoading: profileData.isLoading,
+  //     isFetching: profileData.isFetching,
+  //   });
+  // }, [profileData]);
 
   return (
     <AdminContext.Provider value={profileData}>
