@@ -21,7 +21,7 @@ const AdminEdit = ({ adminProfile, refetch, roles }) => {
       refetch();
       setIsModalOpen(false);
     } catch (err) {
-      console.log(err, "err");
+      console.error(err, "err");
       message.error(err.response?.data?.message || "Failed to update Admin");
     } finally {
       setLoading(false);

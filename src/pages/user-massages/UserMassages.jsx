@@ -26,7 +26,6 @@ function UserMassages() {
 
   const handleUserSelect = (user) => {
     // Handle user selection
-    // console.log("Selected user:", user);
   };
 
   return (

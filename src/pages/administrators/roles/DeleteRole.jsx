@@ -20,7 +20,7 @@ const DeleteRole = ({ isOpen, onClose, roleData, refetch }) => {
       refetch?.();
       onClose();
     } catch (err) {
-      console.log(err, "err");
+      console.error(err, "err");
       message.error(err.response?.data?.message || "Failed to delete role");
     } finally {
       setLoading(false);

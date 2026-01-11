@@ -118,7 +118,6 @@ function AddFoodDetail({ refetch }) {
 
   // 🧾 Submit Handler
   const handleSubmit = async (values) => {
-    console.log("values", values.allow_backorder);
     setLoading(true);
     try {
       const formData = new FormData();
@@ -157,7 +156,6 @@ function AddFoodDetail({ refetch }) {
       message.success("✅ Food added successfully!");
       handleCancel();
       refetch();
-      console.log("Food created:", response.data);
     } catch (error) {
       console.error("❌ Submission Failed:", error);
       message.error(error?.response?.data?.message || "Failed to add food.");

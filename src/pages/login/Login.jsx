@@ -21,7 +21,7 @@ const Login = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      navigate("/");
+      navigate(isInstructor ? "/instructor" : "/");
     }
   }, [navigate]);
 
@@ -38,7 +38,7 @@ const Login = () => {
           localStorage.setItem("token", response?.data?.data?.token);
           localStorage.setItem("userType", "instructor");
           message.success(`Instructor login successful!`);
-          window.location.href = "/";
+          window.location.href = "/instructor";
         } else {
           message.error("Your account is not active! Please contact the super admin.");
         }

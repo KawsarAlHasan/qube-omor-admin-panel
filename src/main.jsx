@@ -6,7 +6,6 @@ import { router } from "./routes/Routes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "antd/dist/reset.css";
 import socket from "./socket.js";
-// import { AdminProvider } from "./context/AdminContext.jsx";
 
 // const queryClient = new QueryClient();
 const queryClient = new QueryClient({
@@ -28,8 +27,6 @@ createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
-      {/* <AdminProvider>
-      </AdminProvider> */}
     </QueryClientProvider>
   </React.StrictMode>
 );

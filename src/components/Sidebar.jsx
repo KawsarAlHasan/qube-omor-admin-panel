@@ -217,9 +217,8 @@ const Sidebar = ({ adminProfile, onClick }) => {
         key: "administrators",
         icon: <MdOutlineAdminPanelSettings />,
         label: <Link to="/administrators">Administrators</Link>,
-        show:
-          hasPermission("administrators", "view") 
-          // && adminProfile?.role?.name === "Super Admin",
+        show: hasPermission("administrators", "view"),
+        // && adminProfile?.role?.name === "Super Admin",
       },
       {
         key: "settings",

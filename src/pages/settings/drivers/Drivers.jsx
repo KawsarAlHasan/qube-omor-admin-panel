@@ -74,7 +74,7 @@ function Drivers() {
       setNewStatus("");
       refetch();
     } catch (err) {
-      console.log(err.response);
+      console.error(err, "err");
       message.error(
         err.response?.data?.message || "Failed to update driver status"
       );
@@ -97,7 +97,7 @@ function Drivers() {
           message.success("Driver deleted successfully!");
           refetch();
         } catch (err) {
-          console.log(err.response);
+          console.error(err, "err");
           message.error(
             err.response?.data?.message || "Failed to delete driver"
           );

@@ -68,7 +68,7 @@ const AddAdmin = ({ refetch, roles, isLoadingRoles, refetchRoles }) => {
       refetch?.();
       handleCancel();
     } catch (err) {
-      console.log(err, "err");
+      console.error(err, "err");
       message.error(err.response?.data?.message || "Failed to create admin");
     } finally {
       setLoading(false);

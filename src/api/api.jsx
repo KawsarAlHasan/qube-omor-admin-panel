@@ -19,7 +19,9 @@ API.interceptors.request.use((config) => {
 export const signOutAdmin = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("adminProfile");
+  localStorage.removeItem("instructorProfile");
   localStorage.removeItem("profileTimestamp");
+  localStorage.removeItem("userType");
   window.location.href = "/login";
 };
 

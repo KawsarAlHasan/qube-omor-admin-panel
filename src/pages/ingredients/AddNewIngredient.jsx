@@ -53,7 +53,7 @@ const AddNewIngredient = ({ refetch }) => {
       refetch();
       handleCancel(); // Close the modal on success
     } catch (error) {
-      console.log(error, "error");
+      console.error(error, "error");
       message.error(
         error?.response?.data?.message || "Failed to add ingredient. Try again."
       );

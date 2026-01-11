@@ -1,5 +1,5 @@
 import { Avatar, Dropdown, Button, Divider, Tag } from "antd";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import logoImage from "../assets/logo.png";
 import { MenuOutlined, UserOutlined, LogoutOutlined } from "@ant-design/icons";
 import ChangePassword from "./ChangePassword";
@@ -7,11 +7,11 @@ import AccountSetting from "./AccountSetting";
 import { signOutAdmin } from "../api/api";
 
 const Navbar = ({ adminProfile, refetch, showDrawer }) => {
-  const navigate = useNavigate();
+  const userType = localStorage.getItem("userType");
+  const isTypeAdmin = userType === "admin";
 
   const handleSignOut = () => {
     signOutAdmin();
-    navigate("/login");
   };
 
   const profileMenuItems = [
@@ -30,7 +30,7 @@ const Navbar = ({ adminProfile, refetch, showDrawer }) => {
                 {adminProfile?.name}
               </h1>
               <Tag color="blue" className="m-0">
-                {adminProfile?.role?.name}
+                {isTypeAdmin ? adminProfile?.role?.name : "Instructor"}
               </Tag>
             </div>
           </div>
@@ -42,11 +42,17 @@ const Navbar = ({ adminProfile, refetch, showDrawer }) => {
     },
     {
       key: "profile",
-      label: <AccountSetting adminProfile={adminProfile} refetch={refetch} />,
+      label: (
+        <AccountSetting
+          adminProfile={adminProfile}
+          refetch={refetch}
+          isTypeAdmin={isTypeAdmin}
+        />
+      ),
     },
     {
       key: "change-password",
-      label: <ChangePassword />,
+      label: <ChangePassword isTypeAdmin={isTypeAdmin} />,
     },
     {
       type: "divider",
@@ -102,7 +108,7 @@ const Navbar = ({ adminProfile, refetch, showDrawer }) => {
                     {adminProfile?.name}
                   </div>
                   <div className="text-[12px] text-gray-500 leading-tight">
-                    {adminProfile?.role?.name}
+                    {isTypeAdmin ? adminProfile?.role?.name : "Instructor"}
                   </div>
                 </div>
                 <div className="hidden md:block">

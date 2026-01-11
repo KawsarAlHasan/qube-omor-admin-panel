@@ -56,7 +56,7 @@ function Credits() {
       refetch();
     } catch (err) {
       message.error(err?.response?.data?.message || "Failed to change status");
-      console.error(err);
+      console.error("error", err);
     }
   };
 
@@ -82,7 +82,7 @@ function Credits() {
       refetch();
     } catch (err) {
       message.error(err.response?.data?.message || "Failed to update credit");
-      console.error(err);
+      console.error("error", err);
     }
   };
 
@@ -104,7 +104,7 @@ function Credits() {
           message.error(
             err.response?.data?.message || "Failed to delete credit"
           );
-          console.error(err);
+          console.error("error", err);
         }
       },
     });

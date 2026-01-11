@@ -199,7 +199,7 @@ const AddRole = ({ refetch, color }) => {
       refetch?.();
       handleCancel();
     } catch (err) {
-      console.log(err, "err");
+      console.error(err, "err");
       message.error(err.response?.data?.message || "Failed to create role");
     } finally {
       setLoading(false);

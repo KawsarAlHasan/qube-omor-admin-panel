@@ -90,8 +90,6 @@ const SetNewPassword = () => {
         password: values.password,
       });
 
-      console.log(response, "response");
-
       // Save the token in localStorage
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("userType", isInstructor ? "instructor" : "admin");
@@ -106,7 +104,7 @@ const SetNewPassword = () => {
 
       // Redirect to the dashboard
       setTimeout(() => {
-        navigate("/");
+        navigate(isInstructor ? "/instructor" : "/");
       }, 500);
     } catch (error) {
       message.error(

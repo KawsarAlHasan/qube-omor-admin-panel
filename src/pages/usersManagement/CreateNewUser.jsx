@@ -74,7 +74,7 @@ function CreateNewUser({ refetch }) {
       setIsModalOpen(false);
       refetch();
     } catch (error) {
-      console.log(error);
+      console.error("Error adding user:", error);
       message.error(error.response?.data?.message || "Failed to add user.");
     } finally {
       setLoading(false);

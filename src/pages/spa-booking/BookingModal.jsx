@@ -45,8 +45,6 @@ function BookingModal({ date, singleData, isVisible, onClose }) {
   const data = singleSpaData?.data;
 
   const handleChangeAttendess = async (bookingId, type) => {
-    console.log("Remove booking:", bookingId, "from", type);
-
     try {
       const res = await API.put("/spa-booking/change-attendees", {
         _id: bookingId,

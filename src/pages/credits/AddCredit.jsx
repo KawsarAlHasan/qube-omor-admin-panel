@@ -37,7 +37,7 @@ function AddCredit({ refetch }) {
       }
     } catch (error) {
       message.error("Failed to add credit");
-      console.error(error);
+      console.error("error", error);
     } finally {
       setLoading(false);
     }

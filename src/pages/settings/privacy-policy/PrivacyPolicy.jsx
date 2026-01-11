@@ -31,7 +31,7 @@ function PrivacyPolicy() {
       setIsModalOpen(false);
       refetch(); // refresh data
     } catch (err) {
-      console.error(err);
+      console.error("err", err);
       message.error("Failed to update privacy policy.");
     } finally {
       setLoading(false);

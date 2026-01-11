@@ -33,7 +33,7 @@ function TermsAndConditions() {
       setIsModalOpen(false);
       refetch(); // refresh data
     } catch (err) {
-      console.error(err);
+      console.error("err", err);
       message.error("Failed to update Terms & Conditions.");
     } finally {
       setLoading(false);

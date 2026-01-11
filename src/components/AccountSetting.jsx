@@ -12,10 +12,9 @@ import {
 } from "antd";
 import { API } from "../api/api";
 
-const AccountSetting = ({ adminProfile, refetch }) => {
+const AccountSetting = ({ adminProfile, refetch, isTypeAdmin }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [avatarLoading, setAvatarLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageFile, setImageFile] = useState(null);
 
@@ -50,7 +49,9 @@ const AccountSetting = ({ adminProfile, refetch }) => {
         formData.append("profile_image", imageFile);
       }
 
-      await API.put(`/admin/update`, formData, {
+      const endPoint = isTypeAdmin ? "/admin/update" : "/auth/update";
+
+      await API.put(endPoint, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -63,7 +64,7 @@ const AccountSetting = ({ adminProfile, refetch }) => {
       setImageFile(null);
       setIsModalOpen(false);
     } catch (err) {
-      console.log(err);
+      console.error(err, "error");
       message.error(err.response?.data?.message || "Failed to update profile");
     } finally {
       setLoading(false);
@@ -149,7 +150,7 @@ const AccountSetting = ({ adminProfile, refetch }) => {
             name: adminProfile?.name,
             email: adminProfile?.email,
             phone: adminProfile?.phone,
-            role: adminProfile?.role?.name,
+            role: isTypeAdmin? adminProfile?.role?.name : "Instructor",
           }}
         >
           <Form.Item

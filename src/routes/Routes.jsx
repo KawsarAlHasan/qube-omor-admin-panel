@@ -29,6 +29,14 @@ import Roles from "../pages/administrators/roles/Roles";
 import PermissionProtectedRoute from "./PermissionProtectedRoute";
 import DashboardOrRedirect from "./DashboardOrRedirect";
 import { AdminProvider } from "../context/AdminContext";
+import InstructorLayout from "../layout/InstructorLayout";
+import MyClasses from "../instructorPages/my-classes/MyClasses";
+import InstructorPrivateRoute from "./InstructorPrivateRoute";
+import { InstructorProvider } from "../context/InstructorContext";
+import InstructorDashboard from "../instructorPages/instructor-dashboard/InstructorDashboard";
+import MySpaClasses from "../instructorPages/my-spa-classes/MySpaClasses";
+import MyPhysioClasses from "../instructorPages/my-physio-classes/MyPhysioClasses";
+import Massages from "../instructorPages/massages/Massages";
 
 export const router = createBrowserRouter([
   {
@@ -317,6 +325,38 @@ export const router = createBrowserRouter([
             <PrivacyPolicy />
           </PermissionProtectedRoute>
         ),
+      },
+    ],
+  },
+  {
+    path: "/instructor",
+    element: (
+      <InstructorProvider>
+        <InstructorPrivateRoute>
+          <InstructorLayout />
+        </InstructorPrivateRoute>
+      </InstructorProvider>
+    ),
+    children: [
+      {
+        path: "/instructor",
+        element: <InstructorDashboard />,
+      },
+      {
+        path: "/instructor/my-spa-classes",
+        element: <MySpaClasses />,
+      },
+      {
+        path: "/instructor/my-physio-classes",
+        element: <MyPhysioClasses />,
+      },
+      {
+        path: "/instructor/my-classes",
+        element: <MyClasses />,
+      },
+      {
+        path: "/instructor/massages",
+        element: <Massages />,
       },
     ],
   },

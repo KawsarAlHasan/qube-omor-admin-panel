@@ -159,8 +159,6 @@ function SpaAnalytics({ selectType }) {
     }
   };
 
-  // http://localhost:8099/api/v1/settings/spa-analytics/download-pdf?startDate=2025-01-10&endDate=2026-01-01&type=Spa
-
   // excel download
   const downloadPDF = async () => {
     try {
@@ -170,8 +168,6 @@ function SpaAnalytics({ selectType }) {
           responseType: "blob",
         }
       );
-
-      console.log("XLSX Response:", response);
 
       const contentDisposition = response.headers["content-disposition"];
       let filename = `spa-physio-classes-analytics-report-${dateRange.start_date}-to-${dateRange.end_date}.xlsx`;

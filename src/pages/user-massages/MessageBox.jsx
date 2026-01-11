@@ -146,7 +146,7 @@ function MessageBox({ senderId }) {
       setUploadProgress(0);
       return response.data.fileUrl;
     } catch (error) {
-      // console.error("File upload error:", error);
+      console.error("File upload error:", error);
       setIsUploading(false);
       setUploadProgress(0);
       throw error;
@@ -168,8 +168,6 @@ function MessageBox({ senderId }) {
     socket.emit("userConnected", myID);
 
     const handleReceiveMessage = (receivedMessage) => {
-      // console.log("Received message via socket:", receivedMessage);
-
       const isMessageForThisChat =
         (receivedMessage.senderId === senderId &&
           receivedMessage.receiverId === myID) ||
@@ -205,7 +203,6 @@ function MessageBox({ senderId }) {
     };
 
     const handleMessageRead = (data) => {
-      // console.log("Messages marked as read:", data);
       // You can update local state if needed to show read status
       // For example, update the is_read status of messages
       setAllMessages((prev) =>
@@ -217,7 +214,7 @@ function MessageBox({ senderId }) {
 
     socket.on("receiveMessage", handleReceiveMessage);
     socket.on("messageError", (error) => {
-      // console.error("Socket message error:", error);
+      console.error("Socket message error:", error);
       antdMessage.error("Failed to send message");
       setIsSending(false);
     });

@@ -3,7 +3,7 @@ import { Button, Modal, Form, Input, message } from "antd";
 import { SettingOutlined } from "@ant-design/icons";
 import { API } from "../api/api";
 
-const ChangePassword = () => {
+const ChangePassword = ({ isTypeAdmin }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -13,7 +13,12 @@ const ChangePassword = () => {
   const handleFinish = async (values) => {
     try {
       setLoading(true);
-      const res = await API.put("/admin/change-password", {
+
+      const endPoint = isTypeAdmin
+        ? "/admin/change-password"
+        : "/auth/change-password";
+
+      const res = await API.put(endPoint, {
         current_password: values.old_password,
         new_password: values.new_password,
       });

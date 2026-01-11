@@ -104,9 +104,6 @@ function AddSpa({ capitalized = "Spa", refetch }) {
       }
 
       const response = await API.post(`/spa/create`, formData);
-
-      console.log("Response:", response);
-
       message.success(`${capitalized} class added successfully`);
       form.resetFields();
       setImageList([]);

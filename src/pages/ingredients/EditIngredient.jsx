@@ -59,11 +59,11 @@ function EditIngredient({ ingredientDetails, isOpen, onClose, refetch }) {
       refetch();
       onClose(); // Close modal on success
     } catch (error) {
+      console.erro("error", error);
       message.error(
         error?.response?.data?.message ||
           `Failed to add ${data.ingredient_name}. Try again.`
       );
-      console.log("error", error.response);
     } finally {
       setLoading(false);
     }

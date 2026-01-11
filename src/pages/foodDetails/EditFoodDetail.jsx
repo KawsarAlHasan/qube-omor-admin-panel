@@ -242,7 +242,6 @@ function EditFoodDetail({ record, refetch }) {
       message.success("✅ Food updated successfully!");
       handleCancel();
       refetch();
-      console.log("Food updated:", response.data);
     } catch (error) {
       console.error("❌ Update Failed:", error);
       message.error(error?.response?.data?.message || "Failed to update food.");

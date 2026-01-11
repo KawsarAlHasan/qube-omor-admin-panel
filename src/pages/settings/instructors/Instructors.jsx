@@ -67,7 +67,7 @@ function Instructors() {
       setNewStatus("");
       refetch();
     } catch (err) {
-      console.log(err.response);
+      console.error("err", err);
       message.error(
         err.response?.data?.message || "Failed to update instructor status"
       );
@@ -90,7 +90,7 @@ function Instructors() {
           message.success("Instructor deleted successfully!");
           refetch();
         } catch (err) {
-          console.log(err.response);
+          console.error("err", err);
           message.error(
             err.response?.data?.message || "Failed to delete instructor"
           );

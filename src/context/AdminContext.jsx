@@ -1,18 +1,19 @@
 import React, { createContext, useContext } from "react";
 import { useAdminProfile } from "../hooks/useAdminProfile";
+import { Navigate } from "react-router-dom";
 
 const AdminContext = createContext();
 
 export const AdminProvider = ({ children }) => {
   const profileData = useAdminProfile();
 
-  // React.useEffect(() => {
-  //   console.log("AdminProvider data:", {
-  //     profile: profileData.adminProfile,
-  //     isLoading: profileData.isLoading,
-  //     isFetching: profileData.isFetching,
-  //   });
-  // }, [profileData]);
+  // Check userType from localStorage
+  const userType = localStorage.getItem("userType");
+
+  // If user is instructor, redirect to instructor dashboard
+  if (userType === "instructor") {
+    return <Navigate to="/instructor" replace />;
+  }
 
   return (
     <AdminContext.Provider value={profileData}>

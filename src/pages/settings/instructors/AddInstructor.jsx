@@ -74,7 +74,7 @@ function AddInstructor({ refetch }) {
       setIsModalOpen(false);
       refetch();
     } catch (error) {
-      console.log(error);
+      console.error(error, "error");
       message.error(
         error.response?.data?.message || "Failed to add Instructor"
       );

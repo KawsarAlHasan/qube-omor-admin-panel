@@ -91,7 +91,7 @@ function FoodDetails() {
       setNewStatus("");
       refetch();
     } catch (err) {
-      console.log(err.response);
+      console.error(err, "error");
       message.error(
         err.response?.data?.message || "Failed to update Food status"
       );

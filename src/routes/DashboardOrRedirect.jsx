@@ -5,7 +5,8 @@ import { usePermission } from "../hooks/usePermission";
 import Loading from "../components/Loading";
 
 const DashboardOrRedirect = () => {
-  const { canAccessModule, getFirstAccessiblePage, hasAnyAccess, isLoading } = usePermission();
+  const { canAccessModule, getFirstAccessiblePage, hasAnyAccess, isLoading } =
+    usePermission();
 
   if (isLoading) {
     return <Loading />;

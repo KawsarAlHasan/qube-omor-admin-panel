@@ -52,8 +52,6 @@ function RecentBookings({ dataSource, isLoading }) {
       key: "serviceName",
       render: (text, record) => (
         <div>
-
-          {console.log(record, "record")}
           <div>{text || "N/A"}</div>
           <Tag color={record.type === "Spa" ? "blue" : "green"} size="small">
             {record.type}

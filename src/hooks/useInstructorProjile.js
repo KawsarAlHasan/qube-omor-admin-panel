@@ -3,7 +3,7 @@ import { API } from "../api/api";
 
 // Cache management utilities
 const CACHE_KEYS = {
-  PROFILE: "adminProfile",
+  PROFILE: "instructorProfile",
   TIMESTAMP: "profileTimestamp",
 };
 
@@ -42,21 +42,21 @@ const saveProfileToCache = (profile) => {
 };
 
 // Clear cache function
-export const clearAdminProfileCache = () => {
+export const clearInstructorProfileCache = () => {
   localStorage.removeItem(CACHE_KEYS.PROFILE);
   localStorage.removeItem(CACHE_KEYS.TIMESTAMP);
 };
 
-// get admin profile with cache
-export const useAdminProfile = () => {
+// get instractor profile with cache
+export const useInstructorProfile = () => {
   const token = localStorage.getItem("token");
   const cachedProfile = getCachedProfile();
 
   const { data, isLoading, isError, error, refetch, isFetching, remove } =
     useQuery({
-      queryKey: ["adminProfile"],
+      queryKey: ["instructorProfile"],
       queryFn: async () => {
-        const response = await API.get("/admin/profile");
+        const response = await API.get("/auth/profile");
         const profileData = response.data.data;
 
         // Save to cache
@@ -76,18 +76,18 @@ export const useAdminProfile = () => {
     });
 
   return {
-    adminProfile: data || cachedProfile,
+    instructorProfile: data || cachedProfile,
     isLoading: isLoading && !cachedProfile,
     isFetching,
     isError,
     error,
     refetch: async () => {
       // Clear cache before refetching
-      clearAdminProfileCache();
+      clearInstructorProfileCache();
       return refetch();
     },
     clearCache: () => {
-      clearAdminProfileCache();
+      clearInstructorProfileCache();
       remove();
     },
   };

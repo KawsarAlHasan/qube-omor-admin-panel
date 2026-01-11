@@ -131,7 +131,6 @@ function EarningsGrowth() {
   // Format chart data from API response
   const formatChartData = (data) => {
     if (!data || !data.chartData || !Array.isArray(data.chartData)) {
-      console.log("No chart data found");
       return [];
     }
 
@@ -299,8 +298,6 @@ function EarningsGrowth() {
           responseType: "blob",
         }
       );
-
-      console.log("XLSX Response:", response);
 
       const contentDisposition = response.headers["content-disposition"];
       let filename = `analytics-report-${dateParams.startDate}-to-${dateParams.endDate}.xlsx`;

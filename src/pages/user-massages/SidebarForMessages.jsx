@@ -74,7 +74,7 @@ function SidebarForMessages({ isMobile, onUserSelect }) {
       });
       await refetch();
     } catch (error) {
-      console.error(error);
+      console.error("Error marking message as read:", error);
     }
   };
 
@@ -90,7 +90,7 @@ function SidebarForMessages({ isMobile, onUserSelect }) {
 
   useEffect(() => {
     socket.on("receiveMessage", (message) => {
-      console.log("New message received:", message);
+      console.error("New message received:", message);
       refetch();
     });
 
